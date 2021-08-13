@@ -15,9 +15,7 @@ public class ActiveOrders {
     }
 
     public void ArrangeQueue() {
-    }
 
-    public void displayQueue() {
     }
 
 }
