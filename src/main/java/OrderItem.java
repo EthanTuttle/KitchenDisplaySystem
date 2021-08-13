@@ -7,11 +7,18 @@ public class OrderItem
 	private LinkedList<MenuItem> order;
 	private int timeToMake;
 
-	public OrderItem() {}
+	public OrderItem()
+	{
+		order = new LinkedList<MenuItem>();
+		timeToMake = 0;
+	}
+	/**
+	 * Create a new order with a prebuilt list of items.
+	 * @param orderPlaced A prebuild order
+	 */
 	public void createOrder(LinkedList<MenuItem> orderPlaced)
 	{
 		order = orderPlaced;
-		timeToMake = 0;
 		for (MenuItem item : orderPlaced)
 		{
 			timeToMake+= item.getTimeToMake();
@@ -20,17 +27,19 @@ public class OrderItem
 	public void addItemToOrder(MenuItem itemOrdered)
 	{
 		order.add(itemOrdered);
+		timeToMake+=itemOrdered.getTimeToMake();
 	}
 	public void removeItemFromOrder(int index)
 	{
-		order.remove(index);
-	}
-	public void placeOrder()
-	{
-		// Once the order is placed it gets set to a customer
+		MenuItem itemRemoved = order.remove(index);
+		timeToMake-=itemRemoved.getTimeToMake();
 	}
 	public LinkedList<MenuItem> getOrder()
 	{
 		return this.order;	
+	}
+	public int getTimeToMake()
+	{
+		return timeToMake;
 	}
 }
