@@ -28,6 +28,9 @@ public class OrderItem
 	public void placeOrder()
 	{
 		// Once the order is placed it gets set to a customer
-		
+	}
+	public LinkedList<MenuItem> getOrder()
+	{
+		return this.order;	
 	}
 }
