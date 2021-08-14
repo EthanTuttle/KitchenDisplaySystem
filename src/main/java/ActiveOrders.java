@@ -7,9 +7,7 @@ public class ActiveOrders {
     private PriorityQueue<Customer> orders;
 
     public ActiveOrders(Customer aCustomer) {
-
         orders = new PriorityQueue<Customer>();
-
         orders.add(aCustomer);
 
     }

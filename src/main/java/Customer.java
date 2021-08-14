@@ -5,8 +5,9 @@ import java.util.LinkedList;
 public class Customer
 {
 	private LinkedList<OrderItem> allOrders;
-	OrderItem singletonOrder;
-	int timeToMake;
+	private OrderItem singletonOrder;
+	private String name;
+	private int timeToMake;
 
 	public Customer()
 	{
@@ -38,5 +39,17 @@ public class Customer
 	{
 		singletonOrder.removeItemFromOrder(index);
 		// Don't change the time because the time is only added once the order has been placed
+	}
+	public LinkedList<OrderItem> getOrders()
+	{
+		return this.allOrders;
+	}
+	public String getName()
+	{
+		return this.name;
+	}
+	public int getTimeToMake()
+	{
+		return this.timeToMake;
 	}
 }
