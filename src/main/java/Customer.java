@@ -22,15 +22,19 @@ public class Customer
 	 */
 	private int timeToMake;
 
+	/**
+	 * Name of customer
+	 */
 	private String name;
 	/**
 	 * Instantiate Customer object
 	 */
-	public Customer()
+	public Customer(String n)
 	{
 		allOrders = new LinkedList<OrderItem>();
 		singletonOrder = new OrderItem();
 		timeToMake = 0;
+		name = n;
 	}
 
 	/**
