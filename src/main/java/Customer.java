@@ -2,18 +2,39 @@ package src.main.java;
 
 import java.util.LinkedList;
 
+/**
+ * <b>Customer<b/> class to that places <b>Orders<b/>
+ */
 public class Customer
 {
+	/**
+	 * All orders that a customer orders
+	 */
 	private LinkedList<OrderItem> allOrders;
+
+	/**
+	 * One order that customer has made
+	 */
 	OrderItem singletonOrder;
+
+	/**
+	 * Time to make the customer's order
+	 */
 	int timeToMake;
 
+	/**
+	 * Instantiate Customer object
+	 */
 	public Customer()
 	{
 		allOrders = new LinkedList<OrderItem>();
 		singletonOrder = new OrderItem();
 		timeToMake = 0;
 	}
+
+	/**
+	 * Customer places the order after adding their menu items
+	 */
 	public void placeOrder()
 	{
 		allOrders.add(singletonOrder);
@@ -24,16 +45,31 @@ public class Customer
 		//		... and so on
 		singletonOrder = new OrderItem();
 	}
+
+	/**
+	 * Cancel the order they have made
+	 * @param index index of order to cancel
+	 */
 	public void cancelOrder(int index)
 	{
 		OrderItem orderRemoved = allOrders.remove(index);
 		timeToMake-=orderRemoved.getTimeToMake();
 	}
+
+	/**
+	 * Adds item to an order
+	 * @param item item to add
+	 */
 	public void addItemToOrder(MenuItem item)
 	{
 		singletonOrder.addItemToOrder(item);
 		// Don't change the time because the time is only added once the order has been placed
 	}
+
+	/**
+	 * Removes item from a specific index 
+	 * @param index index of item to remove
+	 */
 	public void removeItemFromOrder(int index)
 	{
 		singletonOrder.removeItemFromOrder(index);
