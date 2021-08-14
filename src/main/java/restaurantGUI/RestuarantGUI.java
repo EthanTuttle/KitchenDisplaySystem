@@ -20,7 +20,7 @@ public class RestuarantGUI extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setJMenuBar(new GUIMenu(this));
-        setTitle("Epidemic Simulation");
+        setTitle("Restaurant View");
 
         setVisible(true);
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
