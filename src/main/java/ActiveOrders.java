@@ -21,7 +21,6 @@ public class ActiveOrders {
     public ActiveOrders(Customer aCustomer) {
 
         orders = new PriorityQueue<Customer>();
-
         orders.add(aCustomer);
 
     }

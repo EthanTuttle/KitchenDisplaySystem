@@ -15,13 +15,14 @@ public class Customer
 	/**
 	 * One order that customer has made
 	 */
-	OrderItem singletonOrder;
+	private OrderItem singletonOrder;
 
 	/**
 	 * Time to make the customer's order
 	 */
-	int timeToMake;
+	private int timeToMake;
 
+	private String name;
 	/**
 	 * Instantiate Customer object
 	 */
@@ -74,5 +75,17 @@ public class Customer
 	{
 		singletonOrder.removeItemFromOrder(index);
 		// Don't change the time because the time is only added once the order has been placed
+	}
+	public LinkedList<OrderItem> getOrders()
+	{
+		return this.allOrders;
+	}
+	public String getName()
+	{
+		return this.name;
+	}
+	public int getTimeToMake()
+	{
+		return this.timeToMake;
 	}
 }
