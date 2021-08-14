@@ -15,7 +15,7 @@ public class Menu {
     }
 
     public void addMenuItem(String category, String menuName, int timeToMake){ //adds a menu item to a certain category
-        menu.get(category).put(menuName,new MenuItem(menuName,timeToMake));
+        menu.get(category).put(menuName,new MenuItem(menuName,timeToMake,category));
     }
 
     public Map<String,MenuItem> getMenuItems(String category){ ///gets the menu items from the same category
