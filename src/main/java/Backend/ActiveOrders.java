@@ -24,6 +24,10 @@ public class ActiveOrders {
         orders.add(aCustomer);
 
     }
+
+    public ActiveOrders() {
+        orders = new PriorityQueue<Customer>();
+    }
     
     /**
      * Arranges queue
