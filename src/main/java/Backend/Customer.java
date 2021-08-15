@@ -80,14 +80,26 @@ public class Customer
 		singletonOrder.removeItemFromOrder(index);
 		// Don't change the time because the time is only added once the order has been placed
 	}
+	/**
+	 * 
+	 * @return Orders a customer has
+	 */
 	public LinkedList<OrderItem> getOrders()
 	{
 		return this.allOrders;
 	}
+	/**
+	 * 
+	 * @return Name of customer
+	 */
 	public String getName()
 	{
 		return this.name;
 	}
+	/**
+	 * 
+	 * @return Time to make order
+	 */
 	public int getTimeToMake()
 	{
 		return this.timeToMake;
