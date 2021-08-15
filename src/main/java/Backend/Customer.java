@@ -31,6 +31,10 @@ public class Customer
 	 */
 	private int ticksInQueue;
 	/**
+	 * See if an order has been placed
+	 */
+	private boolean orderPlaced;
+	/**
 	 * Instantiate Customer object
 	 */
 	public Customer(String n)
@@ -40,6 +44,7 @@ public class Customer
 		timeToMake = 0;
 		name = n;
 		ticksInQueue = 0;
+		orderPlaced = false;
 	}
 
 	/**
@@ -48,11 +53,12 @@ public class Customer
 	public void placeOrder()
 	{
 		allOrders.add(singletonOrder);
+		orderPlaced = true;
 		// Create a new singletonOrder since customers may place more than one order
 		// Ex Person A : Orders Combo Item A.
 		// 		Person A : Also orders Combo Item B for their friend
 		//		... and so on
-		singletonOrder = new OrderItem();
+		//singletonOrder = new OrderItem();
 	}
 
 	/**
@@ -73,6 +79,9 @@ public class Customer
 	{
 		singletonOrder.addItemToOrder(item);
 		timeToMake+= item.getTimeToMake();
+		if (orderPlaced){
+			ActiveOrders.orders.sort(new OrderComparator());
+		}
 	}
 
 	/**
@@ -80,9 +89,12 @@ public class Customer
 	 * @param index index of item to remove
 	 */
 	public void removeItemFromOrder(int index)
-	{
+	{	
 		timeToMake-=singletonOrder.getMenuItem(index).getTimeToMake();
 		singletonOrder.removeItemFromOrder(index);
+		if (orderPlaced){
+			ActiveOrders.orders.sort(new OrderComparator());
+		}
 	}
 	/**
 	 * 
