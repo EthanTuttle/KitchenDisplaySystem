@@ -14,4 +14,12 @@ public class ActiveOrdersDisplay extends JPanel {
         
     }
 
+    public void addOrder() {
+
+    }
+
+    private void updatePanel() {
+        
+    }
+
 }
