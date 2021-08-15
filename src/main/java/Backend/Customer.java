@@ -27,6 +27,10 @@ public class Customer
 	 */
 	private String name;
 	/**
+	 * Number of times a customer is in the queue when another order has finished
+	 */
+	private int ticksInQueue;
+	/**
 	 * Instantiate Customer object
 	 */
 	public Customer(String n)
@@ -35,6 +39,7 @@ public class Customer
 		singletonOrder = new OrderItem();
 		timeToMake = 0;
 		name = n;
+		ticksInQueue = 0;
 	}
 
 	/**
@@ -102,5 +107,9 @@ public class Customer
 	public int getTimeToMake()
 	{
 		return this.timeToMake;
+	}
+
+	public void incrementTick(){
+		ticksInQueue++;
 	}
 }
