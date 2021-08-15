@@ -43,7 +43,6 @@ public class RestaurantGUI extends JFrame{
             public void actionPerformed(ActionEvent event) {
                 remove(mainPanel);
                 add(activeOrdersDisplay);
-                repaint();
                 revalidate();
             }
         });

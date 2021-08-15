@@ -27,11 +27,6 @@ public class ActiveOrdersDisplay extends JPanel {
     public void addOrder() {
 
     }
-    public void paint(Graphics g)
-    {
-        g.setColor(Color.BLACK);
-        g.drawRect(10,10,100,100);
-    }
 
     private void updatePanel() {
         
