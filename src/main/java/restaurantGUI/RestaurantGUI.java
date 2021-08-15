@@ -29,9 +29,9 @@ public class RestaurantGUI extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setJMenuBar(new GUIMenu(this));
         setTitle("Restaurant View");
-
+    
         activeOrdersDisplay = new ActiveOrdersDisplay(new ActiveOrders());
-        
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 1));
         mainPanel.add(new JLabel("Choose where to go to start", SwingConstants.CENTER));
