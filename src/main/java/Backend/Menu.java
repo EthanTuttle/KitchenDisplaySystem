@@ -48,5 +48,15 @@ public class Menu {
         return menu.get(category);
     }
 
+    public Map<String,HashMap<String,MenuItem>> allItems() {
+        return menu;
+    }
+
+    public static Menu loadMenu() {
+        Menu menu = new Menu();
+
+        return menu;
+    }
+
 
 }

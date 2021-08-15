@@ -3,9 +3,6 @@ package src.main.java.customerGUI;
 import java.awt.*;
 import javax.swing.*;
 import src.main.java.Backend.Connection;
-import src.main.java.Backend.MenuItem;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class CustomerGUI extends JFrame {
@@ -21,22 +18,24 @@ public class CustomerGUI extends JFrame {
 
     private Connection connection;
     private String rpiIP = "129.161.136.111"; //change last 3 digits to host ID of machine running restaurant GUI
+    private src.main.java.Backend.Menu menu;
+    private boolean menuLoaded = false;
 
-    public void CustomerGUI() {
+    public CustomerGUI() {
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setJMenuBar(new GUIMenu(this));
         setTitle("Customer View");
 
+        //add panels here
+
         connection = new Connection(1, rpiIP, 55555);
-
-
         try {
             connection.connect();
             new Thread(new Runnable() {
                 public void run() {
-                    src.main.java.Backend.Menu menu = new src.main.java.Backend.Menu();
+                    menu = new src.main.java.Backend.Menu();
                     while (connection.connected()) {
                         try {
                             String line = connection.read();
@@ -51,6 +50,8 @@ public class CustomerGUI extends JFrame {
                             System.out.println(e);
                         }
                     }
+                    menuLoaded = true;
+                    //TODO: figure out how to transition to menu chooser
                 }
             }).start();
             setVisible(true);
