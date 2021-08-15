@@ -2,8 +2,8 @@ package src.main.java.customerGUI;
 
 import java.awt.*;
 import javax.swing.*;
-import src.main.java.Backend.Connection;
-import java.io.IOException;
+import java.net.Socket;
+import java.io.*;
 
 public class CustomerGUI extends JFrame {
     public static void main(String[] args) {
@@ -16,7 +16,9 @@ public class CustomerGUI extends JFrame {
         });
     }
 
-    private Connection connection;
+    private Socket connection;
+    private PrintWriter out; //TODO: use to communicate order
+    private BufferedReader in;
     private String rpiIP = "129.161.136.111"; //change last 3 digits to host ID of machine running restaurant GUI
     private src.main.java.Backend.Menu menu;
     private boolean menuLoaded = false;
@@ -29,16 +31,17 @@ public class CustomerGUI extends JFrame {
         setTitle("Customer View");
 
         //add panels here
-
-        connection = new Connection(1, rpiIP, 55555);
+        
         try {
-            connection.connect();
+            connection = new Socket(rpiIP, 55555);
+            out = new PrintWriter(connection.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             new Thread(new Runnable() {
                 public void run() {
                     menu = new src.main.java.Backend.Menu();
-                    while (connection.connected()) {
+                    while (connection.isConnected()) {
                         try {
-                            String line = connection.read();
+                            String line = in.readLine();
                             if (line.equals("End of Menu")) {
                                 break;
                             } else { //On connection host should send all menu items as name;timeToMake;category

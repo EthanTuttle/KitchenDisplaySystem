@@ -62,6 +62,7 @@ public class RestaurantGUI extends JFrame{
                                         out.println(itr2.next());
                                     }
                                 }
+                                out.println("End of Menu");
                                 //TODO: read in orders and update active orders
                             }
                         }).start(); //run thread to send all menu items
