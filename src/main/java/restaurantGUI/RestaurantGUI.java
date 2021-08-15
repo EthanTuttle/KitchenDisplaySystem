@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+
 import src.main.java.Backend.*;
 
 import src.main.java.Backend.ActiveOrders;
@@ -42,7 +42,10 @@ public class RestaurantGUI extends JFrame{
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 remove(mainPanel);
-                add(activeOrdersDisplay);
+                JScrollPane scroll = new JScrollPane(activeOrdersDisplay);
+                scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                add(scroll);
                 revalidate();
             }
         });

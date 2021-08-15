@@ -27,6 +27,10 @@ public class Customer
 	 */
 	private String name;
 	/**
+	 * Number of times a customer is in the queue when another order has finished
+	 */
+	private int ticksInQueue;
+	/**
 	 * Instantiate Customer object
 	 */
 	public Customer(String n)
@@ -35,6 +39,7 @@ public class Customer
 		singletonOrder = new OrderItem();
 		timeToMake = 0;
 		name = n;
+		ticksInQueue = 0;
 	}
 
 	/**
@@ -43,7 +48,6 @@ public class Customer
 	public void placeOrder()
 	{
 		allOrders.add(singletonOrder);
-		timeToMake+=singletonOrder.getTimeToMake();
 		// Create a new singletonOrder since customers may place more than one order
 		// Ex Person A : Orders Combo Item A.
 		// 		Person A : Also orders Combo Item B for their friend
@@ -68,7 +72,7 @@ public class Customer
 	public void addItemToOrder(MenuItem item)
 	{
 		singletonOrder.addItemToOrder(item);
-		// Don't change the time because the time is only added once the order has been placed
+		timeToMake+= item.getTimeToMake();
 	}
 
 	/**
@@ -77,8 +81,8 @@ public class Customer
 	 */
 	public void removeItemFromOrder(int index)
 	{
+		timeToMake-=singletonOrder.getMenuItem(index).getTimeToMake();
 		singletonOrder.removeItemFromOrder(index);
-		// Don't change the time because the time is only added once the order has been placed
 	}
 	/**
 	 * 
@@ -103,5 +107,9 @@ public class Customer
 	public int getTimeToMake()
 	{
 		return this.timeToMake;
+	}
+
+	public void incrementTick(){
+		ticksInQueue++;
 	}
 }

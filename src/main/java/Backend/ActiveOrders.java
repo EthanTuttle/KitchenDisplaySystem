@@ -1,6 +1,7 @@
 package src.main.java.Backend;
 
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 /**
  * <b>ActiveOrders<b/> class that represents the orders a restaurant sees 
@@ -11,7 +12,8 @@ public class ActiveOrders {
     /**
      * Active orders for the restaurant to make
      */
-    private PriorityQueue<Customer> orders;
+    public static LinkedList<Customer> orders;
+
 
     /**
      * Instantiates active order object
@@ -19,13 +21,13 @@ public class ActiveOrders {
      */
     public ActiveOrders(Customer aCustomer) {
 
-        orders = new PriorityQueue<Customer>();
+        orders = new LinkedList<Customer>();
         orders.add(aCustomer);
 
     }
 
     public ActiveOrders() {
-        orders = new PriorityQueue<Customer>();
+        orders = new LinkedList<Customer>();
     }
     
     /**
@@ -33,6 +35,20 @@ public class ActiveOrders {
      */
     public void ArrangeQueue() {
 
+    }
+
+    public void addCustomer(Customer customer){
+        orders.add(customer);
+        orders.sort(new OrderComparator());
+    }
+
+    public void removeCustomer(Customer customer){
+        orders.remove(customer);
+        Iterator<Customer> it = orders.iterator();
+        while (it.hasNext()){
+            it.next().incrementTick();
+        }
+        orders.sort(new OrderComparator());
     }
 
 }
