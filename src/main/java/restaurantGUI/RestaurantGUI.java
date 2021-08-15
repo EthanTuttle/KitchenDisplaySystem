@@ -54,9 +54,6 @@ public class RestaurantGUI extends JFrame{
 
         setVisible(true);
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
-
-        OrderPanel = new ActiveOrdersDisplay();
-        add(OrderPanel);
     }
 
 }
