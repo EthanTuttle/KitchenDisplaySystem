@@ -112,4 +112,8 @@ public class Customer
 	public void incrementTick(){
 		ticksInQueue++;
 	}
+
+	public int getTick(){
+		return ticksInQueue;
+	}
 }
