@@ -11,9 +11,6 @@ import src.main.java.Backend.ActiveOrders;
 
 public class RestaurantGUI extends JFrame{
 
-    /** Show all the Orders on the OrderPanel */
-    private ActiveOrdersDisplay orderPanel;
-    private ActiveOrders queue;
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable()
         {
@@ -37,26 +34,25 @@ public class RestaurantGUI extends JFrame{
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 1));
-        mainPanel.add(new JLabel("Choose where to go to start"));
+        mainPanel.add(new JLabel("Choose where to go to start", SwingConstants.CENTER));
         JPanel buttonPanel = new JPanel();
         JButton menuButton = new JButton("To Menu Configuration");
         //TODO: create menubutton action listener
         JButton displayButton = new JButton("To Order Display");
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                removeAll();
+                remove(mainPanel);
                 add(activeOrdersDisplay);
+                revalidate();
             }
         });
         buttonPanel.add(menuButton);
         buttonPanel.add(displayButton);
         mainPanel.add(buttonPanel);
+        add(mainPanel);
 
         setVisible(true);
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
-
-        OrderPanel = new ActiveOrdersDisplay();
-        add(OrderPanel);
     }
 
 }
