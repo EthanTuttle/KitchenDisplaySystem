@@ -57,7 +57,11 @@ public class OrderItem
 		MenuItem itemRemoved = order.remove(index);
 		timeToMake-=itemRemoved.getTimeToMake();
 	}
-
+	/**
+	 * 
+	 * @param index Index of menu item to get
+	 * @return menu item at specified index
+	 */
 	public MenuItem getMenuItem(int index){
 		return order.get(index);
 	}
