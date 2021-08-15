@@ -2,9 +2,11 @@ package src.main.java.restaurantGUI;
 
 import java.awt.*;
 import javax.swing.*;
+
+import src.main.java.Backend.Customer;
+import src.main.java.Backend.OrderItem;
+
 import java.util.*;
-import src.main.java.Customer;
-import src.main.java.OrderItem;
 
 public class DisplayItem extends JPanel {
     

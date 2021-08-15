@@ -1,4 +1,4 @@
-package src.main.java;
+package src.main.java.Backend;
 
 /**
  * <b>MenuItem<b/> class which represents a menu item that a restaurant puts on a 
