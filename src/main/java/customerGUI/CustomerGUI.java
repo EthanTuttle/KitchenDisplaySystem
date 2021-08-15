@@ -2,10 +2,8 @@ package src.main.java.customerGUI;
 
 import java.awt.*;
 import javax.swing.*;
-
 import src.main.java.Backend.Connection;
 import src.main.java.Backend.MenuItem;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -38,6 +36,7 @@ public class CustomerGUI extends JFrame {
             connection.connect();
             new Thread(new Runnable() {
                 public void run() {
+                    src.main.java.Backend.Menu menu = new src.main.java.Backend.Menu();
                     while (connection.connected()) {
                         try {
                             String line = connection.read();
@@ -45,7 +44,7 @@ public class CustomerGUI extends JFrame {
                                 break;
                             } else { //On connection host should send all menu items as name;timeToMake;category
                                 String[] list = line.split(";");
-                                MenuItem item = new MenuItem(list[0], Integer.parseInt(list[1]), list[2]);
+                                menu.addMenuItem(list[2], list[0],  Integer.parseInt(list[1]));
                             }
                         } catch (IOException e) {
                             //TODO
