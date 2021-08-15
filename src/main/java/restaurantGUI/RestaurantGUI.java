@@ -7,7 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import src.main.java.Backend.*;
 
+import src.main.java.Backend.ActiveOrders;
+
 public class RestaurantGUI extends JFrame{
+
+    /** Show all the Orders on the OrderPanel */
+    private ActiveOrdersDisplay orderPanel;
+    private ActiveOrders queue;
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable()
         {
@@ -48,6 +54,9 @@ public class RestaurantGUI extends JFrame{
 
         setVisible(true);
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
+
+        OrderPanel = new ActiveOrdersDisplay();
+        add(OrderPanel);
     }
 
 }
