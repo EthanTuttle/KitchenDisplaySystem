@@ -4,18 +4,18 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.JFrame;
 
-public class RestuarantGUI extends JFrame{
+public class RestaurantGUI extends JFrame{
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable()
         {
             public void run()
             {
-                new RestuarantGUI();
+                new RestaurantGUI();
             }
         });
     }
 
-    public RestuarantGUI() {
+    public RestaurantGUI() {
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
