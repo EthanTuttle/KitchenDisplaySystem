@@ -43,7 +43,6 @@ public class Customer
 	public void placeOrder()
 	{
 		allOrders.add(singletonOrder);
-		timeToMake+=singletonOrder.getTimeToMake();
 		// Create a new singletonOrder since customers may place more than one order
 		// Ex Person A : Orders Combo Item A.
 		// 		Person A : Also orders Combo Item B for their friend
@@ -68,7 +67,7 @@ public class Customer
 	public void addItemToOrder(MenuItem item)
 	{
 		singletonOrder.addItemToOrder(item);
-		// Don't change the time because the time is only added once the order has been placed
+		timeToMake+= item.getTimeToMake();
 	}
 
 	/**
@@ -77,8 +76,8 @@ public class Customer
 	 */
 	public void removeItemFromOrder(int index)
 	{
+		timeToMake-=singletonOrder.getMenuItem(index).getTimeToMake();
 		singletonOrder.removeItemFromOrder(index);
-		// Don't change the time because the time is only added once the order has been placed
 	}
 	/**
 	 * 

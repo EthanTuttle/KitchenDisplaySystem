@@ -1,6 +1,5 @@
 package src.main.java.Backend;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 /**
@@ -12,7 +11,7 @@ public class ActiveOrders {
     /**
      * Active orders for the restaurant to make
      */
-    private PriorityQueue<Customer> orders;
+    public static PriorityQueue<Customer> orders;
 
     /**
      * Instantiates active order object
@@ -34,6 +33,14 @@ public class ActiveOrders {
      */
     public void ArrangeQueue() {
 
+    }
+
+    public void addCustomer(Customer customer){
+        orders.add(customer);
+    }
+
+    public void removeCustomer(Customer customer){
+        orders.remove(customer);
     }
 
 }

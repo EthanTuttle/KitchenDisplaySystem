@@ -58,6 +58,10 @@ public class OrderItem
 		timeToMake-=itemRemoved.getTimeToMake();
 	}
 
+	public MenuItem getMenuItem(int index){
+		return order.get(index);
+	}
+
 	/**
 	 * 
 	 * @return Order of a customer
