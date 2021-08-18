@@ -106,6 +106,7 @@ public class RestaurantGUI extends JFrame{
         buttonPanel.add(displayButton);
         buttonPanel.add(menuCreationButton);
         mainPanel.add(buttonPanel);
+        System.out.println("Main Panel");
         add(mainPanel);
 
         setVisible(true);
