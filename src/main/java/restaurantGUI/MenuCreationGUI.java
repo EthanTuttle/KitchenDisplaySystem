@@ -34,7 +34,7 @@ public class MenuCreationGUI extends JPanel {
                 newMenuItemPanel.add(addMenuItemButton);
                 singleCategPanel.add(newMenuItemPanel);
                 enclosingCategPanel.add(singleCategPanel);
-
+                revalidate();
             }
         });
 
