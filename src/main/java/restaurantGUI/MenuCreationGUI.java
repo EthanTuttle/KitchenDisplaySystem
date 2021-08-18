@@ -2,8 +2,7 @@ package src.main.java.restaurantGUI;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class MenuCreationGUI extends JPanel {
 
@@ -25,6 +24,14 @@ public class MenuCreationGUI extends JPanel {
                 JPanel singleCategPanel = new JPanel();
                 JPanel newMenuItemPanel = new JPanel();
                 JLabel newLabel = new JLabel(categField.getText());
+                newLabel.addMouseListener(new MouseAdapter()
+                {
+                    @Override
+                    public void mousePressed(MouseEvent e)
+                    {
+                        handleMousePress(newLabel, "category");
+                    }
+                });
                 JTextField newMenuItemField = new JTextField(10);
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item",newMenuItemField,singleCategPanel));
                 singleCategPanel.setLayout(new BoxLayout(singleCategPanel,BoxLayout.Y_AXIS));
