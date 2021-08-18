@@ -26,7 +26,9 @@ public class MenuCreationGUI extends JPanel {
                 JPanel enclosedSingleCategPanel = new JPanel(new BorderLayout());
                 singleCategPanel.setLayout(new BoxLayout(singleCategPanel,BoxLayout.Y_AXIS));
                 FlowLayout fl = new FlowLayout(FlowLayout.CENTER,0,0);
+                FlowLayout fl2 = new FlowLayout(FlowLayout.CENTER,10,0);
                 JPanel newMenuItemPanel = new JPanel(fl);
+                JPanel labelAndExitPanel = new JPanel(fl2);
                 System.out.println(fl.getVgap());
                 
                 JLabel newLabel = new JLabel(categField.getText());
@@ -41,13 +43,16 @@ public class MenuCreationGUI extends JPanel {
                 JTextField newMenuItemField = new JTextField(10);
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item",
                 newMenuItemField,singleCategPanel));
-
+                JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosedSingleCategPanel, singleCategPanel));
 
                 newMenuItemPanel.add(newMenuItemField);
                 newMenuItemPanel.add(addMenuItemButton);
                 
-                
-                singleCategPanel.add(newLabel);
+                labelAndExitPanel.add(newLabel);
+                labelAndExitPanel.add(removeComponentButton);
+
+                //singleCategPanel.add(newLabel);
+                singleCategPanel.add(labelAndExitPanel);
                 singleCategPanel.add(newMenuItemPanel);
                 enclosedSingleCategPanel.add(singleCategPanel,BorderLayout.NORTH);
                 enclosingCategPanel.add(enclosedSingleCategPanel);
@@ -87,6 +92,24 @@ public class MenuCreationGUI extends JPanel {
             parentPanel.add(newMenuItemLabel);
             parentPanel.revalidate();
             
+        }
+    }
+    class RemoveComponentAction extends AbstractAction{
+        String name;
+        JPanel parentPanel;
+        JPanel childPanel;
+        public RemoveComponentAction(String name, JPanel parentPanel, JPanel childPanel)
+        {
+            super(name);
+            this.name = name;
+            this.parentPanel = parentPanel;
+            this.childPanel = childPanel;
+        }
+        public void actionPerformed(ActionEvent event)
+        {
+            this.parentPanel.remove(this.childPanel);
+            this.parentPanel.revalidate();
+            this.parentPanel.repaint();
         }
     }
     public void handleMousePress(JLabel text, String type)
