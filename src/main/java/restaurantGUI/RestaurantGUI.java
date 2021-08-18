@@ -25,6 +25,7 @@ public class RestaurantGUI extends JFrame{
     }
 
     private ActiveOrdersDisplay activeOrdersDisplay;
+    private MenuCreationGUI menuCreationGUI;
     private src.main.java.Backend.Menu menu;
     private ServerSocket server;
 
@@ -41,7 +42,7 @@ public class RestaurantGUI extends JFrame{
             return;
         }
         
-        menu = MenuLoader.loadMenu();
+        menu = src.main.java.Backend.Menu.loadMenu();
         activeOrdersDisplay = new ActiveOrdersDisplay(new ActiveOrders(), menu);
         new Thread(new Runnable() {
             public void run() {
@@ -80,6 +81,7 @@ public class RestaurantGUI extends JFrame{
             }
         }).start();
 
+        menuCreationGUI = new MenuCreationGUI(menu);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 1));
         mainPanel.add(new JLabel("Choose where to go to start", SwingConstants.CENTER));
@@ -89,7 +91,7 @@ public class RestaurantGUI extends JFrame{
         menuCreationButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event){
                 remove(mainPanel);
-                add(new MenuCreationGUI());
+                add(menuCreationButton);
                 revalidate();
             }
         });
