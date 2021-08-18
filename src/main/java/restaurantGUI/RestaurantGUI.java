@@ -84,8 +84,6 @@ public class RestaurantGUI extends JFrame{
         mainPanel.setLayout(new GridLayout(0, 1));
         mainPanel.add(new JLabel("Choose where to go to start", SwingConstants.CENTER));
         JPanel buttonPanel = new JPanel();
-        JButton menuButton = new JButton("To Menu Configuration");
-        //TODO: create menubutton action listener
         JButton displayButton = new JButton("To Order Display");
         JButton menuCreationButton = new JButton("To Menu Creation");
         menuCreationButton.addActionListener(new ActionListener(){
@@ -102,7 +100,6 @@ public class RestaurantGUI extends JFrame{
                 revalidate();
             }
         });
-        buttonPanel.add(menuButton);
         buttonPanel.add(displayButton);
         buttonPanel.add(menuCreationButton);
         mainPanel.add(buttonPanel);
