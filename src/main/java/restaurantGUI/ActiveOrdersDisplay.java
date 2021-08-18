@@ -1,19 +1,18 @@
 package src.main.java.restaurantGUI;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
-
+import java.util.Date;
 import src.main.java.Backend.ActiveOrders;
 import src.main.java.Backend.Customer;
 import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
-import src.main.java.Backend.OrderItem;
+import java.sql.Timestamp;
 
 public class ActiveOrdersDisplay extends JPanel {
 
@@ -45,7 +44,9 @@ public class ActiveOrdersDisplay extends JPanel {
         new Thread(new Runnable(){
             public void run() {
                 while (true) {
-                    updatePanel();
+                    for (DisplayItem item : displayItems) {
+                        item.updateTime();
+                    }
                 }
             }
         }).start();
@@ -57,7 +58,7 @@ public class ActiveOrdersDisplay extends JPanel {
      */
     public void addOrder(String orderString) {
         String[] items = orderString.split(";");
-        String customerName = items[2];
+        String customerName = items[1];
         Customer customer;
         if (customers.containsKey(customerName)) { //if exists, get customer
             customer = customers.get(customerName);
@@ -72,9 +73,10 @@ public class ActiveOrdersDisplay extends JPanel {
                 customer.addItemToOrder(item);
             }
         }
-        customer.placeOrder();
-        //TODO: add time placed variable
-        
+        String timeString = items[0];
+        Date timePlaced = Timestamp.valueOf(timeString);
+        customer.placeOrder(timePlaced);
+        updatePanel();
     }
 
     private void updatePanel() {
@@ -84,6 +86,7 @@ public class ActiveOrdersDisplay extends JPanel {
             Customer customer = itr.next();
             DisplayItem displayItem = new DisplayItem(customer);
             displayPanel.add(displayItem);
+            displayItems.add(displayItem);
         }
 
         scrollPanel.revalidate();
