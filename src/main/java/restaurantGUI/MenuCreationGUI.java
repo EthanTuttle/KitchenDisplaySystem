@@ -3,15 +3,19 @@ package src.main.java.restaurantGUI;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import src.main.java.Backend.Menu;
+import java.util.Iterator;
 
 public class MenuCreationGUI extends JPanel {
 
-    public MenuCreationGUI(){
+    public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
         JTextField categField = new JTextField(10);
         JButton addCategButton = new JButton("Add Category");
-        JPanel categPanel = new JPanel();
-        JPanel enclosingCategPanel = new JPanel();
+        categPanel = new JPanel();
+        enclosingCategPanel = new JPanel();
+        scrollPanel = new JScrollPane(enclosingCategPanel);
+        
         enclosingCategPanel.setLayout(new BoxLayout(enclosingCategPanel, BoxLayout.X_AXIS));
         categPanel.add(categField);
         categPanel.add(addCategButton);
@@ -57,12 +61,14 @@ public class MenuCreationGUI extends JPanel {
                 enclosedSingleCategPanel.add(singleCategPanel,BorderLayout.NORTH);
                 enclosingCategPanel.add(enclosedSingleCategPanel);
             
+
                 revalidate();
+                scrollPanel.revalidate();
             }
         });
 
         add(categPanel,BorderLayout.NORTH);
-        add(enclosingCategPanel,BorderLayout.CENTER);
+        add(scrollPanel,BorderLayout.CENTER);
     }
     class ButtonAction extends AbstractAction {
         String name;
@@ -91,6 +97,7 @@ public class MenuCreationGUI extends JPanel {
             });
             parentPanel.add(newMenuItemLabel);
             parentPanel.revalidate();
+            scrollPanel.revalidate();
             
         }
     }
@@ -134,4 +141,7 @@ public class MenuCreationGUI extends JPanel {
             text.setText(updatedString);
         }
     }
+    private JScrollPane scrollPanel;
+    private JPanel categPanel;
+    private JPanel enclosingCategPanel;
 }
