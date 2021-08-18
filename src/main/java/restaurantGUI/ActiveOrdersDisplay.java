@@ -59,11 +59,12 @@ public class ActiveOrdersDisplay extends JPanel {
         String[] items = orderString.split(";");
         String customerName = items[2];
         Customer customer;
-        if (customers.containsKey(customerName)) {
+        if (customers.containsKey(customerName)) { //if exists, get customer
             customer = customers.get(customerName);
-        } else {
-            customer = new Customer(customerName);
+        } else { //else create and add to hash map and active order queue
+            customer = new Customer(customerName); 
             customers.put(customerName, customer);
+            queue.addCustomer(customer);
         }
         for (int i = 2; i < items.length; i++) {
             MenuItem item = menu.findMenuItem(items[i]);
