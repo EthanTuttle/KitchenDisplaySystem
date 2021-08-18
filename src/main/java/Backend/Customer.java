@@ -1,6 +1,7 @@
 package src.main.java.Backend;
 
 import java.util.LinkedList;
+import java.util.Date;
 
 /**
  * <b>Customer<b/> class to that places <b>Orders<b/>
@@ -34,6 +35,9 @@ public class Customer
 	 * See if an order has been placed
 	 */
 	private boolean orderPlaced;
+
+	private Date timePlaced = null;
+
 	/**
 	 * Instantiate Customer object
 	 */
@@ -50,7 +54,7 @@ public class Customer
 	/**
 	 * Customer places the order after adding their menu items
 	 */
-	public void placeOrder()
+	public void placeOrder(Date time)
 	{
 		allOrders.add(singletonOrder);
 		orderPlaced = true;
@@ -59,6 +63,9 @@ public class Customer
 		// 		Person A : Also orders Combo Item B for their friend
 		//		... and so on
 		singletonOrder = new OrderItem();
+		if (timePlaced == null || time.compareTo(timePlaced) < 0) {
+			timePlaced = time;
+		}
 	}
 
 	/**
@@ -127,5 +134,10 @@ public class Customer
 
 	public int getTick(){
 		return ticksInQueue;
+	}
+
+
+	public Date getTime() {
+		return timePlaced;
 	}
 }
