@@ -12,6 +12,8 @@ public class MenuCreationGUI extends JPanel {
         JButton addCategButton = new JButton("Add Category");
         JPanel categPanel = new JPanel();
         JPanel enclosingCategPanel = new JPanel();
+        scrollPanel = new JScrollPane(enclosingCategPanel);
+        
         enclosingCategPanel.setLayout(new BoxLayout(enclosingCategPanel, BoxLayout.X_AXIS));
         categPanel.add(categField);
         categPanel.add(addCategButton);
@@ -52,12 +54,14 @@ public class MenuCreationGUI extends JPanel {
                 enclosedSingleCategPanel.add(singleCategPanel,BorderLayout.NORTH);
                 enclosingCategPanel.add(enclosedSingleCategPanel);
             
+
                 revalidate();
+                scrollPanel.revalidate();
             }
         });
 
         add(categPanel,BorderLayout.NORTH);
-        add(enclosingCategPanel,BorderLayout.CENTER);
+        add(scrollPanel,BorderLayout.CENTER);
     }
     class ButtonAction extends AbstractAction {
         String name;
@@ -86,6 +90,7 @@ public class MenuCreationGUI extends JPanel {
             });
             parentPanel.add(newMenuItemLabel);
             parentPanel.revalidate();
+            scrollPanel.revalidate();
             
         }
     }
@@ -111,4 +116,5 @@ public class MenuCreationGUI extends JPanel {
             text.setText(updatedString);
         }
     }
+    public JScrollPane scrollPanel;
 }
