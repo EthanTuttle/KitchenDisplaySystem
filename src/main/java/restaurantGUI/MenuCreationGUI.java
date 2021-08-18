@@ -65,6 +65,7 @@ public class MenuCreationGUI extends JPanel {
             if (parentField.getText().equals("")){
                 return;
             }
+
             JLabel newMenuItemLabel = new JLabel(parentField.getText());
             newMenuItemLabel.addMouseListener(new MouseAdapter()
             {
@@ -84,11 +85,11 @@ public class MenuCreationGUI extends JPanel {
         String updatedString = null;
         if (type.toLowerCase().equals("category"))
         {
-		    updatedString = JOptionPane.showInputDialog(this, "What name would you like to use? (You must choose a name).");
+		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the category to?");
         }
         else if (type.toLowerCase().equals("menu_item"))
         {
-		    updatedString = JOptionPane.showInputDialog(this, "What name would you like to use? (You must choose a name).");
+		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the menu item to?");
         }
         else{
             // The type provided is unexpected.
