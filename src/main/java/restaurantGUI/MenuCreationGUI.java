@@ -64,6 +64,17 @@ public class MenuCreationGUI extends JPanel {
             if (parentField.getText().equals("")){
                 return;
             }
+            JLabel newMenuItemLabel = new JLabel(parentField.getText());
+            newMenuItemLabel.addMouseListener(new MouseAdapter()
+            {
+                @Override
+                public void mousePressed(MouseEvent e)
+                {
+                    handleMousePress(newMenuItemLabel, "menu_item");
+                }
+            });
+            parentPanel.add(newMenuItemLabel);
+            parentPanel.revalidate();
             
         }
     }
