@@ -3,10 +3,12 @@ package src.main.java.restaurantGUI;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import src.main.java.Backend.Menu;
+import java.util.Iterator;
 
 public class MenuCreationGUI extends JPanel {
 
-    public MenuCreationGUI(){
+    public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
         JTextField categField = new JTextField(10);
         JButton addCategButton = new JButton("Add Category");
