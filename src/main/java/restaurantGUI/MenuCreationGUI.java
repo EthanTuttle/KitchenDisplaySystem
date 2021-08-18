@@ -102,22 +102,29 @@ public class MenuCreationGUI extends JPanel {
         }
 
         public void actionPerformed(ActionEvent event){
-            if (parentField.getText().equals("")){
-                return;
-            }
-
-            JLabel newMenuItemLabel = new JLabel(parentField.getText());
-            newMenuItemLabel.addMouseListener(new MouseAdapter()
-            {
-                @Override
-                public void mousePressed(MouseEvent e)
+            JTextField menuItem = new JTextField();
+            JTextField menuItemETM = new JTextField();
+            JComponent[] components = new JComponent[] {
+			new JLabel("Enter the name of the item"),
+			menuItem,
+			new JLabel("Enter the estimated time to make the menu item"),
+			menuItemETM,
+            };
+            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+            if(result == JOptionPane.OK_OPTION) {
+                menuItem.addMouseListener(new MouseAdapter()
                 {
-                    handleMousePress(newMenuItemLabel, "menu_item");
-                }
-            });
-            parentPanel.add(newMenuItemLabel);
-            parentPanel.revalidate();
-            scrollPanel.revalidate();
+                    @Override
+                    public void mousePressed(MouseEvent e)
+                    {
+                        //handleMousePress(menuItem, "menu_item");
+                    }
+                });
+                parentPanel.add(menuItem);
+                parentPanel.add(menuItemETM);
+                parentPanel.revalidate();
+                scrollPanel.revalidate();
+            }
             
         }
     }
