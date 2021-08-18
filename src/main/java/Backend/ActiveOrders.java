@@ -51,4 +51,8 @@ public class ActiveOrders {
         orders.sort(new OrderComparator());
     }
 
+    public Iterator<Customer> getIterator() {
+        return orders.iterator();
+    }
+
 }

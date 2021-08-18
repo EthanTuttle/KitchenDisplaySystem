@@ -6,12 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.ServerSocket;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import src.main.java.Backend.*;
-import java.util.ArrayList;
 import java.net.Socket;
 
 public class RestaurantGUI extends JFrame{
@@ -26,7 +24,7 @@ public class RestaurantGUI extends JFrame{
         });
     }
 
-    private ActiveOrdersDisplay activeOrdersDisplay= new ActiveOrdersDisplay(new ActiveOrders());
+    private ActiveOrdersDisplay activeOrdersDisplay;
     private src.main.java.Backend.Menu menu;
     private ServerSocket server;
 
@@ -44,6 +42,7 @@ public class RestaurantGUI extends JFrame{
         } 
         
         menu = MenuLoader.loadMenu();
+        activeOrdersDisplay = new ActiveOrdersDisplay(new ActiveOrders(), menu);
         new Thread(new Runnable() {
             public void run() {
                 while (true) {
@@ -63,7 +62,14 @@ public class RestaurantGUI extends JFrame{
                                     }
                                 }
                                 out.println("End of Menu");
-                                //TODO: read in orders and update active orders
+                                while(client.isConnected()) { //while connected, look for communication
+                                    try {
+                                        activeOrdersDisplay.addOrder(in.readLine());
+                                    } catch (IOException e) {
+                                        break;
+                                    }
+                                    
+                                }
                             }
                         }).start(); //run thread to send all menu items
                     } catch (IOException e) {
@@ -84,10 +90,7 @@ public class RestaurantGUI extends JFrame{
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 remove(mainPanel);
-                JScrollPane scroll = new JScrollPane(activeOrdersDisplay);
-                scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-                add(scroll);
+                add(activeOrdersDisplay);
                 revalidate();
             }
         });
@@ -98,6 +101,10 @@ public class RestaurantGUI extends JFrame{
 
         setVisible(true);
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
+    }
+
+    public src.main.java.Backend.Menu menu() {
+        return menu;
     }
 
 }

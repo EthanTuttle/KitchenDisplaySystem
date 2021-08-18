@@ -58,7 +58,7 @@ public class Customer
 		// Ex Person A : Orders Combo Item A.
 		// 		Person A : Also orders Combo Item B for their friend
 		//		... and so on
-		//singletonOrder = new OrderItem();
+		singletonOrder = new OrderItem();
 	}
 
 	/**
