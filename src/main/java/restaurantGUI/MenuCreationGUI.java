@@ -11,8 +11,9 @@ import java.util.Iterator;
 
 public class MenuCreationGUI extends JPanel {
 
-    private ArrayList<JTextField> itemFields;
-    private ArrayList<JButton> itemButtons;
+    private ArrayList<JTextField> itemFields = new ArrayList<>();
+    private ArrayList<JButton> itemButtons = new ArrayList<>();
+    private boolean loadingMenu = false;
 
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
@@ -76,6 +77,7 @@ public class MenuCreationGUI extends JPanel {
         add(categPanel,BorderLayout.NORTH);
         add(scrollPanel,BorderLayout.CENTER);
 
+        loadingMenu = true;
         Iterator<String> itr1 = menu.allItems().keySet().iterator();
         while (itr1.hasNext()) {
             String category = itr1.next();
@@ -89,6 +91,7 @@ public class MenuCreationGUI extends JPanel {
                 itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
             }
         }
+        loadingMenu = false;
     }
     class ButtonAction extends AbstractAction {
         String name;
