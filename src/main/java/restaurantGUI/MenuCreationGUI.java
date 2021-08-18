@@ -51,12 +51,9 @@ public class MenuCreationGUI extends JPanel {
                         handleMousePress(newLabel, "category");
                     }
                 });
-                JTextField newMenuItemField = new JTextField(10);
-                JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item",
-                newMenuItemField,singleCategPanel));
+                JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
 
-                newMenuItemPanel.add(newMenuItemField);
                 newMenuItemPanel.add(addMenuItemButton);
                 
                 labelAndExitPanel.add(newLabel);
@@ -96,12 +93,10 @@ public class MenuCreationGUI extends JPanel {
     class ButtonAction extends AbstractAction {
         String name;
         JPanel parentPanel;
-        JTextField parentField;
-        public ButtonAction(String name, JTextField pField, JPanel pPanel){
+        public ButtonAction(String name, JPanel pPanel){
             super(name);
             this.name = name;
             this.parentPanel  = pPanel;
-            this.parentField = pField;
         }
 
         public void actionPerformed(ActionEvent event){
