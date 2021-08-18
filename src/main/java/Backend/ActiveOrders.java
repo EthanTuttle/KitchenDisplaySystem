@@ -37,12 +37,12 @@ public class ActiveOrders {
 
     }
 
-    public void addCustomer(Customer customer){
+    public static void addCustomer(Customer customer){
         orders.add(customer);
         orders.sort(new OrderComparator());
     }
 
-    public void removeCustomer(Customer customer){
+    public static void removeCustomer(Customer customer){
         orders.remove(customer);
         Iterator<Customer> it = orders.iterator();
         while (it.hasNext()){
