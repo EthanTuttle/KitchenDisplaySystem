@@ -41,7 +41,7 @@ public class RestaurantGUI extends JFrame{
         } catch (IOException e) {
             System.out.println(e);
             return;
-        } 
+        }
         
         menu = MenuLoader.loadMenu();
         new Thread(new Runnable() {

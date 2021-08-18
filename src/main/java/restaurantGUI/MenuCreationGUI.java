@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 
 public class MenuCreationGUI extends JPanel {
 
-
     public MenuCreationGUI(){
         setLayout(new BorderLayout());
         JTextField categField = new JTextField(10);
@@ -35,8 +34,8 @@ public class MenuCreationGUI extends JPanel {
                 newMenuItemPanel.add(addMenuItemButton);
                 singleCategPanel.add(newMenuItemPanel);
                 enclosingCategPanel.add(singleCategPanel);
-                
-
+            
+                revalidate();
             }
         });
 
@@ -59,6 +58,28 @@ public class MenuCreationGUI extends JPanel {
                 return;
             }
             
+        }
+    }
+    public void handleMousePress(JLabel text, String type)
+    {
+        String updatedString = null;
+        if (type.toLowerCase().equals("category"))
+        {
+		    updatedString = JOptionPane.showInputDialog(this, "What name would you like to use? (You must choose a name).");
+        }
+        else if (type.toLowerCase().equals("menu_item"))
+        {
+		    updatedString = JOptionPane.showInputDialog(this, "What name would you like to use? (You must choose a name).");
+        }
+        else{
+            // The type provided is unexpected.
+            System.err.println("Received type: "+type+" which wwas not expected.");
+            return;
+        }
+
+        if (updatedString != null)
+        {
+            text.setText(updatedString);
         }
     }
 }
