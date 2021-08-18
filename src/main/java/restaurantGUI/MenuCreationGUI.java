@@ -91,7 +91,7 @@ public class MenuCreationGUI extends JPanel {
                 itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
             }
         }
-        loadingMenu = true;
+        loadingMenu = false;
     }
     class ButtonAction extends AbstractAction {
         String name;
