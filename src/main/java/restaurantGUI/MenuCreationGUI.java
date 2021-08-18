@@ -23,7 +23,12 @@ public class MenuCreationGUI extends JPanel {
                     return;
                 }
                 JPanel singleCategPanel = new JPanel();
-                JPanel newMenuItemPanel = new JPanel();
+                JPanel enclosedSingleCategPanel = new JPanel(new BorderLayout());
+                singleCategPanel.setLayout(new BoxLayout(singleCategPanel,BoxLayout.Y_AXIS));
+                FlowLayout fl = new FlowLayout(FlowLayout.CENTER,0,0);
+                JPanel newMenuItemPanel = new JPanel(fl);
+                System.out.println(fl.getVgap());
+                
                 JLabel newLabel = new JLabel(categField.getText());
                 newLabel.addMouseListener(new MouseAdapter()
                 {
@@ -34,14 +39,18 @@ public class MenuCreationGUI extends JPanel {
                     }
                 });
                 JTextField newMenuItemField = new JTextField(10);
-                JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item",newMenuItemField,singleCategPanel));
-                singleCategPanel.setLayout(new BoxLayout(singleCategPanel,BoxLayout.Y_AXIS));
-                
-                singleCategPanel.add(newLabel);
+                JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item",
+                newMenuItemField,singleCategPanel));
+
+
                 newMenuItemPanel.add(newMenuItemField);
                 newMenuItemPanel.add(addMenuItemButton);
+                
+                
+                singleCategPanel.add(newLabel);
                 singleCategPanel.add(newMenuItemPanel);
-                enclosingCategPanel.add(singleCategPanel);
+                enclosedSingleCategPanel.add(singleCategPanel,BorderLayout.NORTH);
+                enclosingCategPanel.add(enclosedSingleCategPanel);
             
                 revalidate();
             }
