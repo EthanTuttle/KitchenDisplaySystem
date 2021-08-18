@@ -41,6 +41,7 @@ public class MenuCreationGUI extends JPanel {
                 newMenuItemPanel.add(addMenuItemButton);
                 singleCategPanel.add(newMenuItemPanel);
                 enclosingCategPanel.add(singleCategPanel);
+            
                 revalidate();
             }
         });
@@ -64,6 +65,18 @@ public class MenuCreationGUI extends JPanel {
                 return;
             }
 
+            JLabel newMenuItemLabel = new JLabel(parentField.getText());
+            newMenuItemLabel.addMouseListener(new MouseAdapter()
+            {
+                @Override
+                public void mousePressed(MouseEvent e)
+                {
+                    handleMousePress(newMenuItemLabel, "menu_item");
+                }
+            });
+            parentPanel.add(newMenuItemLabel);
+            parentPanel.revalidate();
+            
         }
     }
     public void handleMousePress(JLabel text, String type)
