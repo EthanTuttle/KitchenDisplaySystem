@@ -4,9 +4,15 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import src.main.java.Backend.Menu;
+import src.main.java.Backend.MenuItem;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MenuCreationGUI extends JPanel {
+
+    private ArrayList<JTextField> itemFields;
+    private ArrayList<JButton> itemButtons;
 
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
@@ -49,7 +55,8 @@ public class MenuCreationGUI extends JPanel {
 
                 newMenuItemPanel.add(newMenuItemField);
                 newMenuItemPanel.add(addMenuItemButton);
-                
+                itemFields.add(newMenuItemField);
+                itemButtons.add(addMenuItemButton);
                 
                 singleCategPanel.add(newLabel);
                 singleCategPanel.add(newMenuItemPanel);
@@ -64,6 +71,20 @@ public class MenuCreationGUI extends JPanel {
 
         add(categPanel,BorderLayout.NORTH);
         add(scrollPanel,BorderLayout.CENTER);
+
+        Iterator<String> itr1 = menu.allItems().keySet().iterator();
+        while (itr1.hasNext()) {
+            String category = itr1.next();
+            categField.setText(category);
+            addCategButton.getActionListeners()[0].actionPerformed(null);
+            Iterator<String> itr2 = menu.allItems().get(category).keySet().iterator();
+            while (itr2.hasNext()) {
+                String name = itr2.next(); 
+                MenuItem item = menu.allItems().get(category).get(name);
+                itemFields.get(itemFields.size()-1).setText(item.getName());
+                itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
+            }
+        }
     }
     class ButtonAction extends AbstractAction {
         String name;
