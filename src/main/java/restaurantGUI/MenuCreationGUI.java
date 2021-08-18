@@ -108,27 +108,26 @@ public class MenuCreationGUI extends JPanel {
             JTextField menuItem = new JTextField();
             JTextField menuItemETM = new JTextField();
             JComponent[] components = new JComponent[] {
-			new JLabel("Enter the name of the item"),
-			menuItem,
-			new JLabel("Enter the estimated time to make the menu item"),
-			menuItemETM,
+                new JLabel("Enter the name of the item"),
+                menuItem,
+                new JLabel("Enter the estimated time to make the menu item"),
+                menuItemETM,
             };
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
+                JLabel itemTimeCombo = new JLabel(menuItem.getText()+"  "+menuItemETM.getText());
                 menuItem.addMouseListener(new MouseAdapter()
                 {
                     @Override
                     public void mousePressed(MouseEvent e)
                     {
-                        //handleMousePress(menuItem, "menu_item");
+                        handleMousePress(itemTimeCombo, "menu_item");
                     }
                 });
-                parentPanel.add(menuItem);
-                parentPanel.add(menuItemETM);
+                parentPanel.add(itemTimeCombo);
                 parentPanel.revalidate();
                 scrollPanel.revalidate();
             }
-            
         }
     }
     class RemoveComponentAction extends AbstractAction{
@@ -152,13 +151,25 @@ public class MenuCreationGUI extends JPanel {
     public void handleMousePress(JLabel text, String type)
     {
         String updatedString = null;
+        JTextArea updatedMenuItem = new JTextArea();
+        JTextArea updatedMenuItemETM = new JTextArea();
         if (type.toLowerCase().equals("category"))
         {
 		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the category to?");
         }
         else if (type.toLowerCase().equals("menu_item"))
         {
-		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the menu item to?");
+            JComponent[] components = new JComponent[] {
+                new JLabel("Enter the name of the item"),
+                updatedMenuItem,
+                new JLabel("Enter the estimated time to make the menu item"),
+                updatedMenuItemETM,
+            };
+            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+            if(result == JOptionPane.OK_OPTION) {
+                // Check if the input is valid
+                updatedString = updatedMenuItem.getText()+" "+updatedMenuItemETM.getText();
+            }
         }
         else{
             // The type provided is unexpected.
