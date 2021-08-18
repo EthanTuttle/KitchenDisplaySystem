@@ -12,6 +12,7 @@ public class MenuCreationGUI extends JPanel {
         JButton addCategButton = new JButton("Add Category");
         JPanel categPanel = new JPanel();
         JPanel enclosingCategPanel = new JPanel();
+        enclosingCategPanel.setLayout(new BoxLayout(enclosingCategPanel, BoxLayout.X_AXIS));
         categPanel.add(categField);
         categPanel.add(addCategButton);
 
