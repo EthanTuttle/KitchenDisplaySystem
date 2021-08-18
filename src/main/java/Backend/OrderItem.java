@@ -1,6 +1,7 @@
 package src.main.java.Backend;
 
 import java.util.LinkedList;
+import java.util.Date;
 
 /**
  * <b>Order Item<b/> class that contains <b>menu items<b/> that a <b>Customer<b/> adds to the order
@@ -16,7 +17,6 @@ public class OrderItem
 	 * Time to make the whole order
 	 */
 	private int timeToMake;
-
 	/**
 	 * Instantiates order item object
 	 */

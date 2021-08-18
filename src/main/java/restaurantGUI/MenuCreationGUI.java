@@ -93,7 +93,7 @@ public class MenuCreationGUI extends JPanel {
         }
         else{
             // The type provided is unexpected.
-            System.err.println("Received type: "+type+" which wwas not expected.");
+            System.err.println("Received type: "+type+" which was not expected.");
             return;
         }
 
