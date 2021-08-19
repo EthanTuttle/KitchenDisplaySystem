@@ -29,6 +29,7 @@ public class RestaurantGUI extends JFrame{
     private src.main.java.Backend.Menu menu;
     private ServerSocket server;
 
+    
     public RestaurantGUI() {
         setSize(500, 500);
         setLocationRelativeTo(null);
