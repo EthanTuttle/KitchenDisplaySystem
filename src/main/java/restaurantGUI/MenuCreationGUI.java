@@ -149,6 +149,9 @@ public class MenuCreationGUI extends JPanel {
                     itemFields.add(menuItemETM);
                     itemButtons.get(itemButtons.size()-1).doClick();
                 }
+                if (!itr1.hasNext()){
+                    categField.setText("");
+                }
             }
             loadingMenu = false;
         }
