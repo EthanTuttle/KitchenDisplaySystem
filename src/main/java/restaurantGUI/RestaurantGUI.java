@@ -5,9 +5,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import src.main.java.Backend.*;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -131,6 +134,11 @@ public class RestaurantGUI extends JFrame{
         menuCreationGUI = new MenuCreationGUI(menu);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 1));
+        try {
+            mainPanel.add(new JLabel("Current IP: " + Inet4Address.getLocalHost().getHostAddress(), SwingConstants.CENTER));
+        } catch (UnknownHostException e) {
+            mainPanel.add(new JLabel("Could not display IP", SwingConstants.CENTER));
+        }
         mainPanel.add(new JLabel("Choose where to go to start", SwingConstants.CENTER));
         JPanel buttonPanel = new JPanel();
         JButton displayButton = new JButton("To Order Display");
@@ -151,6 +159,7 @@ public class RestaurantGUI extends JFrame{
         buttonPanel.add(displayButton);
         buttonPanel.add(menuCreationButton);
         mainPanel.add(buttonPanel);
+        
         setContentPane(mainPanel);
 
         setVisible(true);

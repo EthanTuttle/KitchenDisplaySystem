@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.Socket;
-import javax.swing.ImageIcon;
 
 /**
  * Mainframe that the Customer GUI interacts with
@@ -52,9 +51,9 @@ public class Mainframe extends JFrame {
 	 * Center Panel
 	 */
     private JPanel centerPanel;
-	/**
-	 * Menu to show
-	 */
+    JPanel pan;
+
+    JPanel panCopy;
     private Menu givMenu;
 	/**
 	 * Order Price
@@ -77,16 +76,6 @@ public class Mainframe extends JFrame {
 	 * @param fromEathnSocket Socket from Restaurant
 	 */
     public Mainframe(Menu gMenu, String customerString, Socket fromEathnSocket) {
-
-		ImageIcon ninjaIcon = null;
-
-        java.net.URL imgURL = CustomerGUI.class.getResource("ninja.png");
-        if (imgURL != null) {
-            ninjaIcon = new ImageIcon(imgURL);
-            setIconImage(ninjaIcon.getImage());
-        } else {
-            JOptionPane.showMessageDialog(Mainframe.this, "Icon image not found.");
-        }
 
         totalCost = new BigDecimal(0);
         itemInformation = "";
@@ -128,31 +117,98 @@ public class Mainframe extends JFrame {
 	 * @return JScrollPane
 	 */
     private JScrollPane getItemButtons() {
-        JPanel pan = new JPanel();
+
+         pan = new JPanel();
+
+
+
         pan.setLayout(new GridLayout(0, 2));
 
-        // map category:::(name : menuitem(name, timeTomake))
 
-        ArrayList<MenuItem> itemButtons = new ArrayList<MenuItem>();
+         
 
-        for (String category : givMenu.allItems().keySet()) {
+        JPanel borderupper = new JPanel();
+        borderupper.setLayout(new BorderLayout());
 
-            for (String itemName : givMenu.getMenuItems(category).keySet()) {
+        JButton backbutton = new JButton("<-- back");
+        borderupper.add(backbutton, BorderLayout.NORTH);
 
-                itemButtons.add(givMenu.getMenuItems(category).get(itemName));
+        backbutton.setBackground(Color.blue);
+        backbutton.setOpaque(true);
+        backbutton.setVisible(false);
 
-            }
 
-        }
 
-        for (final MenuItem itemButton : itemButtons) {
+        panCopy = pan;
 
-            final JButton createButton = new JButton(itemButton.getName());
-            createButton.setToolTipText(itemButton.getName());
+        backbutton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0) {
+                pan.removeAll();
+                repaint();
+                revalidate();
+
+                backbutton.setVisible(false);
+
+
+                
+
+
+                ArrayList<String> itemButtons = new ArrayList<String>();
+
+                ArrayList<MenuItem> itemButtons2 = new ArrayList<MenuItem>();
+        
+                for (String category : givMenu.allItems().keySet()) {
+        
+                    itemButtons.add(category);
+        
+                }
+
+
+
+        for (final String itemButton : itemButtons) {
+
+            final JButton createButton = new JButton(itemButton);
+            createButton.setToolTipText(itemButton);
 
             createButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    refreshPanel(itemButton);
+                    refresh(itemButton);
+
+                    pan.removeAll();
+                    repaint();
+                    revalidate();
+
+                    for (String itemName : givMenu.getMenuItems(itemButton).keySet()) {
+
+                        itemButtons2.add(givMenu.getMenuItems(itemButton).get(itemName));
+
+                    }
+
+                    backbutton.setVisible(true);
+
+                    for (final MenuItem menuitemButton : itemButtons2) {
+
+                        final JButton createButton2 = new JButton(menuitemButton.getName());
+                        createButton2.setToolTipText(menuitemButton.getName());
+
+                        createButton2.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent arg0) {
+                                refreshPanel(menuitemButton);
+
+                            }
+
+                        });
+                        pan.add(createButton2);
+                        createButton2.setPreferredSize(new Dimension(30, 60));
+                        repaint();
+                        revalidate();
+
+                    }
+
+                }
+
+                private void refresh(String itemButton) {
+
                 }
             });
             pan.add(createButton);
@@ -160,7 +216,83 @@ public class Mainframe extends JFrame {
 
         }
 
-        JScrollPane scroller = new JScrollPane(pan);
+                
+
+
+                
+                
+
+
+            }
+        });
+
+        // map category:::(name : menuitem(name, timeTomake))
+
+        ArrayList<String> itemButtons = new ArrayList<String>();
+
+        ArrayList<MenuItem> itemButtons2 = new ArrayList<MenuItem>();
+
+        for (String category : givMenu.allItems().keySet()) {
+
+            itemButtons.add(category);
+
+        }
+
+        for (final String itemButton : itemButtons) {
+
+            final JButton createButton = new JButton(itemButton);
+            createButton.setToolTipText(itemButton);
+
+            createButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    refresh(itemButton);
+
+                    pan.removeAll();
+                    repaint();
+                    revalidate();
+
+                    for (String itemName : givMenu.getMenuItems(itemButton).keySet()) {
+
+                        itemButtons2.add(givMenu.getMenuItems(itemButton).get(itemName));
+
+                    }
+
+                    backbutton.setVisible(true);
+
+                    for (final MenuItem menuitemButton : itemButtons2) {
+
+                        final JButton createButton2 = new JButton(menuitemButton.getName());
+                        createButton2.setToolTipText(menuitemButton.getName());
+
+                        createButton2.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent arg0) {
+                                refreshPanel(menuitemButton);
+
+                            }
+
+                        });
+                        pan.add(createButton2);
+                        createButton2.setPreferredSize(new Dimension(30, 60));
+                        repaint();
+                        revalidate();
+
+                    }
+
+                }
+
+                private void refresh(String itemButton) {
+
+                }
+            });
+            pan.add(createButton);
+            createButton.setPreferredSize(new Dimension(30, 60));
+
+        }
+
+        borderupper.add(pan, BorderLayout.CENTER);
+
+        JScrollPane scroller = new JScrollPane(borderupper);
+
         Border etchedBorder = BorderFactory.createEtchedBorder();
         Border border = BorderFactory.createTitledBorder(etchedBorder, "Items", TitledBorder.DEFAULT_JUSTIFICATION,
                 TitledBorder.DEFAULT_POSITION, new Font("Lucida", Font.BOLD, 20), Color.BLACK);
