@@ -14,6 +14,7 @@ public class MenuCreationGUI extends JPanel {
     private ArrayList<JTextField> itemFields = new ArrayList<>();
     private ArrayList<JButton> itemButtons = new ArrayList<>();
     private boolean loadingMenu = false;
+    private Menu menu;
 
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
@@ -30,7 +31,7 @@ public class MenuCreationGUI extends JPanel {
         addCategButton.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent event){
-                if (categField.getText().equals("")){
+                if (!(checkValidValue("category"), categField.getText())){
                     return;
                 }
                 JPanel singleCategPanel = new JPanel();
@@ -40,31 +41,28 @@ public class MenuCreationGUI extends JPanel {
                 FlowLayout fl2 = new FlowLayout(FlowLayout.CENTER,10,0);
                 JPanel newMenuItemPanel = new JPanel(fl);
                 JPanel labelAndExitPanel = new JPanel(fl2);
-                System.out.println(fl.getVgap());
-                
-                JLabel newLabel = new JLabel(categField.getText());
-                newLabel.addMouseListener(new MouseAdapter()
+                JLabel categLabel = new JLabel(categField.getText());
+                categLabel.addMouseListener(new MouseAdapter()
                 {
                     @Override
                     public void mousePressed(MouseEvent e)
                     {
-                        handleMousePress(newLabel, "category");
+                        handleMousePress(categLabel, "category");
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
-
+                singleCategPanel.setName(categLabel.getText());
                 newMenuItemPanel.add(addMenuItemButton);
                 
-                labelAndExitPanel.add(newLabel);
+                labelAndExitPanel.add(categLabel);
                 labelAndExitPanel.add(removeComponentButton);
 
-                //singleCategPanel.add(newLabel);
                 singleCategPanel.add(labelAndExitPanel);
                 singleCategPanel.add(newMenuItemPanel);
                 enclosedSingleCategPanel.add(singleCategPanel,BorderLayout.NORTH);
                 enclosingCategPanel.add(enclosedSingleCategPanel);
-                
+                menu.addCategory(categLabel.getText());
                 revalidate();
                 scrollPanel.revalidate();
             }
@@ -73,6 +71,7 @@ public class MenuCreationGUI extends JPanel {
         add(categPanel,BorderLayout.NORTH);
         add(scrollPanel,BorderLayout.CENTER);
 
+        // If a menu exists than load it instead of showing an empty menu
         loadingMenu = true;
         Iterator<String> itr1 = menu.allItems().keySet().iterator();
         while (itr1.hasNext()) {
@@ -110,6 +109,10 @@ public class MenuCreationGUI extends JPanel {
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 JLabel itemTimeCombo = new JLabel(menuItem.getText()+"  "+menuItemETM.getText());
+                if (checkValidValue("menu_item", itemTimeCombo)){
+                    return;
+                }
+                menu.addMenuItem(parentPanel.getName(), menuItem.getText(), Integer.parseInt(menuItemETM.getText()));
                 itemTimeCombo.addMouseListener(new MouseAdapter()
                 {
                     @Override
@@ -176,7 +179,6 @@ public class MenuCreationGUI extends JPanel {
             text.setText(updatedString);
         }
     }
-    
 
     private JScrollPane scrollPanel;
     private JPanel categPanel;
