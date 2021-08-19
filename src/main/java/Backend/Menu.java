@@ -11,8 +11,8 @@ import java.util.LinkedHashMap;
 
 
 /**
- * <b>Menu<b/> class that holds categories of <b>Menu Items<b/> which the restaurant adds <b>menu items<b/> to and
- * the <b>Customer<b/> interacts with to add <b>menu items<b/> to their <b>Order<b/>
+ * <b>Menu</b> class that holds categories of <b>Menu Items</b> which the restaurant adds <b>menu items</b> to and
+ * the <b>Customer</b> interacts with to add <b>menu items</b> to their <b>Order</b>
  */
 public class Menu {
 
