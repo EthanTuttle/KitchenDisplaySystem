@@ -1,8 +1,8 @@
 package src.main.java.Backend;
 
 /**
- * <b>MenuItem<b/> class which represents a menu item that a restaurant puts on a 
- * <b>Menu<b/> and a <b>Customer<b/> could add to an <b>Order<b/>
+ * <b>MenuItem</b> class which represents a menu item that a restaurant puts on a 
+ * <b>Menu</b> and a <b>Customer</b> could add to an <b>Order</b>
  */
 public class MenuItem {
     

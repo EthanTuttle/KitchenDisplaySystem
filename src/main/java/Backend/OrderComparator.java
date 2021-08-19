@@ -2,7 +2,7 @@ package src.main.java.Backend;
 
 import java.util.Comparator;
 /**
- * <b>Order Comparator<b/> class used to order the Active Orders List
+ * <b>Order Comparator</b> class used to order the Active Orders List
  */
 public class OrderComparator implements Comparator<Customer> {
 
