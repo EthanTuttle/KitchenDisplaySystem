@@ -31,7 +31,7 @@ public class MenuCreationGUI extends JPanel {
         addCategButton.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent event){
-                if (!(checkValidValue("category"), categField.getText())){
+                if (!(checkValidValue("category", categField.getText())){
                     return;
                 }
                 JPanel singleCategPanel = new JPanel();
