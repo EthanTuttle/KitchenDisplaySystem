@@ -69,7 +69,7 @@ public class RestaurantGUI extends JFrame{
                                 while(client.isConnected()) { //while connected, look for communication
                                     try {
                                         String line = in.readLine();
-                                        if (line.length() > 0) {
+                                        if (line != null && line.length() > 0) {
                                             activeOrdersDisplay.addOrder(line);
                                         }
                                     } catch (IOException e) {
