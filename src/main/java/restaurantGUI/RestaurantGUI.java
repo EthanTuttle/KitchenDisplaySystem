@@ -28,6 +28,18 @@ public class RestaurantGUI extends JFrame{
 
     
     public RestaurantGUI() {
+
+        addWindowListener(new java.awt.event.WindowAdapter(){
+            /**
+             * stores data before frame closed
+            * @param java.awt.event.WindowEvent e This is the frame closing
+            */
+            public void windowClosing(java.awt.event.WindowEvent e){
+                    exitProcedure();
+                    System.exit(0);
+            }
+        });
+
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
