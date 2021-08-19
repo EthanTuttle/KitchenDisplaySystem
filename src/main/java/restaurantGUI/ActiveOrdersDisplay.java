@@ -14,15 +14,43 @@ import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
 import java.sql.Timestamp;
 
+/**
+ * ActiveOrdersDisplay class which displays all the 
+ * <b>Orders</b> a <b>Restaurant</b> receives to that
+ * <b>Restaurant</b>
+ */
 public class ActiveOrdersDisplay extends JPanel {
 
+    /**
+     * Order Items to display
+     */
     private LinkedList<DisplayItem> displayItems = new LinkedList<>();
+    /**
+     * Queue for Active Orders
+     */
     private ActiveOrders queue;
+    /**
+     * Panel to display active orders
+     */
     private JPanel displayPanel;
+    /**
+     * Scroll Panel to hold display panel
+     */
     private JScrollPane scrollPanel;
+    /**
+     * Overall menu from restaurant
+     */
     private Menu menu;
+    /**
+     * Customers that we have orders from
+     */
     private HashMap<String, Customer> customers = new HashMap<>();
     
+    /**
+     * Instantiates the Active Orders Display
+     * @param queue Queue of active orders
+     * @param menu Restaurant Menu
+     */
     public ActiveOrdersDisplay(ActiveOrders queue, src.main.java.Backend.Menu menu) {
         this.menu = menu;
         this.queue = queue;
@@ -34,15 +62,14 @@ public class ActiveOrdersDisplay extends JPanel {
         scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         add(scrollPanel, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel();
-        JButton button = new JButton("button");
-        button.addActionListener(new ActionListener() {
+        JButton refresh = new JButton("Refresh");
+        refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                
+                updatePanel();
             }
         });
-        buttonPanel.add(button);
+        buttonPanel.add(refresh);
         add(buttonPanel, BorderLayout.SOUTH);
-
         int delay = 500;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -87,28 +114,43 @@ public class ActiveOrdersDisplay extends JPanel {
         updatePanel();
     }
 
+    /**
+     * Updates the panel
+     */
     public void updatePanel() {
         synchronized (displayItems) {
+            displayItems.clear();
             displayPanel.removeAll();
             Iterator<Customer> itr = queue.getIterator();
             while (itr.hasNext()) {
                 Customer customer = itr.next();
-                DisplayItem displayItem = new DisplayItem(customer);
+
+                JButton deleteButton = new JButton("Remove");
+                deleteButton.setBackground(Color.GREEN);
+                deleteButton.setOpaque(true);
+
+                DisplayItem displayItem = new DisplayItem(customer, deleteButton);
                 displayItems.add(displayItem);
-                displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                //displayItem.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/5, (int)displayPanel.getSize().getHeight()));
-                displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/4, (int)displayPanel.getSize().getHeight()));
-                JScrollPane scrollableDisplay = new JScrollPane(displayItem);
-                scrollableDisplay.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                scrollableDisplay.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                scrollableDisplay.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                displayPanel.add(scrollableDisplay);
+                displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, 7*(int)displayPanel.getSize().getHeight()/8));
+                displayItem.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/6, 7*(int)displayPanel.getSize().getHeight()/8));
+                displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, 7*(int)displayPanel.getSize().getHeight()/8));
+                displayPanel.add(displayItem);
                 if (itr.hasNext()) {
                     Dimension minSize = new Dimension(5, 100);
                     Dimension prefSize = new Dimension(10, 100);
                     Dimension maxSize = new Dimension(10, 100);
                     displayPanel.add(new Box.Filler(minSize, prefSize, maxSize));
                 }
+
+                deleteButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        queue.removeCustomer(customer);
+                        displayPanel.remove(displayItem);
+                        scrollPanel.repaint();
+                        scrollPanel.revalidate();
+                        customers.remove(customer.getName());
+                    }
+                });
             }
             scrollPanel.repaint();
             scrollPanel.revalidate();

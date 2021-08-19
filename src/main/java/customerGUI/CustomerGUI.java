@@ -8,15 +8,36 @@ import java.net.Socket;
 import java.util.concurrent.Semaphore;
 import java.io.*;
 
-
+/**
+ * CustomerGUI class that instantiates the
+ * <b>Customer</b> Interface
+ */
 public class CustomerGUI {
 
+    /**
+     * Semaphore to provide synchronization
+     */
     private Semaphore loadSemaphore = new Semaphore(1);
+    /**
+     * Connect to the Customer GUI
+     */
     private Socket connection;
+    /**
+     * Reader to read in input
+     */
     private BufferedReader in;
+    /**
+     * RPI IP Address
+     */
     private String rpiIP = "129.161.52.212"; //change last 3 digits to host ID of machine running restaurant GUI
+    /**
+     * Restaurant Menu
+     */
     private src.main.java.Backend.Menu menu;
 
+    /**
+     * Instantiate CustomerGUI
+     */
     public CustomerGUI() {
         
         //create jdialog for input
@@ -78,7 +99,10 @@ public class CustomerGUI {
 
         
     }
-    
+    /**
+     * Main function creates a new Customer GUI
+     * @param args Command Line Arguments
+     */
    public static void main(String[] args) {
         new CustomerGUI();
    }   

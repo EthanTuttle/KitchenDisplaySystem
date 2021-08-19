@@ -9,18 +9,53 @@ import src.main.java.Backend.MenuItem;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * MenuCreationGUI Class is the interface for a <b>Customer</b> 
+ * to place a <b>Menu</b>
+ */
 public class MenuCreationGUI extends JPanel {
-
+    
+    /**
+     * JTextFields in this Menu Creation GUI
+     */
     private ArrayList<JTextField> itemFields = new ArrayList<>();
+    /**
+     * Item Buttons used in the Menu Creation GUI
+     */
     private ArrayList<JButton> itemButtons = new ArrayList<>();
+    /**
+     * Index used to keep track of which add menu item btn is being clicked
+     */
+    private int itemBtnIndex = 0;
+    /**
+     * Boolean to check if a menu is loading in
+     */
     private boolean loadingMenu = false;
+    /**
+     * Boolean to check if a menu has not been loaded yet
+     */
+    private boolean firstLoad = false;
+    /**
+     * Menu to populate with new categories and menu items
+     */
     private Menu menu;
+    /**
+     * Scroll panel to scroll through different categories
+     */
     private JScrollPane scrollPanel;
+    /**
+     * Panel to add new categories
+     */
     private JPanel categPanel;
+    /**
+     * Panel that holds the categories and their menu items
+     */
     private JPanel enclosingCategPanel;
-    private JTextField lastAddMenuItemField;
-    private JButton lastAddMenuItemButton;
-
+    
+    /**
+     * Instantiates Menu CreationGUI by loading in the menu
+     * @param menu Menu to populate
+     */
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
         this.menu = menu;
@@ -35,9 +70,11 @@ public class MenuCreationGUI extends JPanel {
         categPanel.add(addCategButton);
 
         addCategButton.addActionListener(new ActionListener(){
-
+            
+            @Override
             public void actionPerformed(ActionEvent event){
-                if (!(checkValidValue(categField.getText(),"category"))){
+                //System.out.println("Before menu item btn so now the size of itemBtns is "+itemButtons.size());
+                if (loadingMenu == false && !(checkValidValue(categField.getText(),"category"))){
                     return;
                 }
                 JPanel singleCategPanel = new JPanel();
@@ -57,9 +94,10 @@ public class MenuCreationGUI extends JPanel {
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
-                lastAddMenuItemButton = addMenuItemButton;
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
+                removeComponentButton.setBackground(Color.red);
                 itemButtons.add(addMenuItemButton);
+                //System.out.println("Adding menu item btn so now the size of itemBtns is "+itemButtons.size());
                 singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 enclosedSingleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 newMenuItemPanel.add(addMenuItemButton);
@@ -70,7 +108,10 @@ public class MenuCreationGUI extends JPanel {
                 singleCategPanel.add(newMenuItemPanel);
                 enclosedSingleCategPanel.add(singleCategPanel,BorderLayout.NORTH);
                 enclosingCategPanel.add(enclosedSingleCategPanel);
-                menu.addCategory(categLabel.getText());
+                // If it's the first load we do want to populate the menu otherwise only populate it when we're not loading a menu
+                if (firstLoad == true || loadingMenu == false){
+                    menu.addCategory(categLabel.getText());
+                }
                 revalidate();
                 scrollPanel.revalidate();
             }
@@ -80,6 +121,7 @@ public class MenuCreationGUI extends JPanel {
         add(scrollPanel,BorderLayout.CENTER);
 
         if (menu.isEmpty()){
+            firstLoad = true;
             loadingMenu = true;
             categField.setText("Category 1");
             addCategButton.getActionListeners()[0].actionPerformed(null);
@@ -89,31 +131,48 @@ public class MenuCreationGUI extends JPanel {
             categField.setText("Category 3");
             addCategButton.getActionListeners()[0].actionPerformed(null);
             loadingMenu=false;
+            firstLoad = false;
         }
         else
         {
             // If a menu exists than load it instead of showing an empty menu
             loadingMenu = true;
+            //System.out.println("Menu on entering loader: " +menu.allItems());
             Iterator<String> itr1 = menu.allItems().keySet().iterator();
             while (itr1.hasNext()) {
                 String category = itr1.next();
                 categField.setText(category);
-                addCategButton.getActionListeners()[0].actionPerformed(null);
+                //System.out.println("Clicking add categ btn");
+                addCategButton.doClick();
                 Iterator<String> itr2 = menu.allItems().get(category).keySet().iterator();
+                //System.out.println("Menu after adding categ: " +menu.allItems());
                 while (itr2.hasNext()) {
                     String name = itr2.next(); 
                     MenuItem item = menu.allItems().get(category).get(name);
-                    itemFields.get(itemFields.size()-1).setText(item.getName());
-                    itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
+                    //System.out.println("Clicking add item btn");
+                    //System.out.println("Menu after adding menu item: " +menu.allItems());
+                    JTextField menuItemName = new JTextField();
+                    menuItemName.setText(name);
+                    JTextField menuItemETM = new JTextField();
+                    menuItemETM.setText(String.valueOf(item.getTimeToMake()));
+                    itemFields.add(menuItemName);
+                    itemFields.add(menuItemETM);
+                    itemButtons.get(itemButtons.size()-1).doClick();
                 }
             }
             loadingMenu = false;
         }
     }
+    /**
+     * Check if a category or menu item entered is valid
+     * @param value Category of Menu Item
+     * @param type Type specifying if we are checking a category or menu item
+     * @return True if value is vald or false if it is not
+     */
     public boolean checkValidValue(String value, String type){
         if (type.equals("category")){
             /*check dup category or empty value*/
-            if (menu.containsCategory(value) || value.equals("")){
+            if (value == null || value.equals("") || menu.containsCategory(value)){
                 return false;
             }
         }
@@ -128,7 +187,7 @@ public class MenuCreationGUI extends JPanel {
             String menuItem = itemTimeCombo[0];
             String timeToMake = itemTimeCombo[1];
             /*check that the menu item is not empty and that the menu item does not already exist*/
-            if (menuItem.equals("") || menu.findMenuItem(menuItem) != null){
+            if (value == null || menuItem.equals("") || menu.findMenuItem(menuItem) != null){
                 return false;
             }
             try {
@@ -144,15 +203,33 @@ public class MenuCreationGUI extends JPanel {
         }
         return true;
     }
+
+    /**
+     * Button ActionClass that defines the action to add a 
+     * <b>MenuItem</b> to a category in the <b>Menu</b>
+     */
     class ButtonAction extends AbstractAction {
+        /**
+         * Name of Button Action
+         */
         String name;
+        /**
+         * Parent panel of button
+         */
         JPanel parentPanel;
+        
+        /**
+         * Instanties the button action
+         * @param name Name of Action
+         * @param pPanel Parent Panel of Action/Button
+         */
         public ButtonAction(String name, JPanel pPanel){
             super(name);
             this.name = name;
             this.parentPanel  = pPanel;
         }
-
+        
+        @Override
         public void actionPerformed(ActionEvent event){
             JTextField menuItem = new JTextField();
             JTextField menuItemETM = new JTextField();
@@ -163,22 +240,30 @@ public class MenuCreationGUI extends JPanel {
                 menuItemETM,
             };
             int result = -1;
-            if (loadingMenu == true){
+            if (firstLoad){
                 result = 0;
                 menuItem.setText("Menu Item");
                 menuItemETM.setText("10");
+            }
+            else if (loadingMenu){
+                result = 0;
+                menuItem.setText(itemFields.get(itemFields.size()-2).getText());
+                menuItemETM.setText(itemFields.get(itemFields.size()-1).getText());
             }
             else{
                 result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             }
             if(result == JOptionPane.OK_OPTION) {
                 JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+menuItemETM.getText().strip());
-                if (!(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
+                if (loadingMenu == false && !(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
                     return;
                 }
                 ArrayList<String> values = parseQuery(this.parentPanel);
                 String category = values.get(0);
-                menu.addMenuItem(category, menuItem.getText().strip(), Integer.parseInt(menuItemETM.getText().strip()));
+                // If it's the first time we load something into the menu from the GUI we want to populate the menu
+                if (firstLoad || loadingMenu == false){
+                    menu.addMenuItem(category, menuItem.getText().strip(), Integer.parseInt(menuItemETM.getText().strip()));
+                }
                 itemTimeCombo.addMouseListener(new MouseAdapter()
                 {
                     @Override
@@ -189,6 +274,7 @@ public class MenuCreationGUI extends JPanel {
                 });
                 JPanel labelAndExitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,0));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", this.parentPanel, labelAndExitPanel));
+                removeComponentButton.setBackground(Color.RED);
                 labelAndExitPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
                 parentPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
                 labelAndExitPanel.add(itemTimeCombo);
@@ -199,10 +285,31 @@ public class MenuCreationGUI extends JPanel {
             }
         }
     }
+    /**
+     * RemoveComponentAction class provides functionality
+     * to remove a <b>Category</b> or <b>Menu Item</b> when 
+     * needed.
+     */
     class RemoveComponentAction extends AbstractAction{
+        /**
+         * Name of Action
+         */
         String name;
+        /**
+         * Parent Panel of Action
+         */
         JPanel parentPanel;
+        /**
+         * Child Panel of Action
+         */
         JPanel childPanel;
+
+        /**
+         * Instantiates a Remove Component Action
+         * @param name Name of Action
+         * @param parentPanel Parent Panel of Action
+         * @param childPanel Child Panel of Action
+         */
         public RemoveComponentAction(String name, JPanel parentPanel, JPanel childPanel)
         {
             super(name);
@@ -210,16 +317,17 @@ public class MenuCreationGUI extends JPanel {
             this.parentPanel = parentPanel;
             this.childPanel = childPanel;
         }
+        @Override
         public void actionPerformed(ActionEvent event)
         {
             // this.childPanel.getName() will return
             // category=?&menu_item=?
 
             // Split the query into category=? AND menu_item=?
-            System.out.println(this.childPanel.getName());
+            //System.out.println(this.childPanel.getName());
             ArrayList<String> values = parseQuery(this.childPanel);
             for (int i = 0; i < 2; i++){
-                System.out.println("return ret where val at "+ i +" is "+values.get(i));
+                //System.out.println("return ret where val at "+ i +" is "+values.get(i));
             }
             String category = values.get(0);
             String menuItem = values.get(1);
@@ -229,6 +337,12 @@ public class MenuCreationGUI extends JPanel {
             this.parentPanel.repaint();
         }
     }
+    /**
+     * Provides functionality to change a menu item or category by clicking on it
+     * @param text Text to change category or menu item to
+     * @param type Specifying whether we want to change a category or menu item
+     * @param childPanel Child Panel of Action
+     */
     public void handleMousePress(JLabel text, String type, JPanel childPanel)
     {
         String updatedString = null;
@@ -280,21 +394,22 @@ public class MenuCreationGUI extends JPanel {
             Component[] allComponents = childPanel.getComponents();
             for (int i = 0; i < allComponents.length; i++){
                 if (allComponents[i].getName() != null){
-                    System.out.println("At "+i+" the component name is: "+allComponents[i].getName());
+                    //System.out.println("At "+i+" the component name is: "+allComponents[i].getName());
                     allComponents[i].setName("category="+category+"&menu_item="+updatedMenuItem.getText().strip());
                 }
             }
+            childPanel.revalidate();
         }
     }
     /**
-     * 
+     * Parses input that for a category or menu item
      * @param childPanel Parse the name of this panel
      * @return An ArrayList of strings where the first value is the category and the second value is the menu_item
      */
     private ArrayList<String> parseQuery(JPanel childPanel)
     {
         // Split the query into category=? AND menu_item=?
-        System.out.println(childPanel.getName());
+        //System.out.println(childPanel.getName());
         String[] query = childPanel.getName().split("&");
         ArrayList<String> ret = new ArrayList<String>();
 
