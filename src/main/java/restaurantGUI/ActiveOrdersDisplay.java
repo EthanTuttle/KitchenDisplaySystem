@@ -85,8 +85,16 @@ public class ActiveOrdersDisplay extends JPanel {
         while (itr.hasNext()) {
             Customer customer = itr.next();
             DisplayItem displayItem = new DisplayItem(customer);
-            displayPanel.add(displayItem);
-            displayItems.add(displayItem);
+            displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+            displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+            JScrollPane scrollableDisplay = new JScrollPane(displayItem);
+            displayPanel.add(scrollableDisplay);
+            if (itr.hasNext()) {
+                Dimension minSize = new Dimension(5, 100);
+                Dimension prefSize = new Dimension(10, 100);
+                Dimension maxSize = new Dimension(Short.MAX_VALUE, 100);
+                displayPanel.add(new Box.Filler(minSize, prefSize, maxSize));
+            }
         }
 
         scrollPanel.revalidate();

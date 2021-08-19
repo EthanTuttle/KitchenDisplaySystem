@@ -62,7 +62,10 @@ public class RestaurantGUI extends JFrame{
                                 while(client.isConnected()) { //while connected, look for communication
                                     try {
                                         String line = in.readLine();
-                                        if (line != null && line.length() > 0) {
+                                        if (line == null) {
+                                            break;
+                                        }
+                                        else if (line.length() > 0) {
                                             activeOrdersDisplay.addOrder(line);
                                         }
                                     } catch (IOException e) {
@@ -89,22 +92,20 @@ public class RestaurantGUI extends JFrame{
         JButton menuCreationButton = new JButton("To Menu Creation");
         menuCreationButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event){
-                remove(mainPanel);
-                add(menuCreationGUI);
+                setContentPane(activeOrdersDisplay);
                 revalidate();
             }
         });
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                remove(mainPanel);
-                add(activeOrdersDisplay);
+                setContentPane(menuCreationGUI);
                 revalidate();
             }
         });
         buttonPanel.add(displayButton);
         buttonPanel.add(menuCreationButton);
         mainPanel.add(buttonPanel);
-        add(mainPanel);
+        setContentPane(mainPanel);
 
         setVisible(true);
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
@@ -112,6 +113,18 @@ public class RestaurantGUI extends JFrame{
 
     public src.main.java.Backend.Menu menu() {
         return menu;
+    }
+
+    public void displayActiveOrdersDisplay() {
+        setContentPane(activeOrdersDisplay);
+        repaint();
+        revalidate();
+    }
+
+    public void displayMenuCreationGUI() {
+        setContentPane(menuCreationGUI);
+        repaint();
+        revalidate();
     }
 
 }
