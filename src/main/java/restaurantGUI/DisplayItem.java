@@ -28,11 +28,16 @@ public class DisplayItem extends JPanel {
      * @param customer Customer and therefor order to display
      */
     public DisplayItem(Customer customer, JButton deleteButton) {
+      
         this.customer = customer;
         setLayout(new BorderLayout());
 
         JPanel boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
+
+        if(customer.getName().equals("kuzmin")){
+            boxPanel.setBackground(Color.YELLOW);
+        }
         JLabel name = new JLabel();
         if (customer.getName().length() > 15) {
             name.setText(customer.getName().substring(0, 15) + "...");
