@@ -1,5 +1,9 @@
 package src.main.java.Backend;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
@@ -63,7 +67,60 @@ public class Menu {
 
     public static Menu loadMenu() {
         Menu menu = new Menu();
-        
+        File menuFile = new File(".menu");
+        if (menuFile.exists())
+        {
+            FileReader fileReader = null;
+            BufferedReader bufferedReader = null;
+            try{
+                fileReader = new FileReader(menuFile);
+                bufferedReader = new BufferedReader(fileReader);
+                String line = bufferedReader.readLine();
+                while (line != null){
+                    // Each line is being read as "customer=?&menu_item=?&timeToMake=?"
+                    // fields contains customer=?,
+                    //                 menu_item=?,
+                    //                 timeToMake=?
+                    String[] fields = line.split("&");
+                    String category = "";
+                    String menuItem = "";
+                    String timeToMake = "";
+                    for (int i = 0; i < fields.length; i++){
+                        String[] values = fields[i].split("=");
+                        String fieldValue = values[1];
+                        switch (i)
+                        {
+                            case 1:
+                                category = fieldValue.strip();
+                                menu.addCategory(category);
+                                break;
+                            case 2:
+                                menuItem = fieldValue.strip();
+                                break;
+                            case 3:
+                                Integer actualTimeToMake = Integer.parseInt(fieldValue.strip());
+                                menu.addMenuItem(category, menuItem, actualTimeToMake);
+                        }
+                    }
+                    line = bufferedReader.readLine();
+                }
+		    }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+            finally{
+                try{
+                    if (bufferedReader != null) bufferedReader.close();
+                    if (fileReader != null) fileReader.close();
+                }
+                catch (IOException e){
+                    /* Error caught while trying to close the Writer streams */
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+            }
+        }
+        // Return the menu whether populated or not
         return menu;
     }
 
