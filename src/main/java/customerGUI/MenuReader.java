@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+
+import src.main.java.Backend.MenuItem;
+
 import java.math.BigDecimal;
 
 public class MenuReader {
@@ -38,10 +41,9 @@ public class MenuReader {
 		while (readMenu.hasNextLine()) {
 			
 			String item = readMenu.nextLine();
-			String itemCost = readMenu.nextLine();
-			BigDecimal itemPrice = new BigDecimal(itemCost);
+			int time2make = 1;
 			
-			MenuItem createItem = new MenuItem(item, itemPrice);
+			MenuItem createItem = new MenuItem("blank", time2make,item);
 			menuItems.add(createItem);
 		}
 		readMenu.close();
