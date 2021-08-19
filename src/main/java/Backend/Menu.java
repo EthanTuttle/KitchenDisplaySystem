@@ -63,7 +63,7 @@ public class Menu {
     public static Menu loadMenu() {
         Menu menu = new Menu();
 
-        return menu;    
+        return menu;
     }
 
     public void replace(String oldCategoryName, String newCategoryName){
@@ -96,6 +96,11 @@ public class Menu {
             }
         }
         return null;
+    }
+
+    public Map<String, HashMap<String, MenuItem>> getMenu()
+    {
+        return this.menu;
     }
 
     public boolean isEmpty(){
