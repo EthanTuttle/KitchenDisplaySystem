@@ -63,7 +63,7 @@ public class Menu {
     public static Menu loadMenu() {
         Menu menu = new Menu();
 
-        return menu;
+        return menu;    
     }
 
     public void replace(String oldCategoryName, String newCategoryName){
