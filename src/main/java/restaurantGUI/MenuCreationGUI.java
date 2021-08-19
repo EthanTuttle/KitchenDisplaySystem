@@ -225,29 +225,37 @@ public class MenuCreationGUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event){
             JTextField menuItem = new JTextField();
-            JTextField menuItemETM = new JTextField();
+            //JTextField menuItemETM = new JTextField();
+            SpinnerModel model = new SpinnerNumberModel(0,0,59,1);
+            JSpinner menuItemMin = new JSpinner(model);
+            JSpinner menuItemSec = new JSpinner(model);
             JComponent[] components = new JComponent[] {
                 new JLabel("Enter the name of the item"),
                 menuItem,
-                new JLabel("Enter the estimated time to make the menu item"),
-                menuItemETM,
+                new JLabel("Enter the estimated minutes to make the menu item"),
+                menuItemMin,
+                new JLabel("Enter the estimated seconds to make the menu item"),
+                menuItemSec
             };
             int result = -1;
             if (firstLoad){
                 result = 0;
                 menuItem.setText("Menu Item");
-                menuItemETM.setText("10");
+                menuItemMin.setValue("10");
             }
             else if (loadingMenu){
                 result = 0;
                 menuItem.setText(itemFields.get(itemFields.size()-2).getText());
-                menuItemETM.setText(itemFields.get(itemFields.size()-1).getText());
+                menuItemMin.setValue(itemFields.get(itemFields.size()-1).getText());
             }
             else{
                 result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             }
             if(result == JOptionPane.OK_OPTION) {
-                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+menuItemETM.getText().strip());
+                int minutes = (Integer) menuItemMin.getValue();
+                int seconds = (Integer) menuItemSec.getValue();
+                int totalSeconds = (minutes*60) + seconds;
+                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+ totalSeconds);
                 if (loadingMenu == false && !(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
                     return;
                 }
@@ -255,7 +263,7 @@ public class MenuCreationGUI extends JPanel {
                 String category = values.get(0);
                 // If it's the first time we load something into the menu from the GUI we want to populate the menu
                 if (firstLoad || loadingMenu == false){
-                    menu.addMenuItem(category, menuItem.getText().strip(), Integer.parseInt(menuItemETM.getText().strip()));
+                    menu.addMenuItem(category, menuItem.getText().strip(), totalSeconds);
                 }
                 itemTimeCombo.addMouseListener(new MouseAdapter()
                 {
