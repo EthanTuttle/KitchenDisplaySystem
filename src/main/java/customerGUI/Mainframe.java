@@ -134,7 +134,7 @@ public class Mainframe extends JFrame {
         JButton backbutton = new JButton("<-- back");
         borderupper.add(backbutton, BorderLayout.NORTH);
 
-        backbutton.setBackground(Color.blue);
+        backbutton.setBackground(Color.CYAN);
         backbutton.setOpaque(true);
         backbutton.setVisible(false);
 
