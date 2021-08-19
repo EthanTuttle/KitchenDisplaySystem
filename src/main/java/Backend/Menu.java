@@ -65,6 +65,15 @@ public class Menu {
         return menu;
     }
 
+    public void remove(String categ, String menuItem, String type){
+        if (type.equals("category")){
+            menu.remove(categ);
+        }
+        else if (type.equals("menu_item")){
+            menu.get(categ).remove(menuItem);
+        }
+    }
+
     public MenuItem findMenuItem(String name) {
         Iterator<String> itr = menu.keySet().iterator();
         while (itr.hasNext()) {
