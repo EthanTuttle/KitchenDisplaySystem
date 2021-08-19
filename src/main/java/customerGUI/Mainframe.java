@@ -21,6 +21,8 @@ import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import src.main.java.Backend.MenuItem;
+
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.IOException;
@@ -38,9 +40,7 @@ public class Mainframe extends JFrame {
 	private String itemInformation;
 	
 	public Mainframe(File givenMenu,String customerString) throws FileNotFoundException {
-		/**
-		 * Initializing IVs 
-		 */
+		
 		totalCost = new BigDecimal(0);
 		itemInformation = "";
 		
@@ -191,7 +191,7 @@ public class Mainframe extends JFrame {
 	
 	private void delete() {
 		
-		totalCost = new BigDecimal(0);
+		
 		itemsOrdered.clear();
 		itemInformation = "";
 	
@@ -204,7 +204,7 @@ public class Mainframe extends JFrame {
 	private void refreshPanel(final MenuItem itemButton) {
 		String item = itemButton.getName();
 
-		BigDecimal itemPrice = itemButton.getCost();
+		int itemPrice = itemButton.getTimeToMake();
 		 
 		 itemsOrdered.add(itemButton);
 	
@@ -237,8 +237,7 @@ public class Mainframe extends JFrame {
 		centerPanel.add(deleteButton);
 		 centerPanel.revalidate();
 		
-		totalCost = totalCost.add(itemPrice) ;
-		orderPrice += totalCost.intValue();
+ 		orderPrice += totalCost.intValue();
 	}
 
 
