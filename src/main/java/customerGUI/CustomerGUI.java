@@ -2,10 +2,12 @@ package src.main.java.customerGUI;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.Semaphore;
 import java.io.*;
+
 
 public class CustomerGUI {
 
