@@ -18,6 +18,7 @@ public class MenuCreationGUI extends JPanel {
 
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
+        this.menu = menu;
         JTextField categField = new JTextField(10);
         JButton addCategButton = new JButton("Add Category");
         categPanel = new JPanel();
@@ -41,7 +42,7 @@ public class MenuCreationGUI extends JPanel {
                 FlowLayout fl2 = new FlowLayout(FlowLayout.CENTER,10,0);
                 JPanel newMenuItemPanel = new JPanel(fl);
                 JPanel labelAndExitPanel = new JPanel(fl2);
-                JLabel categLabel = new JLabel(categField.getText());
+                JLabel categLabel = new JLabel(categField.getText().strip());
                 categLabel.addMouseListener(new MouseAdapter()
                 {
                     @Override
@@ -53,8 +54,9 @@ public class MenuCreationGUI extends JPanel {
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
                 singleCategPanel.setName(categLabel.getText());
+                newMenuItemPanel.setName(categLabel.getText());
                 newMenuItemPanel.add(addMenuItemButton);
-                
+                labelAndExitPanel.setName("category="+"&menu_item=&"+categLabel.getText());
                 labelAndExitPanel.add(categLabel);
                 labelAndExitPanel.add(removeComponentButton);
 
@@ -96,11 +98,17 @@ public class MenuCreationGUI extends JPanel {
             }
         }
         else if (type.equals("menu_item")){
-            String[] itemTimeCombo = value.split(" ");
+            // Check that the value is not empty before checking if any values can exist
+            String[] itemTimeCombo = value.split("  ");
+            // Check that the value is not empty before checking if any values can exist
+            // If values exist check that at least 2 values were parsed
+            if (value.equals("") || itemTimeCombo.length < 2){
+                return false;
+            }
             String menuItem = itemTimeCombo[0];
             String timeToMake = itemTimeCombo[1];
-            /*check dup menu_item or empty menu_item*/
-            if (menu.findMenuItem(menuItem) != null || menuItem.equals("")){
+            /*check that the menu item is not empty and that the menu item does not already exist*/
+            if (menuItem.equals("") || menu.findMenuItem(menuItem) != null){
                 return false;
             }
             try {
@@ -115,7 +123,6 @@ public class MenuCreationGUI extends JPanel {
 
         }
         return true;
-        
     }
     class ButtonAction extends AbstractAction {
         String name;
@@ -137,11 +144,11 @@ public class MenuCreationGUI extends JPanel {
             };
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
-                JLabel itemTimeCombo = new JLabel(menuItem.getText()+"  "+menuItemETM.getText());
-                if (!checkValidValue(itemTimeCombo.getText(),"menu_item")){
+                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+menuItemETM.getText().strip());
+                if (!(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
                     return;
                 }
-                menu.addMenuItem(parentPanel.getName(), menuItem.getText(), Integer.parseInt(menuItemETM.getText()));
+                menu.addMenuItem(parentPanel.getName(), menuItem.getText().strip(), Integer.parseInt(menuItemETM.getText().strip()));
                 itemTimeCombo.addMouseListener(new MouseAdapter()
                 {
                     @Override
@@ -150,7 +157,13 @@ public class MenuCreationGUI extends JPanel {
                         handleMousePress(itemTimeCombo, "menu_item");
                     }
                 });
-                parentPanel.add(itemTimeCombo);
+                JPanel labelAndExitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,0));
+                JButton removeComponentButton = new JButton(new RemoveComponentAction("X", this.parentPanel, labelAndExitPanel));
+                labelAndExitPanel.setName("category="+this.parentPanel.getName().strip()+"&menu_item="+menuItem.getText().strip());
+                labelAndExitPanel.add(itemTimeCombo);
+                labelAndExitPanel.add(removeComponentButton);
+
+                parentPanel.add(labelAndExitPanel);
                 parentPanel.revalidate();
                 scrollPanel.revalidate();
             }
@@ -169,6 +182,21 @@ public class MenuCreationGUI extends JPanel {
         }
         public void actionPerformed(ActionEvent event)
         {
+            // this.childPanel.getName() will return
+            // category=?&menu_item=?
+            
+
+            // Split the query into category=? AND menu_item=?
+            String[] query = this.childPanel.getName().split("&");
+            String category = "";
+            String menu_item = "";
+
+            // parse, split and get the category and menu item
+            String[] values = query[0].split("=");
+            category = values[1];
+            values = query[1].split("=");
+            menu_item = values[1];
+            menu.remove(category, menu_item, menu_item.equals("") ? "category" : "menu_item");
             this.parentPanel.remove(this.childPanel);
             this.parentPanel.revalidate();
             this.parentPanel.repaint();
@@ -196,7 +224,7 @@ public class MenuCreationGUI extends JPanel {
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 // Check if the input is valid
-                updatedString = updatedMenuItem.getText()+" "+updatedMenuItemETM.getText();
+                updatedString = updatedMenuItem.getText()+"  "+updatedMenuItemETM.getText();
                 if (!checkValidValue(updatedString,"menu_item")){
                     return;
                 }
