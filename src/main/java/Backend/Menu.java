@@ -2,6 +2,8 @@ package src.main.java.Backend;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Iterator;
+
 
 /**
  * <b>Menu<b/> class that holds categories of <b>Menu Items<b/> which the restaurant adds <b>menu items<b/> to and
@@ -46,6 +48,27 @@ public class Menu {
      */
     public Map<String,MenuItem> getMenuItems(String category){ ///gets the menu items from the same category
         return menu.get(category);
+    }
+
+    public Map<String,HashMap<String,MenuItem>> allItems() {
+        return menu;
+    }
+
+    public static Menu loadMenu() {
+        Menu menu = new Menu();
+
+        return menu;
+    }
+
+    public MenuItem findMenuItem(String name) {
+        Iterator<String> itr = menu.keySet().iterator();
+        while (itr.hasNext()) {
+            String category = itr.next();
+            if (menu.get(category).containsKey(name)) {
+                return menu.get(category).get(name);
+            }
+        }
+        return null;
     }
 
 

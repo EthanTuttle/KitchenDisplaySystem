@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+<<<<<<< HEAD
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -61,6 +62,12 @@ public class CustomerGUI implements ActionListener ,ChangeListener {
         button.setBackground(Color.green);
         button.setOpaque(true);
 
+=======
+import java.awt.*;
+import javax.swing.*;
+import java.net.Socket;
+import java.io.*;
+>>>>>>> ce493a2bd2171eccbdca8547f597990f9621046f
 
 
         buttonPanel.add(buttonmainCourse);
@@ -80,6 +87,7 @@ public class CustomerGUI implements ActionListener ,ChangeListener {
         frame.setVisible(true);
     }
 
+<<<<<<< HEAD
 
     public void init(Container container){};
 
@@ -104,6 +112,54 @@ public class CustomerGUI implements ActionListener ,ChangeListener {
             System.out.println("ORDER PLACED");
           }
         
+=======
+    private Socket connection;
+    private PrintWriter out; //TODO: use to communicate order
+    private BufferedReader in;
+    private String rpiIP = "129.161.136.111"; //change last 3 digits to host ID of machine running restaurant GUI
+    private src.main.java.Backend.Menu menu;
+    private boolean menuLoaded = false;
+
+    public CustomerGUI() {
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setJMenuBar(new GUIMenu(this));
+        setTitle("Customer View");
+
+        //add panels here
+        
+        try {
+            connection = new Socket(rpiIP, 55555);
+            out = new PrintWriter(connection.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            new Thread(new Runnable() {
+                public void run() {
+                    menu = new src.main.java.Backend.Menu();
+                    while (connection.isConnected()) {
+                        try {
+                            String line = in.readLine();
+                            if (line.equals("End of Menu")) {
+                                break;
+                            } else { //On connection host should send all menu items as name;timeToMake;category
+                                String[] list = line.split(";");
+                                menu.addMenuItem(list[2], list[0],  Integer.parseInt(list[1]));
+                            }
+                        } catch (IOException e) {
+                            //TODO
+                            System.out.println(e);
+                        }
+                    }
+                    menuLoaded = true;
+                    //TODO: figure out how to transition to menu chooser
+                }
+            }).start();
+            setVisible(true);
+            setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "ERROR: No connection to Host available", "Connection Error", JOptionPane.ERROR_MESSAGE);
+        }
+>>>>>>> ce493a2bd2171eccbdca8547f597990f9621046f
     }
     
     
