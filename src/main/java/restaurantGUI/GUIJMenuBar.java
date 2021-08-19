@@ -8,13 +8,13 @@ import java.awt.event.ActionListener;
 /**
  * JMenu Bar that switches between Restaurant Display and Menu Creation
  */
-public class GUIMenu  extends JMenuBar {
+public class GUIJMenuBar  extends JMenuBar {
     
     /**
      * Instantiates JMenuBar for the RestaurantGUI
      * @param gui RestauranGUI
      */
-    public GUIMenu(RestaurantGUI gui) {
+    public GUIJMenuBar(RestaurantGUI gui) {
         JMenu view = new JMenu("View");
         JMenuItem active = new JMenuItem("Active Order Display");
         JMenuItem menu = new JMenuItem("Menu Creation Display");

@@ -62,7 +62,7 @@ public class RestaurantGUI extends JFrame{
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setJMenuBar(new GUIMenu(this));
+        setJMenuBar(new GUIJMenuBar(this));
         setTitle("Restaurant View");
         try {
             server = new ServerSocket(55555);
