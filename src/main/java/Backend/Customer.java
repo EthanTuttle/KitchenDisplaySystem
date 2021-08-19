@@ -1,6 +1,7 @@
 package src.main.java.Backend;
 
 import java.util.LinkedList;
+import java.util.Date;
 
 /**
  * <b>Customer<b/> class to that places <b>Orders<b/>
@@ -31,6 +32,13 @@ public class Customer
 	 */
 	private int ticksInQueue;
 	/**
+	 * See if an order has been placed
+	 */
+	private boolean orderPlaced;
+
+	private Date timePlaced = null;
+
+	/**
 	 * Instantiate Customer object
 	 */
 	public Customer(String n)
@@ -40,19 +48,24 @@ public class Customer
 		timeToMake = 0;
 		name = n;
 		ticksInQueue = 0;
+		orderPlaced = false;
 	}
 
 	/**
 	 * Customer places the order after adding their menu items
 	 */
-	public void placeOrder()
+	public void placeOrder(Date time)
 	{
 		allOrders.add(singletonOrder);
+		orderPlaced = true;
 		// Create a new singletonOrder since customers may place more than one order
 		// Ex Person A : Orders Combo Item A.
 		// 		Person A : Also orders Combo Item B for their friend
 		//		... and so on
 		singletonOrder = new OrderItem();
+		if (timePlaced == null || time.compareTo(timePlaced) < 0) {
+			timePlaced = time;
+		}
 	}
 
 	/**
@@ -73,6 +86,9 @@ public class Customer
 	{
 		singletonOrder.addItemToOrder(item);
 		timeToMake+= item.getTimeToMake();
+		if (orderPlaced){
+			ActiveOrders.orders.sort(new OrderComparator());
+		}
 	}
 
 	/**
@@ -80,9 +96,12 @@ public class Customer
 	 * @param index index of item to remove
 	 */
 	public void removeItemFromOrder(int index)
-	{
+	{	
 		timeToMake-=singletonOrder.getMenuItem(index).getTimeToMake();
 		singletonOrder.removeItemFromOrder(index);
+		if (orderPlaced){
+			ActiveOrders.orders.sort(new OrderComparator());
+		}
 	}
 	/**
 	 * 
@@ -111,5 +130,14 @@ public class Customer
 
 	public void incrementTick(){
 		ticksInQueue++;
+	}
+
+	public int getTick(){
+		return ticksInQueue;
+	}
+
+
+	public Date getTime() {
+		return timePlaced;
 	}
 }
