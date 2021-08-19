@@ -24,10 +24,6 @@ public class MenuCreationGUI extends JPanel {
      */
     private ArrayList<JButton> itemButtons = new ArrayList<>();
     /**
-     * Index used to keep track of which add menu item btn is being clicked
-     */
-    private int itemBtnIndex = 0;
-    /**
      * Boolean to check if a menu is loading in
      */
     private boolean loadingMenu = false;
@@ -180,6 +176,13 @@ public class MenuCreationGUI extends JPanel {
             }
             String menuItem = itemTimeCombo[0];
             String timeToMake = itemTimeCombo[1];
+            int tTM = 0;
+            try {
+                tTM = Integer.parseInt(timeToMake);
+            }
+            catch (NumberFormatException n){
+
+            }
             /*check that the menu item is not empty and that the menu item does not already exist*/
             if (value == null || menuItem.equals("") || menu.findMenuItem(menuItem) != null){
                 return false;
@@ -226,37 +229,57 @@ public class MenuCreationGUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event){
             JTextField menuItem = new JTextField();
-            JTextField menuItemETM = new JTextField();
+            //JTextField menuItemETM = new JTextField();
+            SpinnerModel minuteModel = new SpinnerNumberModel(0,0,59,1);
+            SpinnerModel secondModel = new SpinnerNumberModel(0,0,59,1);
+            JSpinner menuItemMin = new JSpinner(minuteModel);
+            JSpinner menuItemSec = new JSpinner(secondModel);
             JComponent[] components = new JComponent[] {
                 new JLabel("Enter the name of the item"),
                 menuItem,
-                new JLabel("Enter the estimated time to make the menu item"),
-                menuItemETM,
+                new JLabel("Enter the estimated minutes to make the menu item"),
+                menuItemMin,
+                new JLabel("Enter the estimated seconds to make the menu item"),
+                menuItemSec
             };
             int result = -1;
             if (firstLoad){
                 result = 0;
                 menuItem.setText("Menu Item");
-                menuItemETM.setText("10");
+                menuItemMin.setValue(10);
             }
             else if (loadingMenu){
                 result = 0;
                 menuItem.setText(itemFields.get(itemFields.size()-2).getText());
-                menuItemETM.setText(itemFields.get(itemFields.size()-1).getText());
+                try {
+                    int it = Integer.parseInt(itemFields.get(itemFields.size()-1).getText());
+                    int minutes = it/60;
+                    int seconds = it%60;
+                    menuItemMin.setValue(minutes);
+                    menuItemSec.setValue(seconds);
+                }
+                catch(NumberFormatException n){
+            
+                }
+                
             }
             else{
                 result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             }
             if(result == JOptionPane.OK_OPTION) {
-                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+menuItemETM.getText().strip());
-                if (loadingMenu == false && !(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
+                int minutes = (Integer) menuItemMin.getValue();
+                int seconds = (Integer) menuItemSec.getValue();
+                int totalSeconds = (minutes*60) + seconds;
+                String checkString = menuItem.getText().strip() + "  " + totalSeconds;
+                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds);
+                if (loadingMenu == false && !(checkValidValue(checkString,"menu_item"))){
                     return;
                 }
                 ArrayList<String> values = parseQuery(this.parentPanel);
                 String category = values.get(0);
                 // If it's the first time we load something into the menu from the GUI we want to populate the menu
                 if (firstLoad || loadingMenu == false){
-                    menu.addMenuItem(category, menuItem.getText().strip(), Integer.parseInt(menuItemETM.getText().strip()));
+                    menu.addMenuItem(category, menuItem.getText().strip(), totalSeconds);
                 }
                 itemTimeCombo.addMouseListener(new MouseAdapter()
                 {
@@ -337,7 +360,10 @@ public class MenuCreationGUI extends JPanel {
     {
         String updatedString = null;
         JTextArea updatedMenuItem = new JTextArea();
-        JTextArea updatedMenuItemETM = new JTextArea();
+        SpinnerModel minuteModel = new SpinnerNumberModel(0,0,59,1);
+        SpinnerModel secondModel = new SpinnerNumberModel(0,0,59,1);
+        JSpinner updatedMenuItemMin = new JSpinner(minuteModel);
+        JSpinner updatedMenuItemSec = new JSpinner(secondModel);
         ArrayList<String> values = parseQuery(childPanel);
         String category = values.get(0);
         if (type.toLowerCase().equals("category"))
@@ -357,20 +383,26 @@ public class MenuCreationGUI extends JPanel {
             JComponent[] components = new JComponent[] {
                 new JLabel("Enter the name of the item"),
                 updatedMenuItem,
-                new JLabel("Enter the estimated time to make the menu item"),
-                updatedMenuItemETM,
+                new JLabel("Enter the estimated minutes to make the menu item"),
+                updatedMenuItemMin,
+                new JLabel("Enter the estimated seconds to make the menu item"),
+                updatedMenuItemSec
             };
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 // Check if the input is valid
-                updatedString = updatedMenuItem.getText().strip()+"  "+updatedMenuItemETM.getText().strip();
-                if (!checkValidValue(updatedString,"menu_item")){
+                int minutes = (Integer) updatedMenuItemMin.getValue();
+                int seconds = (Integer) updatedMenuItemSec.getValue();
+                int totalSeconds = (minutes*60) + seconds;
+                String checkString = updatedMenuItem.getText().strip()+"  "+ totalSeconds;
+                updatedString = updatedMenuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds;
+                if (!checkValidValue(checkString,"menu_item")){
                     return;
                 }
                 // text == menu_item=? <=== and we parse for '?'
                 String menuItem = text.getText().strip().split("  ")[0];
                 menu.remove(category, menuItem, "menu_item");
-                menu.addMenuItem(category, updatedMenuItem.getText().strip(), Integer.parseInt(updatedMenuItemETM.getText()));
+                menu.addMenuItem(category, updatedMenuItem.getText().strip(), totalSeconds);
             }
         }
         else{
