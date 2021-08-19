@@ -22,13 +22,14 @@ public class MenuReader {
 	private String inputFile;
 	private Calendar calendar;
 	private ArrayList<MenuItem> menuItems;
-	
-	public MenuReader(File inputMenu) throws FileNotFoundException {
+	private String TheCUstomer;
+	public MenuReader(File inputMenu, String Cust) throws FileNotFoundException {
 		
 		menuItems = new ArrayList<MenuItem>();
 		readMenu = new Scanner(inputMenu);
 		calendar = new GregorianCalendar();
 		count = 1;
+		TheCUstomer = Cust;
 		inputFile = inputMenu.getName();
 	}
 	
@@ -60,11 +61,18 @@ public class MenuReader {
 	
 		
 		orderLogger.write(" " + new Timestamp(orderDate.getTime()) + ";");
-		
+
+		orderLogger.write(this.TheCUstomer + ";");
+
 		for (MenuItem item: itemsOrdered) {
+
 			orderLogger.write(item.getName() + ";");
+
+
 			
 		}
+
+	
 		
 		orderLogger.close();
 	}
@@ -79,4 +87,3 @@ public class MenuReader {
 		return orders;
 	}
 }
-
