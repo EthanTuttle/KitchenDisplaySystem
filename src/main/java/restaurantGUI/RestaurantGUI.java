@@ -10,7 +10,6 @@ import java.net.ServerSocket;
 import src.main.java.Backend.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import javax.swing.ImageIcon;
 
 /**
  * RestaurantGUI class that creates the Restaurant Interface
@@ -45,6 +44,10 @@ public class RestaurantGUI extends JFrame{
      * Server for customers to connect to the restaurant
      */
     private ServerSocket server;
+    /**
+     * Title Panel
+     */
+    private JPanel mainPanel;
 
     /**
      * Instantiates the RestaurantGUI
@@ -131,14 +134,27 @@ public class RestaurantGUI extends JFrame{
         }).start();
 
         menuCreationGUI = new MenuCreationGUI(menu);
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(0, 1));
-        try {
-            mainPanel.add(new JLabel("Current IP: " + Inet4Address.getLocalHost().getHostAddress(), SwingConstants.CENTER));
-        } catch (UnknownHostException e) {
-            mainPanel.add(new JLabel("Could not display IP", SwingConstants.CENTER));
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(0, 2));
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        if (ninjaIcon == null) {
+            leftPanel.add(new JLabel("<Missing Icon>"));
+        } else {
+            leftPanel.add(new JLabel(ninjaIcon));
         }
-        mainPanel.add(new JLabel("Choose where to go to start", SwingConstants.CENTER));
+        mainPanel.add(leftPanel);
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new GridLayout(0, 1));
+        JLabel title = new JLabel("Ninja Fast Kitchen System 3000", SwingConstants.CENTER);
+        title.setFont(title.getFont().deriveFont(32.0f));
+        rightPanel.add(title);
+        try {
+            rightPanel.add(new JLabel("Current IP: " + Inet4Address.getLocalHost().getHostAddress(), SwingConstants.CENTER));
+        } catch (UnknownHostException e) {
+            rightPanel.add(new JLabel("Could not display IP", SwingConstants.CENTER));
+        }
+        rightPanel.add(new JLabel("Choose where to go to start", SwingConstants.CENTER));
         JPanel buttonPanel = new JPanel();
         JButton displayButton = new JButton("To Order Display");
         JButton menuCreationButton = new JButton("To Menu Creation");
@@ -157,8 +173,8 @@ public class RestaurantGUI extends JFrame{
         });
         buttonPanel.add(displayButton);
         buttonPanel.add(menuCreationButton);
-        mainPanel.add(buttonPanel);
-        
+        rightPanel.add(buttonPanel);
+        mainPanel.add(rightPanel);
         setContentPane(mainPanel);
 
         setVisible(true);
@@ -188,6 +204,12 @@ public class RestaurantGUI extends JFrame{
      */
     public void displayMenuCreationGUI() {
         setContentPane(menuCreationGUI);
+        repaint();
+        revalidate();
+    }
+
+    public void displayTitle() {
+        setContentPane(mainPanel);
         repaint();
         revalidate();
     }
