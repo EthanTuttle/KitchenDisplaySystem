@@ -128,6 +128,7 @@ public class MenuCreationGUI extends JPanel {
             addCategButton.getActionListeners()[0].actionPerformed(null);
             categField.setText("Category 3");
             addCategButton.getActionListeners()[0].actionPerformed(null);
+            categField.setText("");
             loadingMenu=false;
             firstLoad = false;
         }

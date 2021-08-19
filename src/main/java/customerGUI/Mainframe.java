@@ -35,46 +35,47 @@ import java.net.Socket;
  */
 public class Mainframe extends JFrame {
 
-	/**
-	 * Total cost of an order
-	 */
+    /**
+     * Total cost of an order
+     */
     private BigDecimal totalCost;
-	/**
-	 * Reader to read the menu for display
-	 */
+    /**
+     * Reader to read the menu for display
+     */
     private MenuReader menuRead;
-	/**
-	 * Panel to display receipt
-	 */
+    /**
+     * Panel to display receipt
+     */
     private JPanel receipt;
-	/**
-	 * Center Panel
-	 */
+    /**
+     * Center Panel
+     */
     private JPanel centerPanel;
     JPanel pan;
 
     JPanel panCopy;
     private Menu givMenu;
-	/**
-	 * Order Price
-	 */
+    /**
+     * Order Price
+     */
     private int orderPrice;
-	/**
-	 * List of items ordered
-	 */
+    /**
+     * List of items ordered
+     */
     private ArrayList<MenuItem> itemsOrdered;
-	/**
-	 * Information of item
-	 */
+    /**
+     * Information of item
+     */
     private String itemInformation;
 
     // test for shawn uodatate129.161.52.212\\
-	/**
-	 * Instantiates Main Frame
-	 * @param gMenu Restaurant Menu	
-	 * @param customerString Customer name
-	 * @param fromEathnSocket Socket from Restaurant
-	 */
+    /**
+     * Instantiates Main Frame
+     * 
+     * @param gMenu           Restaurant Menu
+     * @param customerString  Customer name
+     * @param fromEathnSocket Socket from Restaurant
+     */
     public Mainframe(Menu gMenu, String customerString, Socket fromEathnSocket) {
 
         totalCost = new BigDecimal(0);
@@ -99,9 +100,9 @@ public class Mainframe extends JFrame {
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
     }
 
-	/**
-	 * Creates the pane display
-	 */
+    /**
+     * Creates the pane display
+     */
     public void create() {
         JPanel mainPanel = (JPanel) getContentPane();
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getItemButtons(), getReceipt());
@@ -112,20 +113,16 @@ public class Mainframe extends JFrame {
 
     }
 
-	/**
-	 * Set Up the buttons
-	 * @return JScrollPane
-	 */
+    /**
+     * Set Up the buttons
+     * 
+     * @return JScrollPane
+     */
     private JScrollPane getItemButtons() {
 
-         pan = new JPanel();
-
-
+        pan = new JPanel();
 
         pan.setLayout(new GridLayout(0, 2));
-
-
-         
 
         JPanel borderupper = new JPanel();
         borderupper.setLayout(new BorderLayout());
@@ -137,11 +134,9 @@ public class Mainframe extends JFrame {
         backbutton.setOpaque(true);
         backbutton.setVisible(false);
 
-
-
         panCopy = pan;
 
-        backbutton.addActionListener(new ActionListener(){
+        backbutton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 pan.removeAll();
                 repaint();
@@ -149,79 +144,66 @@ public class Mainframe extends JFrame {
 
                 backbutton.setVisible(false);
 
-
-                
-
-
                 ArrayList<String> itemButtons = new ArrayList<String>();
 
                 ArrayList<MenuItem> itemButtons2 = new ArrayList<MenuItem>();
-        
+
                 for (String category : givMenu.allItems().keySet()) {
-        
+
                     itemButtons.add(category);
-        
+
                 }
 
+                for (final String itemButton : itemButtons) {
 
+                    final JButton createButton = new JButton(itemButton);
+                    createButton.setToolTipText(itemButton);
 
-        for (final String itemButton : itemButtons) {
+                    createButton.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            refresh(itemButton);
 
-            final JButton createButton = new JButton(itemButton);
-            createButton.setToolTipText(itemButton);
+                            pan.removeAll();
+                            repaint();
+                            revalidate();
 
-            createButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    refresh(itemButton);
+                            for (String itemName : givMenu.getMenuItems(itemButton).keySet()) {
 
-                    pan.removeAll();
-                    repaint();
-                    revalidate();
-
-                    for (String itemName : givMenu.getMenuItems(itemButton).keySet()) {
-
-                        itemButtons2.add(givMenu.getMenuItems(itemButton).get(itemName));
-
-                    }
-
-                    backbutton.setVisible(true);
-
-                    for (final MenuItem menuitemButton : itemButtons2) {
-
-                        final JButton createButton2 = new JButton(menuitemButton.getName());
-                        createButton2.setToolTipText(menuitemButton.getName());
-
-                        createButton2.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent arg0) {
-                                refreshPanel(menuitemButton);
+                                itemButtons2.add(givMenu.getMenuItems(itemButton).get(itemName));
 
                             }
 
-                        });
-                        pan.add(createButton2);
-                        createButton2.setPreferredSize(new Dimension(30, 60));
-                        repaint();
-                        revalidate();
+                            backbutton.setVisible(true);
 
-                    }
+                            for (final MenuItem menuitemButton : itemButtons2) {
+
+                                final JButton createButton2 = new JButton(menuitemButton.getName());
+                                createButton2.setToolTipText(menuitemButton.getName());
+
+                                createButton2.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent arg0) {
+                                        refreshPanel(menuitemButton);
+
+                                    }
+
+                                });
+                                pan.add(createButton2);
+                                createButton2.setPreferredSize(new Dimension(30, 60));
+                                repaint();
+                                revalidate();
+
+                            }
+
+                        }
+
+                        private void refresh(String itemButton) {
+
+                        }
+                    });
+                    pan.add(createButton);
+                    createButton.setPreferredSize(new Dimension(30, 60));
 
                 }
-
-                private void refresh(String itemButton) {
-
-                }
-            });
-            pan.add(createButton);
-            createButton.setPreferredSize(new Dimension(30, 60));
-
-        }
-
-                
-
-
-                
-                
-
 
             }
         });
@@ -301,10 +283,11 @@ public class Mainframe extends JFrame {
 
     }
 
-	/**
-	 * Returns the receipt
-	 * @return JPanel of receipt
-	 */
+    /**
+     * Returns the receipt
+     * 
+     * @return JPanel of receipt
+     */
     private JPanel getReceipt() {
 
         receipt = new JPanel();
@@ -380,9 +363,9 @@ public class Mainframe extends JFrame {
 
     }
 
-	/**
-	 * Deletes items ordered
-	 */
+    /**
+     * Deletes items ordered
+     */
     private void delete() {
 
         itemsOrdered.clear();
@@ -394,10 +377,11 @@ public class Mainframe extends JFrame {
 
     }
 
-	/**
-	 * Refreshes the panel
-	 * @param itemButton Button used to refresh panel
-	 */
+    /**
+     * Refreshes the panel
+     * 
+     * @param itemButton Button used to refresh panel
+     */
     private void refreshPanel(final MenuItem itemButton) {
         String item = itemButton.getName();
 
@@ -416,7 +400,7 @@ public class Mainframe extends JFrame {
         deleteButton.setOpaque(true);
 
         deleteButton.addActionListener(new ActionListener() {
-			@Override
+            @Override
             public void actionPerformed(ActionEvent event) {
                 centerPanel.remove(orderItems);
                 itemsOrdered.remove(itemButton);
