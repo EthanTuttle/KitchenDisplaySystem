@@ -12,6 +12,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import javax.swing.plaf.TreeUI;
+
+import jdk.jfr.SettingDefinition;
 import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
 
@@ -62,23 +65,30 @@ public class MenuReader {
 		orderLogger = new BufferedWriter(orderLoggerStream);
 		
 		java.util.Date orderDate = new java.util.Date();
+
+
+        String sendToSocket = "";
+
+
+
+        
 	
-        out = new PrintWriter(connection.getOutputStream(), true);
+        out = new PrintWriter(connection.getOutputStream(),true);
 
-		out.print(" " + new Timestamp(orderDate.getTime()) + ";");
+        sendToSocket += new Timestamp(orderDate.getTime()) + ";";
 
-		out.print(this.TheCUstomer + ";");
+		sendToSocket +=(this.TheCUstomer + ";");
 
 
 
 		for (MenuItem item: itemsOrdered) {
 
-			out.print(item.getName() + ";");
+			sendToSocket+=(item.getName() + ";");
 
 
 			
 		}
-
+        out.println(sendToSocket);
 	
 		
 		orderLogger.close();
