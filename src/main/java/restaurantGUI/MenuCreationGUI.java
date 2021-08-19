@@ -99,13 +99,14 @@ public class MenuCreationGUI extends JPanel {
                 String category = itr1.next();
                 categField.setText(category);
                 addCategButton.getActionListeners()[0].actionPerformed(null);
-                Iterator<String> itr2 = menu.allItems().get(category).keySet().iterator();
+                /*Iterator<String> itr2 = menu.allItems().get(category).keySet().iterator();
+                
                 while (itr2.hasNext()) {
                     String name = itr2.next(); 
                     MenuItem item = menu.allItems().get(category).get(name);
                     itemFields.get(itemFields.size()-1).setText(item.getName());
                     itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
-                }
+                }*/
             }
             loadingMenu = false;
         }

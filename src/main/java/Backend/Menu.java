@@ -90,14 +90,14 @@ public class Menu {
                         String fieldValue = values[1];
                         switch (i)
                         {
-                            case 1:
+                            case 0:
                                 category = fieldValue.strip();
                                 menu.addCategory(category);
                                 break;
-                            case 2:
+                            case 1:
                                 menuItem = fieldValue.strip();
                                 break;
-                            case 3:
+                            case 2:
                                 Integer actualTimeToMake = Integer.parseInt(fieldValue.strip());
                                 menu.addMenuItem(category, menuItem, actualTimeToMake);
                         }
@@ -121,7 +121,9 @@ public class Menu {
             }
         }
         // Return the menu whether populated or not
+        System.out.println("Menu on load has: "+menu.allItems());
         return menu;
+
     }
 
     public void replace(String oldCategoryName, String newCategoryName){
