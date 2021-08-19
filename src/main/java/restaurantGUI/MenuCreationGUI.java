@@ -111,7 +111,7 @@ public class MenuCreationGUI extends JPanel {
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 JLabel itemTimeCombo = new JLabel(menuItem.getText()+"  "+menuItemETM.getText());
-                menuItem.addMouseListener(new MouseAdapter()
+                itemTimeCombo.addMouseListener(new MouseAdapter()
                 {
                     @Override
                     public void mousePressed(MouseEvent e)
