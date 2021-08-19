@@ -73,7 +73,7 @@ public class MenuReader {
 
 		for (MenuItem item: itemsOrdered) {
 
-			out.println(item.getName() + ";");
+			out.println(item.getName());
 
 
 			
