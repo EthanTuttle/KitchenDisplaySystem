@@ -31,6 +31,7 @@ public class ActiveOrdersDisplay extends JPanel {
         displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.X_AXIS));
         scrollPanel = new JScrollPane(displayPanel);
         scrollPanel.setBorder(null);
+        scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         add(scrollPanel, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel();
         JButton button = new JButton("button");
@@ -82,6 +83,7 @@ public class ActiveOrdersDisplay extends JPanel {
         String timeString = items[0];
         Date timePlaced = Timestamp.valueOf(timeString);
         customer.placeOrder(timePlaced);
+        queue.sort();
         updatePanel();
     }
 
@@ -98,7 +100,6 @@ public class ActiveOrdersDisplay extends JPanel {
                 JScrollPane scrollableDisplay = new JScrollPane(displayItem);
                 scrollableDisplay.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
                 scrollableDisplay.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                scrollableDisplay.setBorder(null);
                 displayPanel.add(scrollableDisplay);
                 if (itr.hasNext()) {
                     Dimension minSize = new Dimension(5, 100);

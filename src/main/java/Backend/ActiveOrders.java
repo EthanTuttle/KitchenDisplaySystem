@@ -55,4 +55,8 @@ public class ActiveOrders {
         return orders.iterator();
     }
 
+    public void sort() {
+        orders.sort(new OrderComparator());
+    }
+
 }
