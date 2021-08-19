@@ -35,7 +35,7 @@ public class MenuReader {
     
 
 
-	public MenuReader(Menu inputMenu, String Cust,Socket connSocket) throws FileNotFoundException {
+	public MenuReader(Menu inputMenu, String Cust,Socket connSocket) {
 		
 		menuItems = new ArrayList<MenuItem>();
 		calendar = new GregorianCalendar();

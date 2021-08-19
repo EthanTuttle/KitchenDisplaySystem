@@ -11,7 +11,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.io.*;
 
-public class CustomerGUI extends JFrame {
+public class CustomerGUI {
 
     private Socket connection;
     private PrintWriter out; //TODO: use to communicate order
@@ -21,66 +21,66 @@ public class CustomerGUI extends JFrame {
     private boolean menuLoaded = false;
 
     public CustomerGUI() {
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setJMenuBar(new GUIMenu(this));
-        setTitle("Customer View");
         
-        try {
-            connection = new Socket(InetAddress.getByName(rpiIP), 55555);
-            out = new PrintWriter(connection.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            new Thread(new Runnable() {
-                public void run() {
-                    menu = new src.main.java.Backend.Menu();
-                    while (connection.isConnected()) {
-                        try {
-                            String line = in.readLine();
-                            if (line.equals("End of Menu")) {
-                                break;
-                            } else { //On connection host should send all menu items as name;timeToMake;category
-                                String[] list = line.split(";");
-                                menu.addMenuItem(list[2], list[0],  Integer.parseInt(list[1]));
-                            }
-                        } catch (IOException e) {
-                            //TODO
-                            System.out.println(e);
-                        }
-                    }
-                    menuLoaded = true;
-                    //TODO: figure out how to transition to menu chooser
-                }
-            }).start();
-            setVisible(true);
-            setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "ERROR: No connection to Host available", "Connection Error", JOptionPane.ERROR_MESSAGE);
-        }
+        //create jdialog for input
+        JPanel input = new JPanel();
+        input.setLayout(new GridLayout(0, 2));
+        input.add(new JLabel("Name: "));
+        JTextField nameInput = new JTextField();
+        input.add(nameInput);
+        input.add(new JLabel("IP: "));
+        JTextField ipInput = new JTextField();
+        input.add(ipInput);
+        int result = JOptionPane.showConfirmDialog(null, input, "Enter the information to run the program", JOptionPane.OK_OPTION);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new FlowLayout());
-        inputPanel.add(new JLabel("Enter Name: "));
-        JTextField input = new JTextField();
-        inputPanel.add(input);
-        mainPanel.add(inputPanel);
-        JButton submit = new JButton("Submit");
-        submit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                if (input.getText().length() > 0) {
-                    //new Mainframe(menu, input.getText());
-                    CustomerGUI.this.setVisible(false);
+        //pull results
+        if (result == JOptionPane.OK_OPTION) {
+            if (nameInput.getText().length() == 0 || ipInput.getText().length() == 0 ) {
+                JOptionPane.showMessageDialog(null, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                rpiIP = ipInput.getText();
+                try {
+                    connection = new Socket(InetAddress.getByName(rpiIP), 55555);
+                    out = new PrintWriter(connection.getOutputStream(), true);
+                    in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    new Thread(new Runnable() {
+                        public void run() {
+                            menu = new src.main.java.Backend.Menu();
+                            while (connection.isConnected()) {
+                                try {
+                                    String line = in.readLine();
+                                    if (line.equals("End of Menu")) {
+                                        break;
+                                    } else { //On connection host should send all menu items as name;timeToMake;category
+                                        String[] list = line.split(";");
+                                        menu.addMenuItem(list[2], list[0],  Integer.parseInt(list[1]));
+                                    }
+                                } catch (IOException e) {
+                                    //TODO: 
+                                    System.out.println(e);
+                                }
+                                
+                            }
+                            menuLoaded = true;
+                        }
+                    }).start();
+                    new Thread(new Runnable(){
+                        public void run() {
+                            while (!menuLoaded) {
+                                //do nothing, wait until menu is loaded and then start the application
+                            }
+                            new Mainframe(menu, nameInput.getText(), connection);
+                        }
+                    }); 
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, e, "Connection Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(1);
                 }
                 
-
             }
-        });
-        mainPanel.add(submit);
-        add(mainPanel);
-        setVisible(true);
-        setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
+        }
+
+        
     }
     
     

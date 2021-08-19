@@ -68,7 +68,10 @@ public class RestaurantGUI extends JFrame{
                                 out.println("End of Menu");
                                 while(client.isConnected()) { //while connected, look for communication
                                     try {
-                                        activeOrdersDisplay.addOrder(in.readLine());
+                                        String line = in.readLine();
+                                        if (line.length() > 0) {
+                                            activeOrdersDisplay.addOrder(line);
+                                        }
                                     } catch (IOException e) {
                                         break;
                                     }

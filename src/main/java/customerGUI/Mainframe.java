@@ -42,7 +42,7 @@ public class Mainframe extends JFrame {
 
 	private String itemInformation;
 	
-	public Mainframe(Menu gMenu,String customerString,Socket fromEathnSocket) throws FileNotFoundException {
+	public Mainframe(Menu gMenu,String customerString,Socket fromEathnSocket) {
 		
 		totalCost = new BigDecimal(0);
 		itemInformation = "";
