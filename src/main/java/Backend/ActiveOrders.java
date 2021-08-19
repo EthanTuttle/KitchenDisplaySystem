@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 /**
- * <b>ActiveOrders<b/> class that represents the orders a restaurant sees 
+ * <b>ActiveOrders</b> class that represents the orders a restaurant sees 
  * that they have to make
  */
 public class ActiveOrders {

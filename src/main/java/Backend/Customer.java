@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Date;
 
 /**
- * <b>Customer<b/> class to that places <b>Orders<b/>
+ * <b>Customer</b> class to that places <b>Orders</b>
  */
 public class Customer
 {
