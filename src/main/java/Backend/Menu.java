@@ -97,4 +97,8 @@ public class Menu {
         }
         return null;
     }
+
+    public boolean isEmpty(){
+        return menu.isEmpty();
+    }
 }

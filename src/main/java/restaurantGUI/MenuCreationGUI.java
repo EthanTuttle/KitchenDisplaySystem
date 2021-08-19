@@ -71,6 +71,15 @@ public class MenuCreationGUI extends JPanel {
 
         add(categPanel,BorderLayout.NORTH);
         add(scrollPanel,BorderLayout.CENTER);
+        
+        if (menu.isEmpty()){
+            categField.setText("Category 1");
+            addCategButton.getActionListeners()[0].actionPerformed(null);
+            categField.setText("Category 2");
+            addCategButton.getActionListeners()[0].actionPerformed(null);
+            categField.setText("Category 3");
+            addCategButton.getActionListeners()[0].actionPerformed(null);
+        }
 
         // If a menu exists than load it instead of showing an empty menu
         loadingMenu = true;
