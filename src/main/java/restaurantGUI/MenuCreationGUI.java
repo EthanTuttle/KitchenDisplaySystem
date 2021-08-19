@@ -15,6 +15,11 @@ public class MenuCreationGUI extends JPanel {
     private ArrayList<JButton> itemButtons = new ArrayList<>();
     private boolean loadingMenu = false;
     private Menu menu;
+    private JScrollPane scrollPanel;
+    private JPanel categPanel;
+    private JPanel enclosingCategPanel;
+    private JTextField lastAddMenuItemField;
+    private JButton lastAddMenuItemButton;
 
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
@@ -52,6 +57,7 @@ public class MenuCreationGUI extends JPanel {
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
+                lastAddMenuItemButton = addMenuItemButton;
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
                 singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 enclosedSingleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
@@ -151,7 +157,7 @@ public class MenuCreationGUI extends JPanel {
                 new JLabel("Enter the estimated time to make the menu item"),
                 menuItemETM,
             };
-            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.OK_CANCEL_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+menuItemETM.getText().strip());
                 if (!(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
@@ -289,7 +295,4 @@ public class MenuCreationGUI extends JPanel {
         return ret;
     }
 
-    private JScrollPane scrollPanel;
-    private JPanel categPanel;
-    private JPanel enclosingCategPanel;
 }
