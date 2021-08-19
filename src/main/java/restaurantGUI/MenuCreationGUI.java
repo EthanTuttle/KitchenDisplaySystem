@@ -162,8 +162,12 @@ public class MenuCreationGUI extends JPanel {
     public boolean checkValidValue(String value, String oldValue, String type){
         if (type.equals("category")){
             /*check dup category or empty value*/
-            if (value == null || value.equals("") || menu.containsCategory(value)){
+            if (value == null || value.equals("")){
                 JOptionPane.showMessageDialog(this, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            else if (menu.containsCategory(value)){
+                JOptionPane.showMessageDialog(this, "Category already exists.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
