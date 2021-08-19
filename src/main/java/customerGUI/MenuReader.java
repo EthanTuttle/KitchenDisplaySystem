@@ -52,7 +52,6 @@ public class MenuReader {
 
     public void logOrder(ArrayList<MenuItem> itemsOrdered, BigDecimal orderPrice) throws IOException {
 
-        orderLoggerStream = new FileWriter(getFileInstance(), true);
         orderLogger = new BufferedWriter(orderLoggerStream);
 
         java.util.Date orderDate = new java.util.Date();
@@ -75,12 +74,5 @@ public class MenuReader {
         orderLogger.close();
     }
 
-    private File getFileInstance() {
 
-        if (orders == null) {
-            String fileName = inputFile + " " + "ItemOrders.txt";
-            orders = new File(fileName);
-        }
-        return orders;
-    }
 }
