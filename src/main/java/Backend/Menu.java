@@ -11,8 +11,8 @@ import java.util.LinkedHashMap;
 
 
 /**
- * <b>Menu<b/> class that holds categories of <b>Menu Items<b/> which the restaurant adds <b>menu items<b/> to and
- * the <b>Customer<b/> interacts with to add <b>menu items<b/> to their <b>Order<b/>
+ * <b>Menu</b> class that holds categories of <b>Menu Items</b> which the restaurant adds <b>menu items</b> to and
+ * the <b>Customer</b> interacts with to add <b>menu items</b> to their <b>Order</b>
  */
 public class Menu {
 
@@ -43,11 +43,7 @@ public class Menu {
      * @param timeToMake Time to make menu item
      */
     public void addMenuItem(String category, String menuItemName, int timeToMake){ //adds a menu item to a certain category
-        //System.out.println"Parameters coming in are: \""+category+"\", "+menuItemName+" and "+timeToMake);
-        //System.out.println"++Menu get category of \""+category+"\" gives "+menu.get(category));
         menu.get(category).put(menuItemName,new MenuItem(menuItemName,timeToMake,category));
-        //System.out.println"--Menu get category after add of \""+category+"\" gives "+menu.get(category));
-        //System.out.println"After adding to the menu we have: "+menu);
     }
 
     /**
@@ -125,7 +121,6 @@ public class Menu {
                         }
                     }
                     line = bufferedReader.readLine();
-                    //System.out.println"Current menu is: "+menu.allItems());
                 }
 		    }
             catch(IOException e){
@@ -144,7 +139,6 @@ public class Menu {
             }
         }
         // Return the menu whether populated or not
-        //System.out.println"Menu on load has: "+menu.allItems());
         return menu;
 
     }
@@ -155,11 +149,8 @@ public class Menu {
      * @param newCategoryName The New Category Name
      */
     public void replace(String oldCategoryName, String newCategoryName){
-        ////System.out.println"Before: "+menu);
-        ////System.out.println"We have old categ: "+oldCategoryName+" and new categ: "+newCategoryName);
         HashMap<String,MenuItem> sampleMap = menu.remove(oldCategoryName);
         menu.put(newCategoryName,sampleMap);
-        ////System.out.println"After "+menu);
     }
 
     /**
@@ -169,15 +160,12 @@ public class Menu {
      * @param type Type specifying whether we remove a category or menu item
      */
     public void remove(String categ, String menuItem, String type){
-        ////System.out.println"Before: "+menu);
-        ////System.out.println"We have categ: "+categ+" and menuItem: "+menuItem);
         if (type.equals("category")){
             menu.remove(categ);
         }
         else if (type.equals("menu_item")){
             menu.get(categ).remove(menuItem);
         }
-        ////System.out.println"After "+menu);
     }
     
     /**

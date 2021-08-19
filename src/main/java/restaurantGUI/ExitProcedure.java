@@ -25,13 +25,11 @@ public class ExitProcedure
 				bufferedWriter = new BufferedWriter(fileWriter);
 				String line = "";
 				Map<String, HashMap<String, MenuItem>> itr = menu.getMenu();
-				//System.out.println("Menu has: "+menu.allItems());
 				// Loop through LinkedHashMap<String, HashMap<String, MenuItem>> in the menu 
 				for (String category : itr.keySet()){
 					HashMap<String, MenuItem> itr2 = itr.get(category);
 					if (itr2.keySet().isEmpty()){
 						line="category="+category+"&menu_item= &timeToMake= ";
-						//System.out.println("Writing line: \""+line+"\"");
 						bufferedWriter.write(line);
 						bufferedWriter.newLine();
 					}
@@ -47,7 +45,6 @@ public class ExitProcedure
 								mapItemName = menuItem;
 							}
 							line="category="+mapCategory+"&menu_item="+mapItemName+"&timeToMake="+item.getTimeToMake();
-							//System.out.println("Writing line: \""+line+"\"");
 							bufferedWriter.write(line);
 							bufferedWriter.newLine();
 						}
@@ -66,7 +63,6 @@ public class ExitProcedure
 					/* Error caught while trying to close the Writer streams */
 					e.printStackTrace();
 				}
-				//System.out.println("On exit menu is: "+menu.allItems());
 			}
 	}
 }
