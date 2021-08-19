@@ -93,7 +93,7 @@ public class Mainframe extends JFrame {
         create();
 
         setSize(1500, 1500);
-        setTitle("Restaurant Menu System");
+        setTitle("Customer Order");
         setBackground(Color.WHITE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
