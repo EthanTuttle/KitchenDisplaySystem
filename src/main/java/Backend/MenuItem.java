@@ -57,4 +57,9 @@ public class MenuItem {
         return category;
     }
 
+    @Override
+    public String toString() {
+        return name + ";" + timeToMake + ";" + category;
+    }
+
 }
