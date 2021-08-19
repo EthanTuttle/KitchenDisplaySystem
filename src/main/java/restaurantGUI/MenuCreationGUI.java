@@ -48,15 +48,15 @@ public class MenuCreationGUI extends JPanel {
                     @Override
                     public void mousePressed(MouseEvent e)
                     {
-                        handleMousePress(categLabel, "category");
+                        handleMousePress(categLabel, "category", categLabel.getText());
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
                 singleCategPanel.setName(categLabel.getText());
                 newMenuItemPanel.setName(categLabel.getText());
+                enclosedSingleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 newMenuItemPanel.add(addMenuItemButton);
-                labelAndExitPanel.setName("category="+"&menu_item=&"+categLabel.getText());
                 labelAndExitPanel.add(categLabel);
                 labelAndExitPanel.add(removeComponentButton);
 
@@ -154,7 +154,7 @@ public class MenuCreationGUI extends JPanel {
                     @Override
                     public void mousePressed(MouseEvent e)
                     {
-                        handleMousePress(itemTimeCombo, "menu_item");
+                        handleMousePress(itemTimeCombo, "menu_item", parentPanel.getName());
                     }
                 });
                 JPanel labelAndExitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,0));
@@ -184,7 +184,6 @@ public class MenuCreationGUI extends JPanel {
         {
             // this.childPanel.getName() will return
             // category=?&menu_item=?
-            
 
             // Split the query into category=? AND menu_item=?
             String[] query = this.childPanel.getName().split("&");
@@ -202,7 +201,7 @@ public class MenuCreationGUI extends JPanel {
             this.parentPanel.repaint();
         }
     }
-    public void handleMousePress(JLabel text, String type)
+    public void handleMousePress(JLabel text, String type, String category)
     {
         String updatedString = null;
         JTextArea updatedMenuItem = new JTextArea();
@@ -211,7 +210,9 @@ public class MenuCreationGUI extends JPanel {
         {
 		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the category to?");
             if (!checkValidValue(updatedString,"category")){
+                return;
             }
+            //menu.replace(updatedString, category);
         }
         else if (type.toLowerCase().equals("menu_item"))
         {
@@ -224,10 +225,12 @@ public class MenuCreationGUI extends JPanel {
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 // Check if the input is valid
-                updatedString = updatedMenuItem.getText()+"  "+updatedMenuItemETM.getText();
+                updatedString = updatedMenuItem.getText().strip()+"  "+updatedMenuItemETM.getText().strip();
                 if (!checkValidValue(updatedString,"menu_item")){
                     return;
                 }
+                menu.remove(category, updatedMenuItem.getText().strip(), "menu_item");
+                menu.addMenuItem(category, updatedMenuItem.getText().strip(), Integer.parseInt(updatedMenuItemETM.getText()));
             }
         }
         else{
