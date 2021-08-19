@@ -69,6 +69,8 @@ public class Menu {
         HashMap<String,MenuItem> sampleMap = menu.remove(oldCategoryName);
         menu.put(newCategoryName,sampleMap);
     }
+
+    
     public void remove(String categ, String menuItem, String type){
         System.out.println(menu);
         if (type.equals("category")){
