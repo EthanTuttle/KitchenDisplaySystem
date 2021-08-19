@@ -70,18 +70,6 @@ public class ActiveOrdersDisplay extends JPanel {
         });
         buttonPanel.add(refresh);
         add(buttonPanel, BorderLayout.SOUTH);
-
-        new Thread(new Runnable(){
-
-            @Override
-            public void run() {
-                while (true) {
-                    synchronized (displayItems) {
-                        for (DisplayItem item : displayItems) {
-                            item.updateTime();
-                        }
-                        scrollPanel.repaint();
-                        scrollPanel.revalidate();
         int delay = 500;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
