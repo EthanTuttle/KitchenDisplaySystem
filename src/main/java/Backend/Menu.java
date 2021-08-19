@@ -67,19 +67,24 @@ public class Menu {
     }
 
     public void replace(String oldCategoryName, String newCategoryName){
+        System.out.println("Before: "+menu);
+        System.out.println("We have old categ: "+oldCategoryName+" and new categ: "+newCategoryName);
         HashMap<String,MenuItem> sampleMap = menu.remove(oldCategoryName);
         menu.put(newCategoryName,sampleMap);
+        System.out.println("After "+menu);
     }
+
+    
     public void remove(String categ, String menuItem, String type){
-        System.out.println("Before: "+menu);
-        System.out.println("We have categ: "+categ+" and menuItem: "+menuItem);
+        //System.out.println("Before: "+menu);
+        //System.out.println("We have categ: "+categ+" and menuItem: "+menuItem);
         if (type.equals("category")){
             menu.remove(categ);
         }
         else if (type.equals("menu_item")){
             menu.get(categ).remove(menuItem);
         }
-        System.out.println("After "+menu);
+        //System.out.println("After "+menu);
     }
 
     public MenuItem findMenuItem(String name) {

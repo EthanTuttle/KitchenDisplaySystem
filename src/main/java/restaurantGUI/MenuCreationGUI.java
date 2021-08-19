@@ -205,13 +205,18 @@ public class MenuCreationGUI extends JPanel {
         String updatedString = null;
         JTextArea updatedMenuItem = new JTextArea();
         JTextArea updatedMenuItemETM = new JTextArea();
+        ArrayList<String> values = parseQuery(childPanel);
+        String category = values.get(0);
         if (type.toLowerCase().equals("category"))
         {
 		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the category to?");
             if (!checkValidValue(updatedString,"category")){
                 return;
             }
-            //menu.replace(updatedString, category);
+            menu.replace(category, updatedString);
+            String oldMenuItem = values.get(1);
+            childPanel.setName("category="+updatedString+"&menu_item="+oldMenuItem);
+            category = updatedString;
         }
         else if (type.toLowerCase().equals("menu_item"))
         {
@@ -228,18 +233,10 @@ public class MenuCreationGUI extends JPanel {
                 if (!checkValidValue(updatedString,"menu_item")){
                     return;
                 }
-                ArrayList<String> values = parseQuery(childPanel);
-                String category = values.get(0);
                 // text == menu_item=? <=== and we parse for '?'
                 String menuItem = text.getText().strip().split("  ")[0];
                 menu.remove(category, menuItem, "menu_item");
                 menu.addMenuItem(category, updatedMenuItem.getText().strip(), Integer.parseInt(updatedMenuItemETM.getText()));
-                Component[] allComponents = childPanel.getComponents();
-                for (int i = 0; i < allComponents.length; i++){
-                    if (allComponents[i].getName() != null){
-                        allComponents[i].setName("category="+category+"&menu_item="+updatedMenuItem.getText().strip());
-                    }
-                }
             }
         }
         else{
@@ -251,7 +248,13 @@ public class MenuCreationGUI extends JPanel {
         if (updatedString != null)
         {
             text.setText(updatedString);
-
+            Component[] allComponents = childPanel.getComponents();
+            for (int i = 0; i < allComponents.length; i++){
+                if (allComponents[i].getName() != null){
+                    System.out.println("At "+i+" the component name is: "+allComponents[i].getName());
+                    allComponents[i].setName("category="+category+"&menu_item="+updatedMenuItem.getText().strip());
+                }
+            }
         }
     }
     /**
