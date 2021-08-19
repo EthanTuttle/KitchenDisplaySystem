@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JOptionPane;
 
+import src.main.java.Backend.Menu;
+
 
 public class RestaurantTester {
 
@@ -16,7 +18,7 @@ public class RestaurantTester {
 
 			String CustomerName = JOptionPane.showInputDialog("Enter Name");
 			
-			Mainframe guiFrame = new Mainframe(inputFile, CustomerName);
+			Mainframe guiFrame = new Mainframe(new Menu(), CustomerName);
 		}
 		
 		catch(FileNotFoundException e) {

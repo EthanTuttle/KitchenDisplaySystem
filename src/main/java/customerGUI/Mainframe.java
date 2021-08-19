@@ -21,6 +21,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
 
 import java.io.FileNotFoundException;
@@ -34,12 +35,13 @@ public class Mainframe extends JFrame {
 	private MenuReader menuRead;
 	private JPanel receipt;
 	private JPanel centerPanel;
+    private Menu givMenu;
 	private int orderPrice;
 	private ArrayList <MenuItem> itemsOrdered;
 
 	private String itemInformation;
 	
-	public Mainframe(File givenMenu,String customerString) throws FileNotFoundException {
+	public Mainframe(Menu gMenu,String customerString) throws FileNotFoundException {
 		
 		totalCost = new BigDecimal(0);
 		itemInformation = "";
@@ -47,8 +49,10 @@ public class Mainframe extends JFrame {
 		String Customer = customerString;
 
 		itemsOrdered = new ArrayList<MenuItem>();
-		menuRead = new MenuReader(givenMenu,Customer);
-		menuRead.readInputFile();
+
+        givMenu = gMenu;
+		// menuRead = new MenuReader(givenMenu,Customer);
+		// menuRead.readInputFile();
 		create();
 		create();
 		
@@ -76,7 +80,32 @@ public class Mainframe extends JFrame {
 		JPanel pan = new JPanel();
 		pan.setLayout(new GridLayout(0,2));
 		
-		ArrayList<MenuItem> itemButtons = menuRead.getMenuItems();
+
+
+
+
+
+
+
+    // map category:::(name : menuitem(name, timeTomake))
+
+
+
+        ArrayList<MenuItem> itemButtons  = new ArrayList<MenuItem>();
+
+        for(String category : givMenu.allItems().keySet()){
+
+                for( String itemName : givMenu.getMenuItems(category).keySet()){
+
+                   itemButtons.add(givMenu.getMenuItems(category).get(itemName));
+
+                }
+
+        }
+
+
+
+		
 
 		for (final MenuItem itemButton: itemButtons) {
 
