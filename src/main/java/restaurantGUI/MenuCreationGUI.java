@@ -353,6 +353,7 @@ public class MenuCreationGUI extends JPanel {
         }
         else if (type.toLowerCase().equals("menu_item"))
         {
+            updatedMenuItem.setText(text.getText());
             JComponent[] components = new JComponent[] {
                 new JLabel("Enter the name of the item"),
                 updatedMenuItem,
