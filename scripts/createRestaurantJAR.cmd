@@ -1,4 +1,5 @@
+@ECHO off
 cd ..
 javac src\main\java\restaurantGUI\RestaurantGUI.java -d bin\Restaurant
-cd bin\Restaurant
-jar cfm restaurant.jar MANIFEST.MF .
+cd bin
+jar cfe restaurant.jar src.main.java.restaurantGUI.RestaurantGUI -C Restaurant . 
