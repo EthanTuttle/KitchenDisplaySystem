@@ -34,13 +34,13 @@ public class ActiveOrdersDisplay extends JPanel {
         scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         add(scrollPanel, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel();
-        JButton button = new JButton("button");
-        button.addActionListener(new ActionListener() {
+        JButton refresh = new JButton("Refresh");
+        refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                
+                updatePanel();
             }
         });
-        buttonPanel.add(button);
+        buttonPanel.add(refresh);
         add(buttonPanel, BorderLayout.SOUTH);
 
         int delay = 500;
@@ -93,10 +93,14 @@ public class ActiveOrdersDisplay extends JPanel {
             Iterator<Customer> itr = queue.getIterator();
             while (itr.hasNext()) {
                 Customer customer = itr.next();
-                DisplayItem displayItem = new DisplayItem(customer);
+
+                JButton deleteButton = new JButton("Remove");
+                deleteButton.setBackground(Color.GREEN);
+                deleteButton.setOpaque(true);
+
+                DisplayItem displayItem = new DisplayItem(customer, deleteButton);
                 displayItems.add(displayItem);
                 displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                //displayItem.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/5, (int)displayPanel.getSize().getHeight()));
                 displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/4, (int)displayPanel.getSize().getHeight()));
                 JScrollPane scrollableDisplay = new JScrollPane(displayItem);
                 scrollableDisplay.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
@@ -109,6 +113,16 @@ public class ActiveOrdersDisplay extends JPanel {
                     Dimension maxSize = new Dimension(10, 100);
                     displayPanel.add(new Box.Filler(minSize, prefSize, maxSize));
                 }
+
+                deleteButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        queue.removeCustomer(customer);
+                        displayPanel.remove(scrollableDisplay);
+                        scrollPanel.repaint();
+                        scrollPanel.revalidate();
+                        customers.remove(customer.getName());
+                    }
+                });
             }
             scrollPanel.repaint();
             scrollPanel.revalidate();
