@@ -43,20 +43,20 @@ public class ActiveOrdersDisplay extends JPanel {
         buttonPanel.add(button);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        new Thread(new Runnable(){
-            public void run() {
-                while (true) {
-                    synchronized (displayItems) {
-                        for (DisplayItem item : displayItems) {
-                            item.updateTime();
-                        }
-                        scrollPanel.repaint();
-                        scrollPanel.revalidate();
+        int delay = 500;
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                synchronized (displayItems) {
+                    for (DisplayItem item : displayItems) {
+                        item.updateTime();
                     }
-                    
+                    scrollPanel.repaint();
+                    scrollPanel.revalidate();
                 }
             }
-        }).start();
+        };
+        Timer timeUpdater = new Timer(delay, taskPerformer);
+        timeUpdater.start();
     }
 
     /**
@@ -87,7 +87,7 @@ public class ActiveOrdersDisplay extends JPanel {
         updatePanel();
     }
 
-    private void updatePanel() {
+    public void updatePanel() {
         synchronized (displayItems) {
             displayPanel.removeAll();
             Iterator<Customer> itr = queue.getIterator();
@@ -96,9 +96,11 @@ public class ActiveOrdersDisplay extends JPanel {
                 DisplayItem displayItem = new DisplayItem(customer);
                 displayItems.add(displayItem);
                 displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+                //displayItem.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/5, (int)displayPanel.getSize().getHeight()));
+                displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/4, (int)displayPanel.getSize().getHeight()));
                 JScrollPane scrollableDisplay = new JScrollPane(displayItem);
                 scrollableDisplay.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+                scrollableDisplay.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
                 scrollableDisplay.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
                 displayPanel.add(scrollableDisplay);
                 if (itr.hasNext()) {

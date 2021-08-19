@@ -113,6 +113,7 @@ public class RestaurantGUI extends JFrame{
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 setContentPane(activeOrdersDisplay);
+                activeOrdersDisplay.updatePanel();
                 revalidate();
             }
         });
@@ -131,6 +132,7 @@ public class RestaurantGUI extends JFrame{
 
     public void displayActiveOrdersDisplay() {
         setContentPane(activeOrdersDisplay);
+        activeOrdersDisplay.updatePanel();
         repaint();
         revalidate();
     }
