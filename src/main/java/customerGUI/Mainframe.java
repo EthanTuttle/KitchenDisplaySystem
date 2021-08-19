@@ -64,7 +64,7 @@ public class Mainframe extends JFrame {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-
+		setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
 	}
 	
 	
