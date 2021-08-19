@@ -1,7 +1,6 @@
 package src.main.java.restaurantGUI;
 
 import java.awt.*;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,6 @@ import java.net.ServerSocket;
 import src.main.java.Backend.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import javax.swing.ImageIcon;
 
 /**
  * RestaurantGUI class that creates the Restaurant Interface
@@ -139,18 +137,18 @@ public class RestaurantGUI extends JFrame{
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 2));
         JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout(0, 1));
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         if (ninjaIcon == null) {
             leftPanel.add(new JLabel("<Missing Icon>"));
         } else {
             leftPanel.add(new JLabel(ninjaIcon));
         }
-        JLabel title = new JLabel("Ninja Fast Kitchen System 3000", SwingConstants.CENTER);
-        title.setFont(title.getFont().deriveFont(32.0f));
-        leftPanel.add(title);
         mainPanel.add(leftPanel);
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new GridLayout(0, 1));
+        JLabel title = new JLabel("Ninja Fast Kitchen System 3000", SwingConstants.CENTER);
+        title.setFont(title.getFont().deriveFont(32.0f));
+        rightPanel.add(title);
         try {
             rightPanel.add(new JLabel("Current IP: " + Inet4Address.getLocalHost().getHostAddress(), SwingConstants.CENTER));
         } catch (UnknownHostException e) {
