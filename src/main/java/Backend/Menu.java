@@ -52,6 +52,12 @@ public class Menu {
     public Map<String,HashMap<String,MenuItem>> allItems() {
         return menu;
     }
+    public Boolean containsCategory(String category){
+        if (menu.get(category) != null){
+            return true;
+        }
+        return false;
+    }
 
     public static Menu loadMenu() {
         Menu menu = new Menu();
@@ -69,6 +75,4 @@ public class Menu {
         }
         return null;
     }
-
-
 }
