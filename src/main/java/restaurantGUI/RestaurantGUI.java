@@ -10,9 +10,14 @@ import src.main.java.Backend.*;
 import java.net.Socket;
 import javax.swing.ImageIcon;
 
-
+/**
+ * RestaurantGUI class that creates the Restaurant Interface
+ */
 public class RestaurantGUI extends JFrame{
-
+    /**
+     * Main function that invokes the Restaurant GUI
+     * @param args Command Line Arguments
+     */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable()
         {
@@ -22,13 +27,26 @@ public class RestaurantGUI extends JFrame{
             }
         });
     }
-
+    /**
+     * Display of active orders display
+     */
     private ActiveOrdersDisplay activeOrdersDisplay;
+    /**
+     * Menu Creation GUI
+     */
     private MenuCreationGUI menuCreationGUI;
+    /**
+     * Restaurant Menu
+     */
     private src.main.java.Backend.Menu menu;
+    /**
+     * Server for customers to connect to the restaurant
+     */
     private ServerSocket server;
 
-    
+    /**
+     * Instantiates the RestaurantGUI
+     */
     public RestaurantGUI() {
 
         ImageIcon ninjaIcon = null;
@@ -44,7 +62,7 @@ public class RestaurantGUI extends JFrame{
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setJMenuBar(new GUIMenu(this));
+        setJMenuBar(new GUIJMenuBar(this));
         setTitle("Restaurant View");
         try {
             server = new ServerSocket(55555);
@@ -69,6 +87,7 @@ public class RestaurantGUI extends JFrame{
 
         activeOrdersDisplay = new ActiveOrdersDisplay(new ActiveOrders(), menu);
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 while (true) {
                     System.out.println("Waiting");
@@ -138,10 +157,17 @@ public class RestaurantGUI extends JFrame{
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
     }
 
+    /**
+     * Gets menu from the back end
+     * @return Restaurant Menu
+     */
     public src.main.java.Backend.Menu menu() {
         return menu;
     }
 
+    /**
+     * Displays the active order display
+     */
     public void displayActiveOrdersDisplay() {
         setContentPane(activeOrdersDisplay);
         activeOrdersDisplay.updatePanel();
@@ -149,6 +175,9 @@ public class RestaurantGUI extends JFrame{
         revalidate();
     }
 
+    /**
+     * Displays the Menu Creation GUI
+     */
     public void displayMenuCreationGUI() {
         setContentPane(menuCreationGUI);
         repaint();

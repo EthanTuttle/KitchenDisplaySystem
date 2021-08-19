@@ -9,11 +9,24 @@ import src.main.java.Backend.OrderItem;
 import java.util.concurrent.TimeUnit;
 import java.util.*;
 
+/**
+ * Display for a specific item in the order display
+ */
 public class DisplayItem extends JPanel {
     
+    /**
+     * Time to display
+     */
     private JLabel time;
+    /**
+     * Customer and therefore order to display
+     */
     private Customer customer;
 
+    /**
+     * Instantiate the display item
+     * @param customer Customer and therefor order to display
+     */
     public DisplayItem(Customer customer, JButton deleteButton) {
         this.customer = customer;
         setLayout(new BorderLayout());
@@ -46,11 +59,14 @@ public class DisplayItem extends JPanel {
             }
         }
         boxPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        add(boxPanel, BorderLayout.CENTER);
+        JScrollPane scroll = new JScrollPane(boxPanel);
+        add(scroll, BorderLayout.CENTER);
         add(deleteButton, BorderLayout.SOUTH);
     }
 
+    /**
+     * Updates the time for each order and displays it
+     */
     public void updateTime() {
         long diff = new Date().getTime() - customer.getTime().getTime();
         String timeString = String.format("%d:%02d", 

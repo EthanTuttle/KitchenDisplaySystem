@@ -6,8 +6,15 @@ import java.util.*;
 import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
 
+/**
+ * Exit Procedure Class stores a menu for a future run of the application
+ */
 public class ExitProcedure 
 {
+	/**
+	 * Stores the menu for future runs of the application
+	 * @param menu Menu to Store
+	 */
 	public static void exitProcedure(Menu menu)
 	{
 			// create a new menu file and populate it with default settings
