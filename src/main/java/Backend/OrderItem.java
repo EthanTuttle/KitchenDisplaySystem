@@ -3,8 +3,8 @@ package src.main.java.Backend;
 import java.util.LinkedList;
 
 /**
- * <b>Order Item<b/> class that contains <b>menu items<b/> that a <b>Customer<b/> adds to the order
- * and the time to make that entire <b>Order item<b/>
+ * <b>Order Item</b> class that contains <b>menu items</b> that a <b>Customer</b> adds to the order
+ * and the time to make that entire <b>Order item</b>
  */
 public class OrderItem
 {

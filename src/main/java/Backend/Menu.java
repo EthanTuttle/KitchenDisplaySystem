@@ -39,7 +39,7 @@ public class Menu {
     /**
      * Adds a menu item to a category in the menu
      * @param category Category where we should add menu item to
-     * @param menuName Menu Item Name 
+     * @param menuItemName Menu Item Name 
      * @param timeToMake Time to make menu item
      */
     public void addMenuItem(String category, String menuItemName, int timeToMake){ //adds a menu item to a certain category
@@ -184,11 +184,19 @@ public class Menu {
         return null;
     }
 
+    /**
+     * Get the Menu from menu
+     * @return Map representation of the menu
+     */
     public Map<String, HashMap<String, MenuItem>> getMenu()
     {
         return this.menu;
     }
-
+    
+    /**
+     * Check is a menu is empty
+     * @return True if empty, false if not empty
+     */
     public boolean isEmpty(){
         return menu.isEmpty();
     }

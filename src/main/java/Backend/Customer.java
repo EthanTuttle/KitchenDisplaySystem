@@ -42,6 +42,7 @@ public class Customer
 
 	/**
 	 * Instantiate Customer object
+	 * @param n Customer name
 	 */
 	public Customer(String n)
 	{
@@ -55,6 +56,7 @@ public class Customer
 
 	/**
 	 * Customer places the order after adding their menu items
+	 * @param time Time the customer places the order
 	 */
 	public void placeOrder(Date time)
 	{
