@@ -1,24 +1,19 @@
 package src.main.java.customerGUI;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.*;
 import javax.swing.*;
-
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.concurrent.Semaphore;
 import java.io.*;
 
 public class CustomerGUI {
 
+    private Semaphore loadSemaphore = new Semaphore(1);
     private Socket connection;
-    private PrintWriter out; //TODO: use to communicate order
     private BufferedReader in;
     private String rpiIP = "129.161.52.212"; //change last 3 digits to host ID of machine running restaurant GUI
     private src.main.java.Backend.Menu menu;
-    private boolean menuLoaded = false;
 
     public CustomerGUI() {
         
@@ -40,8 +35,8 @@ public class CustomerGUI {
             } else {
                 rpiIP = ipInput.getText();
                 try {
+                    loadSemaphore.acquire();
                     connection = new Socket(InetAddress.getByName(rpiIP), 55555);
-                    out = new PrintWriter(connection.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     new Thread(new Runnable() {
                         public void run() {
@@ -64,19 +59,17 @@ public class CustomerGUI {
                                 }
                                 
                             }
-                            menuLoaded = true;
+                            loadSemaphore.release();
                         }
                     }).start();
-                    new Thread(new Runnable(){
-                        public void run() {
-                            while (!menuLoaded) {
-                                //do nothing, wait until menu is loaded and then start the application
-                            }
-                            new Mainframe(menu, nameInput.getText(), connection);
-                        }
-                    }).start(); 
+                    loadSemaphore.acquire();
+                    new Mainframe(menu, nameInput.getText(), connection);
+                    loadSemaphore.release();
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, e, "Connection Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(1);
+                } catch (InterruptedException e) {
+                    JOptionPane.showMessageDialog(null, e, "Thread Error", JOptionPane.ERROR_MESSAGE);
                     System.exit(1);
                 }
                 
