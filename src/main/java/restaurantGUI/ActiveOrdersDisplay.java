@@ -46,6 +46,7 @@ public class ActiveOrdersDisplay extends JPanel {
                 while (true) {
                     for (DisplayItem item : displayItems) {
                         item.updateTime();
+                       
                     }
                 }
             }
@@ -85,6 +86,7 @@ public class ActiveOrdersDisplay extends JPanel {
         while (itr.hasNext()) {
             Customer customer = itr.next();
             DisplayItem displayItem = new DisplayItem(customer);
+            displayItems.add(displayItem);
             displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
             displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
             JScrollPane scrollableDisplay = new JScrollPane(displayItem);
