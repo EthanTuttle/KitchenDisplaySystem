@@ -64,8 +64,7 @@ public class MenuCreationGUI extends JPanel {
                 singleCategPanel.add(newMenuItemPanel);
                 enclosedSingleCategPanel.add(singleCategPanel,BorderLayout.NORTH);
                 enclosingCategPanel.add(enclosedSingleCategPanel);
-            
-
+                
                 revalidate();
                 scrollPanel.revalidate();
             }
