@@ -56,13 +56,9 @@ public class RestaurantGUI extends JFrame{
                         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                         new Thread(new Runnable() {
                             public void run() {
-                                Map<String,HashMap<String,src.main.java.Backend.MenuItem>> allItems = menu.allItems();
-                                Iterator<String> itr = allItems.keySet().iterator();
-                                while(itr.hasNext()) {
-                                    Map<String, src.main.java.Backend.MenuItem> cat = menu.getMenuItems(itr.next());
-                                    Iterator<String> itr2 = cat.keySet().iterator();
-                                    while(itr2.hasNext()) {
-                                        out.println(itr2.next());
+                                for (String category : menu.allItems().keySet()) {
+                                    for (String name : menu.allItems().get(category).keySet()) {
+                                        out.println(menu.allItems().get(category).get(name).toString());
                                     }
                                 }
                                 out.println("End of Menu");
