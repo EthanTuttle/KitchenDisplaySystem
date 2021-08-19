@@ -92,13 +92,13 @@ public class RestaurantGUI extends JFrame{
         JButton menuCreationButton = new JButton("To Menu Creation");
         menuCreationButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event){
-                setContentPane(activeOrdersDisplay);
+                setContentPane(menuCreationGUI);
                 revalidate();
             }
         });
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                setContentPane(menuCreationGUI);
+                setContentPane(activeOrdersDisplay);
                 revalidate();
             }
         });
