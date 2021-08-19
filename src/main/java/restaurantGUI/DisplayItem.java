@@ -27,30 +27,41 @@ public class DisplayItem extends JPanel {
      * Instantiate the display item
      * @param customer Customer and therefor order to display
      */
-    public DisplayItem(Customer customer) {
+    public DisplayItem(Customer customer, JButton deleteButton) {
         this.customer = customer;
-        setLayout(new GridLayout(0, 1));
-        JLabel name = new JLabel("", SwingConstants.CENTER);
-        if (customer.getName().length() > 20) {
-            name.setText(customer.getName().substring(0, 20) + "...");
+        setLayout(new BorderLayout());
+
+        JPanel boxPanel = new JPanel();
+        boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
+        JLabel name = new JLabel();
+        if (customer.getName().length() > 15) {
+            name.setText(customer.getName().substring(0, 15) + "...");
         } else {
             name.setText(customer.getName());
         }
-        
         Font original = name.getFont();
-        Font bigger = original.deriveFont(18.0f);
+        Font bigger = original.deriveFont(24.0f);
         name.setFont(bigger);
-        time = new JLabel("", SwingConstants.CENTER);
+        time = new JLabel();
         updateTime();
-        add(name);
-        add(time);
+        time.setFont(original.deriveFont(18.0f));
+        boxPanel.add(name);
+        boxPanel.add(time);
+        //add(new Box.Filler(minSize, prefSize, maxSize));
+        JSeparator bar = new JSeparator();
+        bar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 5));
+        boxPanel.add(bar);
         for (OrderItem order : customer.getOrders()) {
             for (MenuItem menuItem : order.getOrder()) {
-                add(new JLabel(menuItem.getName()));
-                
+                JLabel itemName = new JLabel(menuItem.getName(), SwingConstants.CENTER);
+                itemName.setFont(original.deriveFont(18.0f));
+                boxPanel.add(itemName);                
             }
         }
-        setBorder(BorderFactory.createLineBorder(Color.black));
+        boxPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        add(boxPanel, BorderLayout.CENTER);
+        add(deleteButton, BorderLayout.SOUTH);
     }
 
     /**
@@ -58,7 +69,7 @@ public class DisplayItem extends JPanel {
      */
     public void updateTime() {
         long diff = new Date().getTime() - customer.getTime().getTime();
-        String timeString = String.format("%d:%d", 
+        String timeString = String.format("%d:%02d", 
         TimeUnit.MILLISECONDS.toMinutes(diff),
         TimeUnit.MILLISECONDS.toSeconds(diff) - 
         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
