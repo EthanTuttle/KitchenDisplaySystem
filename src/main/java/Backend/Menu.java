@@ -99,7 +99,7 @@ public class Menu {
                     String[] fields = line.split("&");
                     String category = "";
                     String menuItem = "";
-                    String timeToMake = "";
+                    Integer timeToMake = null;
                     for (int i = 0; i < fields.length; i++){
                         String[] values = fields[i].split("=");
                         String fieldValue = values[1];
@@ -113,8 +113,10 @@ public class Menu {
                                 menuItem = fieldValue.strip();
                                 break;
                             case 2:
-                                Integer actualTimeToMake = Integer.parseInt(fieldValue.strip());
-                                menu.addMenuItem(category, menuItem, actualTimeToMake);
+                                timeToMake = fieldValue.strip().equals("") ? null : Integer.parseInt(fieldValue.strip());
+                                if (timeToMake != null){
+                                    menu.addMenuItem(category, menuItem, timeToMake);
+                                }
                         }
                     }
                     line = bufferedReader.readLine();

@@ -66,6 +66,7 @@ public class ExitProcedure
 					/* Error caught while trying to close the Writer streams */
 					e.printStackTrace();
 				}
+				System.out.println("On exit menu is: "+menu.allItems());
 			}
 	}
 }
