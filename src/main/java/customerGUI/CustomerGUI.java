@@ -53,6 +53,9 @@ public class CustomerGUI {
                                         break;
                                     } else { //On connection host should send all menu items as name;timeToMake;category
                                         String[] list = line.split(";");
+                                        if (!menu.containsCategory(list[2])) {
+                                            menu.addCategory(list[2]);
+                                        }
                                         menu.addMenuItem(list[2], list[0],  Integer.parseInt(list[1]));
                                     }
                                 } catch (IOException e) {
