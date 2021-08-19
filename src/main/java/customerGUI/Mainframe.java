@@ -41,7 +41,7 @@ public class Mainframe extends JFrame {
 	private ArrayList <MenuItem> itemsOrdered;
 
 	private String itemInformation;
-	
+	//test for shawn uodatate129.161.52.212
 	public Mainframe(Menu gMenu,String customerString,Socket fromEathnSocket) {
 		
 		totalCost = new BigDecimal(0);
