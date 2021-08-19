@@ -31,7 +31,7 @@ public class MenuCreationGUI extends JPanel {
         addCategButton.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent event){
-                if (!(checkValidValue("category"), categField.getText())){
+                if (!(checkValidValue(categField.getText(),"category"))){
                     return;
                 }
                 JPanel singleCategPanel = new JPanel();
@@ -88,6 +88,35 @@ public class MenuCreationGUI extends JPanel {
         }
         loadingMenu = false;
     }
+    public boolean checkValidValue(String value, String type){
+        if (type.equals("category")){
+            /*check dup category or empty value*/
+            if (menu.containsCategory(value) || value.equals("")){
+                return false;
+            }
+        }
+        else if (type.equals("menu_item")){
+            String[] itemTimeCombo = value.split(" ");
+            String menuItem = itemTimeCombo[0];
+            String timeToMake = itemTimeCombo[1];
+            /*check dup menu_item or empty menu_item*/
+            if (menu.findMenuItem(menuItem) != null || menuItem.equals("")){
+                return false;
+            }
+            try {
+                Integer actualTimeToMake = Integer.parseInt(timeToMake);
+                if (actualTimeToMake<0){
+                    throw new Exception();
+                }
+            }
+            catch (Exception n){
+                return false;
+            }
+
+        }
+        return true;
+        
+    }
     class ButtonAction extends AbstractAction {
         String name;
         JPanel parentPanel;
@@ -109,7 +138,7 @@ public class MenuCreationGUI extends JPanel {
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 JLabel itemTimeCombo = new JLabel(menuItem.getText()+"  "+menuItemETM.getText());
-                if (checkValidValue("menu_item", itemTimeCombo)){
+                if (checkValidValue(itemTimeCombo.getText(),"menu_item")){
                     return;
                 }
                 menu.addMenuItem(parentPanel.getName(), menuItem.getText(), Integer.parseInt(menuItemETM.getText()));
