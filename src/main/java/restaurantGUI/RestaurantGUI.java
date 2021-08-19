@@ -8,6 +8,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import src.main.java.Backend.*;
 import java.net.Socket;
+import javax.swing.ImageIcon;
+
 
 public class RestaurantGUI extends JFrame{
 
@@ -28,6 +30,16 @@ public class RestaurantGUI extends JFrame{
 
     
     public RestaurantGUI() {
+
+        ImageIcon ninjaIcon = null;
+
+        java.net.URL imgURL = RestaurantGUI.class.getResource("ninja.png");
+        if (imgURL != null) {
+            ninjaIcon = new ImageIcon(imgURL);
+            setIconImage(ninjaIcon.getImage());
+        } else {
+            JOptionPane.showMessageDialog(RestaurantGUI.this, "Icon image not found.");
+        }
 
         setSize(500, 500);
         setLocationRelativeTo(null);
