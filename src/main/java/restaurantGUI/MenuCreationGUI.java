@@ -176,6 +176,8 @@ public class MenuCreationGUI extends JPanel {
             text.setText(updatedString);
         }
     }
+    
+
     private JScrollPane scrollPanel;
     private JPanel categPanel;
     private JPanel enclosingCategPanel;
