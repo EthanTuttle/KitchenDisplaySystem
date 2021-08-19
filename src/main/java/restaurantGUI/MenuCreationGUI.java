@@ -53,6 +53,7 @@ public class MenuCreationGUI extends JPanel {
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
+                itemButtons.add(addMenuItemButton);
                 singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 enclosedSingleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 newMenuItemPanel.add(addMenuItemButton);
@@ -71,32 +72,37 @@ public class MenuCreationGUI extends JPanel {
 
         add(categPanel,BorderLayout.NORTH);
         add(scrollPanel,BorderLayout.CENTER);
-        
+
         if (menu.isEmpty()){
+            loadingMenu = true;
             categField.setText("Category 1");
             addCategButton.getActionListeners()[0].actionPerformed(null);
+            itemButtons.get(0).doClick();
             categField.setText("Category 2");
             addCategButton.getActionListeners()[0].actionPerformed(null);
             categField.setText("Category 3");
             addCategButton.getActionListeners()[0].actionPerformed(null);
+            loadingMenu=false;
         }
-
-        // If a menu exists than load it instead of showing an empty menu
-        loadingMenu = true;
-        Iterator<String> itr1 = menu.allItems().keySet().iterator();
-        while (itr1.hasNext()) {
-            String category = itr1.next();
-            categField.setText(category);
-            addCategButton.getActionListeners()[0].actionPerformed(null);
-            Iterator<String> itr2 = menu.allItems().get(category).keySet().iterator();
-            while (itr2.hasNext()) {
-                String name = itr2.next(); 
-                MenuItem item = menu.allItems().get(category).get(name);
-                itemFields.get(itemFields.size()-1).setText(item.getName());
-                itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
+        else
+        {
+            // If a menu exists than load it instead of showing an empty menu
+            loadingMenu = true;
+            Iterator<String> itr1 = menu.allItems().keySet().iterator();
+            while (itr1.hasNext()) {
+                String category = itr1.next();
+                categField.setText(category);
+                addCategButton.getActionListeners()[0].actionPerformed(null);
+                Iterator<String> itr2 = menu.allItems().get(category).keySet().iterator();
+                while (itr2.hasNext()) {
+                    String name = itr2.next(); 
+                    MenuItem item = menu.allItems().get(category).get(name);
+                    itemFields.get(itemFields.size()-1).setText(item.getName());
+                    itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
+                }
             }
+            loadingMenu = false;
         }
-        loadingMenu = false;
     }
     public boolean checkValidValue(String value, String type){
         if (type.equals("category")){
@@ -150,7 +156,15 @@ public class MenuCreationGUI extends JPanel {
                 new JLabel("Enter the estimated time to make the menu item"),
                 menuItemETM,
             };
-            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+            int result = -1;
+            if (loadingMenu == true){
+                result = 0;
+                menuItem.setText("Menu Item");
+                menuItemETM.setText("10");
+            }
+            else{
+                result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+            }
             if(result == JOptionPane.OK_OPTION) {
                 JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+menuItemETM.getText().strip());
                 if (!(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
