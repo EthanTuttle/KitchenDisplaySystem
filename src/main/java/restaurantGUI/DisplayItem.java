@@ -59,8 +59,8 @@ public class DisplayItem extends JPanel {
             }
         }
         boxPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        add(boxPanel, BorderLayout.CENTER);
+        JScrollPane scroll = new JScrollPane(boxPanel);
+        add(scroll, BorderLayout.CENTER);
         add(deleteButton, BorderLayout.SOUTH);
     }
 

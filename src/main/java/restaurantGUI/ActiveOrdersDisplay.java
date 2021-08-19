@@ -131,6 +131,7 @@ public class ActiveOrdersDisplay extends JPanel {
      */
     public void updatePanel() {
         synchronized (displayItems) {
+            displayItems.clear();
             displayPanel.removeAll();
             Iterator<Customer> itr = queue.getIterator();
             while (itr.hasNext()) {
@@ -142,13 +143,10 @@ public class ActiveOrdersDisplay extends JPanel {
 
                 DisplayItem displayItem = new DisplayItem(customer, deleteButton);
                 displayItems.add(displayItem);
-                displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/4, (int)displayPanel.getSize().getHeight()));
-                JScrollPane scrollableDisplay = new JScrollPane(displayItem);
-                scrollableDisplay.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                scrollableDisplay.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                scrollableDisplay.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-                displayPanel.add(scrollableDisplay);
+                displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, 7*(int)displayPanel.getSize().getHeight()/8));
+                displayItem.setPreferredSize(new Dimension((int)displayPanel.getSize().getWidth()/6, 7*(int)displayPanel.getSize().getHeight()/8));
+                displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, 7*(int)displayPanel.getSize().getHeight()/8));
+                displayPanel.add(displayItem);
                 if (itr.hasNext()) {
                     Dimension minSize = new Dimension(5, 100);
                     Dimension prefSize = new Dimension(10, 100);
@@ -159,7 +157,7 @@ public class ActiveOrdersDisplay extends JPanel {
                 deleteButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         queue.removeCustomer(customer);
-                        displayPanel.remove(scrollableDisplay);
+                        displayPanel.remove(displayItem);
                         scrollPanel.repaint();
                         scrollPanel.revalidate();
                         customers.remove(customer.getName());
