@@ -73,6 +73,7 @@ public class MenuCreationGUI extends JPanel {
         add(scrollPanel,BorderLayout.CENTER);
 
         // If a menu exists than load it instead of showing an empty menu
+        /*
         loadingMenu = true;
         Iterator<String> itr1 = menu.allItems().keySet().iterator();
         while (itr1.hasNext()) {
@@ -87,7 +88,7 @@ public class MenuCreationGUI extends JPanel {
                 itemButtons.get(itemButtons.size()-1).getActionListeners()[0].actionPerformed(null);
             }
         }
-        loadingMenu = false;
+        loadingMenu = false;*/
     }
     public boolean checkValidValue(String value, String type){
         if (type.equals("category")){
