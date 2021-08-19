@@ -134,7 +134,6 @@ public class Mainframe extends JFrame {
         backbutton.setOpaque(true);
         backbutton.setVisible(false);
 
-        panCopy = pan;
 
         backbutton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -153,7 +152,11 @@ public class Mainframe extends JFrame {
                     itemButtons.add(category);
 
                 }
-
+                Border etchedBorder = BorderFactory.createEtchedBorder();
+                Border border = BorderFactory.createTitledBorder(etchedBorder, "Categories", TitledBorder.DEFAULT_JUSTIFICATION,
+                        TitledBorder.DEFAULT_POSITION, new Font("Lucida", Font.BOLD, 20), Color.BLACK);
+                pan.setBorder(border);
+        
                 for (final String itemButton : itemButtons) {
 
                     final JButton createButton = new JButton(itemButton);
@@ -174,6 +177,13 @@ public class Mainframe extends JFrame {
                             }
 
                             backbutton.setVisible(true);
+
+                            Border etchedBorder = BorderFactory.createEtchedBorder();
+                            Border border = BorderFactory.createTitledBorder(etchedBorder, itemButton, TitledBorder.DEFAULT_JUSTIFICATION,
+                                    TitledBorder.DEFAULT_POSITION, new Font("Lucida", Font.BOLD, 20), Color.BLACK);
+                            pan.setBorder(border);
+                    
+                            
 
                             for (final MenuItem menuitemButton : itemButtons2) {
 
@@ -214,11 +224,20 @@ public class Mainframe extends JFrame {
 
         ArrayList<MenuItem> itemButtons2 = new ArrayList<MenuItem>();
 
+
+        Border etchedBorder = BorderFactory.createEtchedBorder();
+        Border border = BorderFactory.createTitledBorder(etchedBorder, "Categories", TitledBorder.DEFAULT_JUSTIFICATION,
+                TitledBorder.DEFAULT_POSITION, new Font("Lucida", Font.BOLD, 20), Color.BLACK);
+        pan.setBorder(border);
+
+
         for (String category : givMenu.allItems().keySet()) {
 
             itemButtons.add(category);
 
         }
+
+
 
         for (final String itemButton : itemButtons) {
 
@@ -227,15 +246,24 @@ public class Mainframe extends JFrame {
 
             createButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
+                    Border etchedBorder = BorderFactory.createEtchedBorder();
+
+                    Border border = BorderFactory.createTitledBorder(etchedBorder, itemButton, TitledBorder.DEFAULT_JUSTIFICATION,
+                    TitledBorder.DEFAULT_POSITION, new Font("Lucida", Font.BOLD, 20), Color.BLACK);
+            pan.setBorder(border);
+
                     refresh(itemButton);
 
                     pan.removeAll();
                     repaint();
                     revalidate();
 
+
+                    
                     for (String itemName : givMenu.getMenuItems(itemButton).keySet()) {
 
                         itemButtons2.add(givMenu.getMenuItems(itemButton).get(itemName));
+
 
                     }
 
@@ -246,6 +274,8 @@ public class Mainframe extends JFrame {
                         final JButton createButton2 = new JButton(menuitemButton.getName());
                         createButton2.setToolTipText(menuitemButton.getName());
 
+
+                        
                         createButton2.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent arg0) {
                                 refreshPanel(menuitemButton);
@@ -259,14 +289,19 @@ public class Mainframe extends JFrame {
                         revalidate();
 
                     }
+                    
 
                 }
+
+        
+        
 
                 private void refresh(String itemButton) {
 
                 }
             });
             pan.add(createButton);
+
             createButton.setPreferredSize(new Dimension(30, 60));
 
         }
@@ -275,10 +310,7 @@ public class Mainframe extends JFrame {
 
         JScrollPane scroller = new JScrollPane(borderupper);
 
-        Border etchedBorder = BorderFactory.createEtchedBorder();
-        Border border = BorderFactory.createTitledBorder(etchedBorder, "Items", TitledBorder.DEFAULT_JUSTIFICATION,
-                TitledBorder.DEFAULT_POSITION, new Font("Lucida", Font.BOLD, 20), Color.BLACK);
-        pan.setBorder(border);
+     
         return scroller;
 
     }
