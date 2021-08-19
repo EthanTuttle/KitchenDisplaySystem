@@ -95,7 +95,7 @@ public class Menu {
                     // fields contains customer=?,
                     //                 menu_item=?,
                     //                 timeToMake=?
-                    String[] fields = line.split("&");
+                    String[] fields = line.split(";");
                     String category = "";
                     String menuItem = "";
                     Integer timeToMake = null;
