@@ -96,8 +96,8 @@ public class MenuCreationGUI extends JPanel {
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
                 removeComponentButton.setBackground(Color.red);
                 itemButtons.add(addMenuItemButton);
-                singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
-                enclosedSingleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
+                singleCategPanel.setName("category="+categLabel.getText()+";menu_item= ");
+                enclosedSingleCategPanel.setName("category="+categLabel.getText()+";menu_item= ");
                 newMenuItemPanel.add(addMenuItemButton);
                 labelAndExitPanel.add(categLabel);
                 labelAndExitPanel.add(removeComponentButton);
@@ -268,8 +268,8 @@ public class MenuCreationGUI extends JPanel {
                 JPanel labelAndExitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,0));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", this.parentPanel, labelAndExitPanel));
                 removeComponentButton.setBackground(Color.RED);
-                labelAndExitPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
-                parentPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
+                labelAndExitPanel.setName("LabelAndExitcategory="+category+";menu_item="+menuItem.getText().strip());
+                parentPanel.setName("ParentPanelcategory="+category+";menu_item="+menuItem.getText().strip());
                 labelAndExitPanel.add(itemTimeCombo);
                 labelAndExitPanel.add(removeComponentButton);
                 parentPanel.add(labelAndExitPanel);
@@ -314,7 +314,7 @@ public class MenuCreationGUI extends JPanel {
         public void actionPerformed(ActionEvent event)
         {
             // this.childPanel.getName() will return
-            // category=?&menu_item=?
+            // category=?;menu_item=?
 
             // Split the query into category=? AND menu_item=?
             ArrayList<String> values = parseQuery(this.childPanel);
@@ -346,8 +346,8 @@ public class MenuCreationGUI extends JPanel {
                 return;
             }
             menu.replace(category, updatedString);
-            String oldMenuItem = values.get(1);
-            childPanel.setName("category="+updatedString+"&menu_item="+oldMenuItem);
+            String oldMenuItem = values.get(1).equals("") ? " " : values.get(1);
+            childPanel.setName("category="+updatedString+";menu_item="+oldMenuItem);
             category = updatedString;
         }
         else if (type.toLowerCase().equals("menu_item"))
@@ -383,7 +383,8 @@ public class MenuCreationGUI extends JPanel {
             Component[] allComponents = childPanel.getComponents();
             for (int i = 0; i < allComponents.length; i++){
                 if (allComponents[i].getName() != null){
-                    allComponents[i].setName("category="+category+"&menu_item="+updatedMenuItem.getText().strip());
+                    String newMenuItem = updatedMenuItem.getText().strip().equals("") ? " " : updatedMenuItem.getText().strip();
+                    allComponents[i].setName("category="+category+";menu_item="+newMenuItem);
                 }
             }
             childPanel.revalidate();
@@ -397,7 +398,11 @@ public class MenuCreationGUI extends JPanel {
     private ArrayList<String> parseQuery(JPanel childPanel)
     {
         // Split the query into category=? AND menu_item=?
-        String[] query = childPanel.getName().split("&");
+        System.out.println("query is: \'"+childPanel.getName()+"\'");
+        String[] query = childPanel.getName().split(";");
+        for (String val : query){
+            System.out.println("query split val is \""+val+"\"");
+        }
         ArrayList<String> ret = new ArrayList<String>();
 
         // parse, split and get the category and menu item
@@ -406,6 +411,11 @@ public class MenuCreationGUI extends JPanel {
         ret.add(values[1]);
         values = query[1].split("=");
         //menu_item = values[1];
+
+        /*//Debug Statements
+        for (String vals: values){
+            System.out.println("Values are: \""+vals+"\"");
+        }*/
         ret.add(values[1]);
         return ret;
     }

@@ -29,7 +29,7 @@ public class ExitProcedure
 				for (String category : itr.keySet()){
 					HashMap<String, MenuItem> itr2 = itr.get(category);
 					if (itr2.keySet().isEmpty()){
-						line="category="+category+"&menu_item= &timeToMake= ";
+						line="category="+category+";menu_item= ;timeToMake= ";
 						bufferedWriter.write(line);
 						bufferedWriter.newLine();
 					}
@@ -44,7 +44,7 @@ public class ExitProcedure
 								mapCategory = category;
 								mapItemName = menuItem;
 							}
-							line="category="+mapCategory+"&menu_item="+mapItemName+"&timeToMake="+item.getTimeToMake();
+							line="category="+mapCategory+";menu_item="+mapItemName+";timeToMake="+item.getTimeToMake();
 							bufferedWriter.write(line);
 							bufferedWriter.newLine();
 						}
