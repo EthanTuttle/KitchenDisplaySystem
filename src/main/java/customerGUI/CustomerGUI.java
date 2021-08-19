@@ -31,7 +31,7 @@ public class CustomerGUI {
         input.add(new JLabel("IP: "));
         JTextField ipInput = new JTextField();
         input.add(ipInput);
-        int result = JOptionPane.showConfirmDialog(null, input, "Enter the information to run the program", JOptionPane.OK_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, input, "Enter the information to run the program", JOptionPane.OK_CANCEL_OPTION);
 
         //pull results
         if (result == JOptionPane.OK_OPTION) {
@@ -71,7 +71,7 @@ public class CustomerGUI {
                             }
                             new Mainframe(menu, nameInput.getText(), connection);
                         }
-                    }); 
+                    }).start(); 
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, e, "Connection Error", JOptionPane.ERROR_MESSAGE);
                     System.exit(1);
@@ -83,8 +83,6 @@ public class CustomerGUI {
         
     }
     
-    
-
    public static void main(String[] args) {
         new CustomerGUI();
    }   
