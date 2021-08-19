@@ -14,7 +14,7 @@ public class ExitProcedure
 			FileWriter fileWriter = null;
 			BufferedWriter bufferedWriter = null;
 			try{
-				fileWriter = new FileWriter("settings");
+				fileWriter = new FileWriter(".menu");
 				bufferedWriter = new BufferedWriter(fileWriter);
 				String line = "";
 				Map<String, HashMap<String, MenuItem>> itr = menu.getMenu();
@@ -27,7 +27,6 @@ public class ExitProcedure
 						bufferedWriter.newLine();
 					}
 				}
-				
 			}
 			catch(IOException e){
 				e.printStackTrace();

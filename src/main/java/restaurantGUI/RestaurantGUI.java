@@ -49,7 +49,7 @@ public class RestaurantGUI extends JFrame{
             * @param java.awt.event.WindowEvent e This is the frame closing
             */
             public void windowClosing(java.awt.event.WindowEvent e){
-                    exitProcedure(menu);
+                    ExitProcedure.exitProcedure(menu);
                     System.exit(0);
             }
         });
