@@ -163,6 +163,7 @@ public class MenuCreationGUI extends JPanel {
         if (type.equals("category")){
             /*check dup category or empty value*/
             if (value == null || value.equals("") || menu.containsCategory(value)){
+                JOptionPane.showMessageDialog(this, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -172,20 +173,14 @@ public class MenuCreationGUI extends JPanel {
             // Check that the value is not empty before checking if any values can exist
             // If values exist check that at least 2 values were parsed
             if (value.equals("") || itemTimeCombo.length < 2){
+                JOptionPane.showMessageDialog(this, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             String menuItem = itemTimeCombo[0];
             String timeToMake = itemTimeCombo[1];
-            int tTM = 0;
-            try {
-                tTM = Integer.parseInt(timeToMake);
-            }
-            catch (NumberFormatException n){
-
-            }
             /*check that the menu item is not empty and that the menu item does not already exist*/
             if (value == null || menuItem.equals("")){
-                JOptionPane.showMessageDialog(null, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             else if (oldValue != null){
@@ -199,14 +194,14 @@ public class MenuCreationGUI extends JPanel {
             }
             else{
                 if (menu.findMenuItem(menuItem) != null){
-                    JOptionPane.showMessageDialog(null, "Menu item already exists.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Menu item already exists.", "Input Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
             try {
                 Integer actualTimeToMake = Integer.parseInt(timeToMake);
                 if (actualTimeToMake<0){
-                    JOptionPane.showMessageDialog(null, "Time can't be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Time can't be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
                     throw new Exception();
                 }
             }
