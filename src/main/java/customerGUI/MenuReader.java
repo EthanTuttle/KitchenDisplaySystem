@@ -65,15 +65,15 @@ public class MenuReader {
 	
         out = new PrintWriter(connection.getOutputStream(), true);
 
-		out.println(" " + new Timestamp(orderDate.getTime()) + ";");
+		out.print(" " + new Timestamp(orderDate.getTime()) + ";");
 
-		out.println(this.TheCUstomer + ";");
+		out.print(this.TheCUstomer + ";");
 
 
 
 		for (MenuItem item: itemsOrdered) {
 
-			out.println(item.getName());
+			out.print(item.getName() + ";");
 
 
 			
