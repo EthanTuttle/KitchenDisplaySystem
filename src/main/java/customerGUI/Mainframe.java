@@ -28,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.Socket;
 
 public class Mainframe extends JFrame {
 
@@ -41,7 +42,7 @@ public class Mainframe extends JFrame {
 
 	private String itemInformation;
 	
-	public Mainframe(Menu gMenu,String customerString) throws FileNotFoundException {
+	public Mainframe(Menu gMenu,String customerString,Socket fromEathnSocket) throws FileNotFoundException {
 		
 		totalCost = new BigDecimal(0);
 		itemInformation = "";
@@ -51,7 +52,9 @@ public class Mainframe extends JFrame {
 		itemsOrdered = new ArrayList<MenuItem>();
 
         givMenu = gMenu;
-		// menuRead = new MenuReader(givenMenu,Customer);
+
+
+		menuRead = new MenuReader(gMenu,Customer,fromEathnSocket);
 		// menuRead.readInputFile();
 		create();
 		create();

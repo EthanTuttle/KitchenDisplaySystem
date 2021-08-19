@@ -5,15 +5,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
 
 import java.math.BigDecimal;
+import java.net.Socket;
 
 public class MenuReader {
 
@@ -26,28 +29,27 @@ public class MenuReader {
 	private Calendar calendar;
 	private ArrayList<MenuItem> menuItems;
 	private String TheCUstomer;
-	public MenuReader(File inputMenu, String Cust) throws FileNotFoundException {
+    private PrintWriter out; //TODO: use to communicate order
+    private Socket connection;
+
+    
+
+
+	public MenuReader(Menu inputMenu, String Cust,Socket connSocket) throws FileNotFoundException {
 		
 		menuItems = new ArrayList<MenuItem>();
-		readMenu = new Scanner(inputMenu);
 		calendar = new GregorianCalendar();
 		count = 1;
 		TheCUstomer = Cust;
-		inputFile = inputMenu.getName();
-	}
-	
-	public void readInputFile() {
 
-		while (readMenu.hasNextLine()) {
-			
-			String item = readMenu.nextLine();
-			int time2make = 1;
-			
-			MenuItem createItem = new MenuItem("blank", time2make,item);
-			menuItems.add(createItem);
-		}
-		readMenu.close();
-	}
+        connection = connSocket;
+
+
+        
+        
+    }
+
+
 
 	public ArrayList<MenuItem> getMenuItems() {
 		return menuItems;
@@ -61,14 +63,17 @@ public class MenuReader {
 		
 		java.util.Date orderDate = new java.util.Date();
 	
-		
-		orderLogger.write(" " + new Timestamp(orderDate.getTime()) + ";");
+        out = new PrintWriter(connection.getOutputStream(), true);
 
-		orderLogger.write(this.TheCUstomer + ";");
+		out.println(" " + new Timestamp(orderDate.getTime()) + ";");
+
+		out.println(this.TheCUstomer + ";");
+
+
 
 		for (MenuItem item: itemsOrdered) {
 
-			orderLogger.write(item.getName() + ";");
+			out.println(item.getName() + ";");
 
 
 			
