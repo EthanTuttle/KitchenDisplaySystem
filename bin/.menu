@@ -1,4 +1,12 @@
-category=Category 1;menu_item=Menu Item;timeToMake=10
-category=Category 2;menu_item= ;timeToMake= 
-category=Category 3;menu_item= ;timeToMake= 
-category=Category 4;menu_item= ;timeToMake= 
+category=Food;menu_item=Burger;timeToMake=10
+category=Food;menu_item=Fries;timeToMake=2
+category=Food;menu_item=Chicken;timeToMake=13
+category=Food;menu_item=Pulled Pork;timeToMake=20
+category=Drinks;menu_item=Water;timeToMake=1
+category=Drinks;menu_item=Lemonade;timeToMake=2
+category=Drinks;menu_item=Coke;timeToMake=2
+category=Drinks;menu_item=Pepsi;timeToMake=2
+category=Drinks;menu_item=Coffee;timeToMake=5
+category=Dessert;menu_item=Pumpkin Pie;timeToMake=2
+category=Dessert;menu_item=Ice Cream;timeToMake=3
+category=Dessert;menu_item=Chocolate Cake;timeToMake=5

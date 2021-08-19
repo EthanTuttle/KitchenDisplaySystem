@@ -16,16 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-
+import javax.swing.ImageIcon;
 import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
-
-import java.io.FileNotFoundException;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.Socket;
@@ -91,6 +86,15 @@ public class Mainframe extends JFrame {
         // menuRead.readInputFile();
         create();
         create();
+
+        ImageIcon ninjaIcon = null;
+        java.net.URL imgURL = CustomerGUI.class.getResource("ninja.png");
+        if (imgURL != null) {
+            ninjaIcon = new ImageIcon(imgURL);
+            setIconImage(ninjaIcon.getImage());
+        } else {
+            JOptionPane.showMessageDialog(Mainframe.this, "Icon image not found.");
+        }
 
         setSize(1500, 1500);
         setTitle("Customer Order");
