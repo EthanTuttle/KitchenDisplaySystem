@@ -35,7 +35,9 @@ public class Customer
 	 * See if an order has been placed
 	 */
 	private boolean orderPlaced;
-
+	/**
+	 * Time an order was placed
+	 */
 	private Date timePlaced = null;
 
 	/**
@@ -111,6 +113,7 @@ public class Customer
 	{
 		return this.allOrders;
 	}
+
 	/**
 	 * 
 	 * @return Name of customer
@@ -119,6 +122,7 @@ public class Customer
 	{
 		return this.name;
 	}
+
 	/**
 	 * 
 	 * @return Time to make order
@@ -128,15 +132,26 @@ public class Customer
 		return this.timeToMake;
 	}
 
+	/**
+	 * Increments the amount number of ticks (order completions) this customer has 
+	 * been in the active orders queue for
+	 */
 	public void incrementTick(){
 		ticksInQueue++;
 	}
 
+	/**
+	 * Returns the tick of the customer
+	 * @return  Tick number
+	 */
 	public int getTick(){
 		return ticksInQueue;
 	}
 
-
+	/**
+	 * Get the time the order was placed
+	 * @return Time order was placed
+	 */
 	public Date getTime() {
 		return timePlaced;
 	}

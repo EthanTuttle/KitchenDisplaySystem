@@ -14,15 +14,43 @@ import src.main.java.Backend.Menu;
 import src.main.java.Backend.MenuItem;
 import java.sql.Timestamp;
 
+/**
+ * ActiveOrdersDisplay class which displays all the 
+ * <b>Orders</b> a <b>Restaurant</b> receives to that
+ * <b>Restaurant</b>
+ */
 public class ActiveOrdersDisplay extends JPanel {
 
+    /**
+     * Order Items to display
+     */
     private LinkedList<DisplayItem> displayItems = new LinkedList<>();
+    /**
+     * Queue for Active Orders
+     */
     private ActiveOrders queue;
+    /**
+     * Panel to display active orders
+     */
     private JPanel displayPanel;
+    /**
+     * Scroll Panel to hold display panel
+     */
     private JScrollPane scrollPanel;
+    /**
+     * Overall menu from restaurant
+     */
     private Menu menu;
+    /**
+     * Customers that we have orders from
+     */
     private HashMap<String, Customer> customers = new HashMap<>();
     
+    /**
+     * Instantiates the Active Orders Display
+     * @param queue Queue of active orders
+     * @param menu Restaurant Menu
+     */
     public ActiveOrdersDisplay(ActiveOrders queue, src.main.java.Backend.Menu menu) {
         this.menu = menu;
         this.queue = queue;
@@ -44,6 +72,8 @@ public class ActiveOrdersDisplay extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
 
         new Thread(new Runnable(){
+
+            @Override
             public void run() {
                 while (true) {
                     synchronized (displayItems) {
@@ -87,6 +117,9 @@ public class ActiveOrdersDisplay extends JPanel {
         updatePanel();
     }
 
+    /**
+     * Updates the panel
+     */
     private void updatePanel() {
         synchronized (displayItems) {
             displayPanel.removeAll();

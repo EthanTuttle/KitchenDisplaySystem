@@ -9,18 +9,45 @@ import src.main.java.Backend.MenuItem;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * MenuCreationGUI Class is the interface for a <b>Customer</b> 
+ * to place a <b>Menu</b>
+ */
 public class MenuCreationGUI extends JPanel {
-
+    
+    /**
+     * JTextFields in this Menu Creation GUI
+     */
     private ArrayList<JTextField> itemFields = new ArrayList<>();
+    /**
+     * Item Buttons used in the Menu Creation GUI
+     */
     private ArrayList<JButton> itemButtons = new ArrayList<>();
+    /**
+     * Boolean to check if a menu is loading in
+     */
     private boolean loadingMenu = false;
+    /**
+     * Menu to populate with new categories and menu items
+     */
     private Menu menu;
+    /**
+     * Scroll panel to scroll through different categories
+     */
     private JScrollPane scrollPanel;
+    /**
+     * Panel to add new categories
+     */
     private JPanel categPanel;
+    /**
+     * Panel that holds the categories and their menu items
+     */
     private JPanel enclosingCategPanel;
-    private JTextField lastAddMenuItemField;
-    private JButton lastAddMenuItemButton;
-
+    
+    /**
+     * Instantiates Menu CreationGUI by loading in the menu
+     * @param menu Menu to populate
+     */
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
         this.menu = menu;
@@ -35,7 +62,8 @@ public class MenuCreationGUI extends JPanel {
         categPanel.add(addCategButton);
 
         addCategButton.addActionListener(new ActionListener(){
-
+            
+            @Override
             public void actionPerformed(ActionEvent event){
                 if (!(checkValidValue(categField.getText(),"category"))){
                     return;
@@ -57,7 +85,7 @@ public class MenuCreationGUI extends JPanel {
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
-                lastAddMenuItemButton = addMenuItemButton;
+                addMenuItemButton.setBackground(Color.RED);
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
                 itemButtons.add(addMenuItemButton);
                 singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
@@ -110,6 +138,12 @@ public class MenuCreationGUI extends JPanel {
             loadingMenu = false;
         }
     }
+    /**
+     * Check if a category or menu item entered is valid
+     * @param value Category of Menu Item
+     * @param type Type specifying if we are checking a category or menu item
+     * @return True if value is vald or false if it is not
+     */
     public boolean checkValidValue(String value, String type){
         if (type.equals("category")){
             /*check dup category or empty value*/
@@ -144,15 +178,33 @@ public class MenuCreationGUI extends JPanel {
         }
         return true;
     }
+
+    /**
+     * Button ActionClass that defines the action to add a 
+     * <b>MenuItem</b> to a category in the <b>Menu</b>
+     */
     class ButtonAction extends AbstractAction {
+        /**
+         * Name of Button Action
+         */
         String name;
+        /**
+         * Parent panel of button
+         */
         JPanel parentPanel;
+        
+        /**
+         * Instanties the button action
+         * @param name Name of Action
+         * @param pPanel Parent Panel of Action/Button
+         */
         public ButtonAction(String name, JPanel pPanel){
             super(name);
             this.name = name;
             this.parentPanel  = pPanel;
         }
-
+        
+        @Override
         public void actionPerformed(ActionEvent event){
             JTextField menuItem = new JTextField();
             JTextField menuItemETM = new JTextField();
@@ -199,10 +251,31 @@ public class MenuCreationGUI extends JPanel {
             }
         }
     }
+    /**
+     * RemoveComponentAction class provides functionality
+     * to remove a <b>Category</b> or <b>Menu Item</b> when 
+     * needed.
+     */
     class RemoveComponentAction extends AbstractAction{
+        /**
+         * Name of Action
+         */
         String name;
+        /**
+         * Parent Panel of Action
+         */
         JPanel parentPanel;
+        /**
+         * Child Panel of Action
+         */
         JPanel childPanel;
+
+        /**
+         * Instantiates a Remove Component Action
+         * @param name Name of Action
+         * @param parentPanel Parent Panel of Action
+         * @param childPanel Child Panel of Action
+         */
         public RemoveComponentAction(String name, JPanel parentPanel, JPanel childPanel)
         {
             super(name);
@@ -210,6 +283,7 @@ public class MenuCreationGUI extends JPanel {
             this.parentPanel = parentPanel;
             this.childPanel = childPanel;
         }
+        @Override
         public void actionPerformed(ActionEvent event)
         {
             // this.childPanel.getName() will return
@@ -229,6 +303,12 @@ public class MenuCreationGUI extends JPanel {
             this.parentPanel.repaint();
         }
     }
+    /**
+     * Provides functionality to change a menu item or category by clicking on it
+     * @param text Text to change category or menu item to
+     * @param type Specifying whether we want to change a category or menu item
+     * @param childPanel Child Panel of Action
+     */
     public void handleMousePress(JLabel text, String type, JPanel childPanel)
     {
         String updatedString = null;
@@ -287,7 +367,7 @@ public class MenuCreationGUI extends JPanel {
         }
     }
     /**
-     * 
+     * Parses input that for a category or menu item
      * @param childPanel Parse the name of this panel
      * @return An ArrayList of strings where the first value is the category and the second value is the menu_item
      */

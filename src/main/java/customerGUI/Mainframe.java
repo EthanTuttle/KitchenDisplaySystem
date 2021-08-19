@@ -31,19 +31,51 @@ import java.math.BigDecimal;
 import java.net.Socket;
 import javax.swing.ImageIcon;
 
+/**
+ * Mainframe that the Customer GUI interacts with
+ */
 public class Mainframe extends JFrame {
 
+	/**
+	 * Total cost of an order
+	 */
     private BigDecimal totalCost;
+	/**
+	 * Reader to read the menu for display
+	 */
     private MenuReader menuRead;
+	/**
+	 * Panel to display receipt
+	 */
     private JPanel receipt;
+	/**
+	 * Center Panel
+	 */
     private JPanel centerPanel;
+	/**
+	 * Menu to show
+	 */
     private Menu givMenu;
+	/**
+	 * Order Price
+	 */
     private int orderPrice;
+	/**
+	 * List of items ordered
+	 */
     private ArrayList<MenuItem> itemsOrdered;
-
+	/**
+	 * Information of item
+	 */
     private String itemInformation;
 
     // test for shawn uodatate129.161.52.212\\
+	/**
+	 * Instantiates Main Frame
+	 * @param gMenu Restaurant Menu	
+	 * @param customerString Customer name
+	 * @param fromEathnSocket Socket from Restaurant
+	 */
     public Mainframe(Menu gMenu, String customerString, Socket fromEathnSocket) {
 
 		ImageIcon ninjaIcon = null;
@@ -78,6 +110,9 @@ public class Mainframe extends JFrame {
         setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
     }
 
+	/**
+	 * Creates the pane display
+	 */
     public void create() {
         JPanel mainPanel = (JPanel) getContentPane();
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getItemButtons(), getReceipt());
@@ -88,6 +123,10 @@ public class Mainframe extends JFrame {
 
     }
 
+	/**
+	 * Set Up the buttons
+	 * @return JScrollPane
+	 */
     private JScrollPane getItemButtons() {
         JPanel pan = new JPanel();
         pan.setLayout(new GridLayout(0, 2));
@@ -130,6 +169,10 @@ public class Mainframe extends JFrame {
 
     }
 
+	/**
+	 * Returns the receipt
+	 * @return JPanel of receipt
+	 */
     private JPanel getReceipt() {
 
         receipt = new JPanel();
@@ -205,6 +248,9 @@ public class Mainframe extends JFrame {
 
     }
 
+	/**
+	 * Deletes items ordered
+	 */
     private void delete() {
 
         itemsOrdered.clear();
@@ -216,6 +262,10 @@ public class Mainframe extends JFrame {
 
     }
 
+	/**
+	 * Refreshes the panel
+	 * @param itemButton Button used to refresh panel
+	 */
     private void refreshPanel(final MenuItem itemButton) {
         String item = itemButton.getName();
 
@@ -234,6 +284,7 @@ public class Mainframe extends JFrame {
         deleteButton.setOpaque(true);
 
         deleteButton.addActionListener(new ActionListener() {
+			@Override
             public void actionPerformed(ActionEvent event) {
                 centerPanel.remove(orderItems);
                 itemsOrdered.remove(itemButton);

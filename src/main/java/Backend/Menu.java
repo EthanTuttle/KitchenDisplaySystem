@@ -51,9 +51,20 @@ public class Menu {
     public Map<String,MenuItem> getMenuItems(String category){ ///gets the menu items from the same category
         return menu.get(category);
     }
+
+    /**
+     * Gets the menu 
+     * @return Menu
+     */
     public Map<String,HashMap<String,MenuItem>> allItems() {
         return menu;
     }
+    
+    /**
+     * Returns if a category is in the menu
+     * @param category The category to test
+     * @return Boolean if category is in the menu
+     */
     public Boolean containsCategory(String category){
         if (menu.get(category) != null){
             return true;
@@ -61,12 +72,21 @@ public class Menu {
         return false;
     }
 
+    /**
+     * Loads menu from previous run of application
+     * @return Menu that was previously loaded
+     */
     public static Menu loadMenu() {
         Menu menu = new Menu();
 
         return menu;
     }
 
+    /**
+     * Replaces an old category in the menu with a new category
+     * @param oldCategoryName The Old Category Name 
+     * @param newCategoryName The New Category Name
+     */
     public void replace(String oldCategoryName, String newCategoryName){
         //System.out.println("Before: "+menu);
         //System.out.println("We have old categ: "+oldCategoryName+" and new categ: "+newCategoryName);
@@ -75,7 +95,12 @@ public class Menu {
         //System.out.println("After "+menu);
     }
 
-    
+    /**
+     * Removes a category or menu item from the menu based of the type passed in
+     * @param categ The Category to Remove
+     * @param menuItem The Menu Item to Remove
+     * @param type Type specifying whether we remove a category or menu item
+     */
     public void remove(String categ, String menuItem, String type){
         //System.out.println("Before: "+menu);
         //System.out.println("We have categ: "+categ+" and menuItem: "+menuItem);
@@ -87,7 +112,12 @@ public class Menu {
         }
         //System.out.println("After "+menu);
     }
-
+    
+    /**
+     * Finds a menu item based off its name in the menu
+     * @param name Name of the Menu Item
+     * @return The Menu Item found, null otherwise
+     */
     public MenuItem findMenuItem(String name) {
         Iterator<String> itr = menu.keySet().iterator();
         while (itr.hasNext()) {
