@@ -67,11 +67,11 @@ public class Menu {
     }
 
     public void replace(String oldCategoryName, String newCategoryName){
-        System.out.println("Before: "+menu);
-        System.out.println("We have old categ: "+oldCategoryName+" and new categ: "+newCategoryName);
+        //System.out.println("Before: "+menu);
+        //System.out.println("We have old categ: "+oldCategoryName+" and new categ: "+newCategoryName);
         HashMap<String,MenuItem> sampleMap = menu.remove(oldCategoryName);
         menu.put(newCategoryName,sampleMap);
-        System.out.println("After "+menu);
+        //System.out.println("After "+menu);
     }
 
     
