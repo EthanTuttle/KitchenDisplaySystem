@@ -67,10 +67,8 @@ public class CustomerGUI {
                     loadSemaphore.release();
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, e, "Connection Error", JOptionPane.ERROR_MESSAGE);
-                    System.exit(1);
                 } catch (InterruptedException e) {
                     JOptionPane.showMessageDialog(null, e, "Thread Error", JOptionPane.ERROR_MESSAGE);
-                    System.exit(1);
                 }
                 
             }

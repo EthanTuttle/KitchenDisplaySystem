@@ -23,84 +23,64 @@ import java.net.Socket;
 
 public class MenuReader {
 
-	private File orders;
-	private Scanner readMenu;
-	private BufferedWriter orderLogger;
-	private FileWriter orderLoggerStream;
-	private int count;
-	private String inputFile;
-	private Calendar calendar;
-	private ArrayList<MenuItem> menuItems;
-	private String TheCUstomer;
-    private PrintWriter out; //TODO: use to communicate order
+    private File orders;
+    private Scanner readMenu;
+    private BufferedWriter orderLogger;
+    private FileWriter orderLoggerStream;
+    private int count;
+    private String inputFile;
+    private Calendar calendar;
+    private ArrayList<MenuItem> menuItems;
+    private String TheCUstomer;
+    private PrintWriter out; // TODO: use to communicate order
     private Socket connection;
 
-    
+    public MenuReader(Menu inputMenu, String Cust, Socket connSocket) {
 
-
-	public MenuReader(Menu inputMenu, String Cust,Socket connSocket) {
-		
-		menuItems = new ArrayList<MenuItem>();
-		calendar = new GregorianCalendar();
-		count = 1;
-		TheCUstomer = Cust;
+        menuItems = new ArrayList<MenuItem>();
+        calendar = new GregorianCalendar();
+        count = 1;
+        TheCUstomer = Cust;
 
         connection = connSocket;
 
-
-        
-        
     }
 
+    public ArrayList<MenuItem> getMenuItems() {
+        return menuItems;
+    }
 
+    public void logOrder(ArrayList<MenuItem> itemsOrdered, BigDecimal orderPrice) throws IOException {
 
-	public ArrayList<MenuItem> getMenuItems() {
-		return menuItems;
-	}
-	
+        orderLoggerStream = new FileWriter(getFileInstance(), true);
+        orderLogger = new BufferedWriter(orderLoggerStream);
 
-	public void logOrder(ArrayList<MenuItem> itemsOrdered, BigDecimal orderPrice) throws IOException {
-	
-		orderLoggerStream = new FileWriter(getFileInstance(),true);
-		orderLogger = new BufferedWriter(orderLoggerStream);
-		
-		java.util.Date orderDate = new java.util.Date();
-
+        java.util.Date orderDate = new java.util.Date();
 
         String sendToSocket = "";
 
-
-
-        
-	
-        out = new PrintWriter(connection.getOutputStream(),true);
+        out = new PrintWriter(connection.getOutputStream(), true);
 
         sendToSocket += new Timestamp(orderDate.getTime()) + ";";
 
-		sendToSocket +=(this.TheCUstomer + ";");
+        sendToSocket += (this.TheCUstomer + ";");
 
+        for (MenuItem item : itemsOrdered) {
 
+            sendToSocket += (item.getName() + ";");
 
-		for (MenuItem item: itemsOrdered) {
-
-			sendToSocket+=(item.getName() + ";");
-
-
-			
-		}
+        }
         out.println(sendToSocket);
-	
-		
-		orderLogger.close();
-	}
 
-	
-	private File getFileInstance() {
-		
-		if (orders == null) {
-			String fileName = inputFile + " " + "ItemOrders.txt";
-			orders = new File(fileName);
-		}
-		return orders;
-	}
+        orderLogger.close();
+    }
+
+    private File getFileInstance() {
+
+        if (orders == null) {
+            String fileName = inputFile + " " + "ItemOrders.txt";
+            orders = new File(fileName);
+        }
+        return orders;
+    }
 }

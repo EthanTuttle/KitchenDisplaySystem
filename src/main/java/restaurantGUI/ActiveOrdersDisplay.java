@@ -30,6 +30,7 @@ public class ActiveOrdersDisplay extends JPanel {
         displayPanel = new JPanel();
         displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.X_AXIS));
         scrollPanel = new JScrollPane(displayPanel);
+        scrollPanel.setBorder(null);
         add(scrollPanel, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel();
         JButton button = new JButton("button");
@@ -44,9 +45,14 @@ public class ActiveOrdersDisplay extends JPanel {
         new Thread(new Runnable(){
             public void run() {
                 while (true) {
-                    for (DisplayItem item : displayItems) {
-                        item.updateTime();
+                    synchronized (displayItems) {
+                        for (DisplayItem item : displayItems) {
+                            item.updateTime();
+                        }
+                        scrollPanel.repaint();
+                        scrollPanel.revalidate();
                     }
+                    
                 }
             }
         }).start();
@@ -80,24 +86,29 @@ public class ActiveOrdersDisplay extends JPanel {
     }
 
     private void updatePanel() {
-        displayPanel.removeAll();
-        Iterator<Customer> itr = queue.getIterator();
-        while (itr.hasNext()) {
-            Customer customer = itr.next();
-            DisplayItem displayItem = new DisplayItem(customer);
-            displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-            displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
-            JScrollPane scrollableDisplay = new JScrollPane(displayItem);
-            displayPanel.add(scrollableDisplay);
-            if (itr.hasNext()) {
-                Dimension minSize = new Dimension(5, 100);
-                Dimension prefSize = new Dimension(10, 100);
-                Dimension maxSize = new Dimension(Short.MAX_VALUE, 100);
-                displayPanel.add(new Box.Filler(minSize, prefSize, maxSize));
+        synchronized (displayItems) {
+            displayPanel.removeAll();
+            Iterator<Customer> itr = queue.getIterator();
+            while (itr.hasNext()) {
+                Customer customer = itr.next();
+                DisplayItem displayItem = new DisplayItem(customer);
+                displayItems.add(displayItem);
+                displayItem.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+                displayItem.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+                JScrollPane scrollableDisplay = new JScrollPane(displayItem);
+                scrollableDisplay.setMinimumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+                scrollableDisplay.setMaximumSize(new Dimension((int)displayPanel.getSize().getWidth()/6, (int)displayPanel.getSize().getHeight()));
+                scrollableDisplay.setBorder(null);
+                displayPanel.add(scrollableDisplay);
+                if (itr.hasNext()) {
+                    Dimension minSize = new Dimension(5, 100);
+                    Dimension prefSize = new Dimension(10, 100);
+                    Dimension maxSize = new Dimension(10, 100);
+                    displayPanel.add(new Box.Filler(minSize, prefSize, maxSize));
+                }
             }
+            scrollPanel.repaint();
+            scrollPanel.revalidate();
         }
-
-        scrollPanel.revalidate();
     }
-
 }

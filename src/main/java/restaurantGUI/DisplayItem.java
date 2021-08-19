@@ -29,6 +29,7 @@ public class DisplayItem extends JPanel {
         for (OrderItem order : customer.getOrders()) {
             for (MenuItem menuItem : order.getOrder()) {
                 add(new JLabel(menuItem.getName()));
+                
             }
         }
         setBorder(BorderFactory.createLineBorder(Color.black));
