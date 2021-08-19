@@ -35,7 +35,7 @@ public class DisplayItem extends JPanel {
         JPanel boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
 
-        if(customer.getName().equals("kuzmin")){
+        if(customer.getName().toLowerCase().equals("kuzmin")){
             boxPanel.setBackground(Color.YELLOW);
         }
         JLabel name = new JLabel();
