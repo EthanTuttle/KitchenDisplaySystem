@@ -69,7 +69,7 @@ public class MenuCreationGUI extends JPanel {
             
             @Override
             public void actionPerformed(ActionEvent event){
-                if (loadingMenu == false && !(checkValidValue(categField.getText(),"category"))){
+                if (loadingMenu == false && !(checkValidValue(categField.getText(), null, "category"))){
                     return;
                 }
                 JPanel singleCategPanel = new JPanel();
@@ -159,7 +159,7 @@ public class MenuCreationGUI extends JPanel {
      * @param type Type specifying if we are checking a category or menu item
      * @return True if value is vald or false if it is not
      */
-    public boolean checkValidValue(String value, String type){
+    public boolean checkValidValue(String value, String oldValue, String type){
         if (type.equals("category")){
             /*check dup category or empty value*/
             if (value == null || value.equals("") || menu.containsCategory(value)){
@@ -184,8 +184,21 @@ public class MenuCreationGUI extends JPanel {
 
             }
             /*check that the menu item is not empty and that the menu item does not already exist*/
-            if (value == null || menuItem.equals("") || menu.findMenuItem(menuItem) != null){
+            if (value == null || menuItem.equals("")){
                 return false;
+            }
+            else if (oldValue != null){
+                String[] oldItemTimeCombo = oldValue.split("  ");
+                String oldMenuItem = oldItemTimeCombo[0];
+                String oldTimeToMake = oldItemTimeCombo[1];
+                if (oldMenuItem.equals(menuItem) && timeToMake.equals(oldTimeToMake)){
+                    return false;
+                }
+            }
+            else{
+                if (menu.findMenuItem(menuItem) != null){
+                    return false;
+                }
             }
             try {
                 Integer actualTimeToMake = Integer.parseInt(timeToMake);
@@ -272,7 +285,7 @@ public class MenuCreationGUI extends JPanel {
                 int totalSeconds = (minutes*60) + seconds;
                 String checkString = menuItem.getText().strip() + "  " + totalSeconds;
                 JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds);
-                if (loadingMenu == false && !(checkValidValue(checkString,"menu_item"))){
+                if (loadingMenu == false && !(checkValidValue(checkString, null, "menu_item"))){
                     return;
                 }
                 ArrayList<String> values = parseQuery(this.parentPanel);
@@ -369,7 +382,7 @@ public class MenuCreationGUI extends JPanel {
         if (type.toLowerCase().equals("category"))
         {
 		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the category to?");
-            if (!checkValidValue(updatedString,"category")){
+            if (!checkValidValue(updatedString, null, "category")){
                 return;
             }
             menu.replace(category, updatedString);
@@ -379,6 +392,17 @@ public class MenuCreationGUI extends JPanel {
         }
         else if (type.toLowerCase().equals("menu_item"))
         {
+            // text == menu_item=?  Time: ?:?
+            String[] oldValues = text.getText().split("  ");
+            String oldMenuItem = oldValues[0];
+            // oldValues[1] == Time: ?:?
+            // So splitting on ":" gives ["Time", " ?", "?"]
+            String[] timeParsedValues = oldValues[1].split(":");
+            String oldMinutes = timeParsedValues[1].strip();
+            String oldSeconds = timeParsedValues[2].strip();
+            updatedMenuItem.setText(oldMenuItem);
+            updatedMenuItemMin.setValue(Integer.parseInt(oldMinutes));
+            updatedMenuItemSec.setValue(Integer.parseInt(oldSeconds));
             JComponent[] components = new JComponent[] {
                 new JLabel("Enter the name of the item"),
                 updatedMenuItem,
@@ -394,8 +418,13 @@ public class MenuCreationGUI extends JPanel {
                 int seconds = (Integer) updatedMenuItemSec.getValue();
                 int totalSeconds = (minutes*60) + seconds;
                 String checkString = updatedMenuItem.getText().strip()+"  "+ totalSeconds;
+
+                String oldTotalSeconds = String.valueOf(Integer.parseInt(oldMinutes)*60+Integer.parseInt(oldSeconds));
+                String oldItemTimeCombo = oldMenuItem.strip()+"  "+oldTotalSeconds;
+                System.out.println("old item time combo is: \""+oldItemTimeCombo+"\"");
+                System.out.println("new item time combo is: \""+checkString+"\"");
                 updatedString = updatedMenuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds;
-                if (!checkValidValue(checkString,"menu_item")){
+                if (!checkValidValue(checkString, oldItemTimeCombo, "menu_item")){
                     return;
                 }
                 // text == menu_item=? <=== and we parse for '?'
@@ -433,9 +462,11 @@ public class MenuCreationGUI extends JPanel {
         // Split the query into category=? AND menu_item=?
         System.out.println("query is: \'"+childPanel.getName()+"\'");
         String[] query = childPanel.getName().split(";");
+        
+        /*//Debug statements
         for (String val : query){
             System.out.println("query split val is \""+val+"\"");
-        }
+        }*/
         ArrayList<String> ret = new ArrayList<String>();
 
         // parse, split and get the category and menu item
