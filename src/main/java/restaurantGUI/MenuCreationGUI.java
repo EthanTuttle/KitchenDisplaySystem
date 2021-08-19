@@ -185,6 +185,7 @@ public class MenuCreationGUI extends JPanel {
             }
             /*check that the menu item is not empty and that the menu item does not already exist*/
             if (value == null || menuItem.equals("")){
+                JOptionPane.showMessageDialog(null, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             else if (oldValue != null){
@@ -192,17 +193,20 @@ public class MenuCreationGUI extends JPanel {
                 String oldMenuItem = oldItemTimeCombo[0];
                 String oldTimeToMake = oldItemTimeCombo[1];
                 if (oldMenuItem.equals(menuItem) && timeToMake.equals(oldTimeToMake)){
+                    // don't show an error since the user didn't change anything
                     return false;
                 }
             }
             else{
                 if (menu.findMenuItem(menuItem) != null){
+                    JOptionPane.showMessageDialog(null, "Menu item already exists.", "Input Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
             try {
                 Integer actualTimeToMake = Integer.parseInt(timeToMake);
                 if (actualTimeToMake<0){
+                    JOptionPane.showMessageDialog(null, "Time can't be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
                     throw new Exception();
                 }
             }
