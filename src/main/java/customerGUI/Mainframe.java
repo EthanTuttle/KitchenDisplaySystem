@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.Socket;
+import javax.swing.ImageIcon;
 
 public class Mainframe extends JFrame {
 
@@ -44,6 +45,16 @@ public class Mainframe extends JFrame {
 
     // test for shawn uodatate129.161.52.212\\
     public Mainframe(Menu gMenu, String customerString, Socket fromEathnSocket) {
+
+		ImageIcon ninjaIcon = null;
+
+        java.net.URL imgURL = CustomerGUI.class.getResource("ninja.png");
+        if (imgURL != null) {
+            ninjaIcon = new ImageIcon(imgURL);
+            setIconImage(ninjaIcon.getImage());
+        } else {
+            JOptionPane.showMessageDialog(Mainframe.this, "Icon image not found.");
+        }
 
         totalCost = new BigDecimal(0);
         itemInformation = "";
