@@ -49,7 +49,6 @@ public class Menu {
     public Map<String,MenuItem> getMenuItems(String category){ ///gets the menu items from the same category
         return menu.get(category);
     }
-
     public Map<String,HashMap<String,MenuItem>> allItems() {
         return menu;
     }
