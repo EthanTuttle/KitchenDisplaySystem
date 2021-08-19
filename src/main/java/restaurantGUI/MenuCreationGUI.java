@@ -15,6 +15,11 @@ public class MenuCreationGUI extends JPanel {
     private ArrayList<JButton> itemButtons = new ArrayList<>();
     private boolean loadingMenu = false;
     private Menu menu;
+    private JScrollPane scrollPanel;
+    private JPanel categPanel;
+    private JPanel enclosingCategPanel;
+    private JTextField lastAddMenuItemField;
+    private JButton lastAddMenuItemButton;
 
     public MenuCreationGUI(Menu menu){
         setLayout(new BorderLayout());
@@ -52,6 +57,7 @@ public class MenuCreationGUI extends JPanel {
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
+                lastAddMenuItemButton = addMenuItemButton;
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
                 itemButtons.add(addMenuItemButton);
                 singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
@@ -302,7 +308,4 @@ public class MenuCreationGUI extends JPanel {
         return ret;
     }
 
-    private JScrollPane scrollPanel;
-    private JPanel categPanel;
-    private JPanel enclosingCategPanel;
 }
