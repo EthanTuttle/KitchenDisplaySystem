@@ -85,8 +85,8 @@ public class MenuCreationGUI extends JPanel {
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
-                addMenuItemButton.setBackground(Color.RED);
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
+                removeComponentButton.setBackground(Color.red);
                 itemButtons.add(addMenuItemButton);
                 singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 enclosedSingleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
@@ -241,6 +241,7 @@ public class MenuCreationGUI extends JPanel {
                 });
                 JPanel labelAndExitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,0));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", this.parentPanel, labelAndExitPanel));
+                removeComponentButton.setBackground(Color.RED);
                 labelAndExitPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
                 parentPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
                 labelAndExitPanel.add(itemTimeCombo);
