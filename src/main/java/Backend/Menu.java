@@ -39,6 +39,7 @@ public class Menu {
      */
     public void addMenuItem(String category, String menuItemName, int timeToMake){ //adds a menu item to a certain category
         menu.get(category).put(menuItemName,new MenuItem(menuItemName,timeToMake,category));
+        System.out.println("After add we have: "+menu);
     }
 
     /**
@@ -70,14 +71,15 @@ public class Menu {
         menu.put(newCategoryName,sampleMap);
     }
     public void remove(String categ, String menuItem, String type){
-        System.out.println(menu);
+        System.out.println("Before: "+menu);
+        System.out.println("We have categ: "+categ+" and menuItem: "+menuItem);
         if (type.equals("category")){
             menu.remove(categ);
         }
         else if (type.equals("menu_item")){
             menu.get(categ).remove(menuItem);
         }
-        System.out.println(menu);
+        System.out.println("After "+menu);
     }
 
     public MenuItem findMenuItem(String name) {
