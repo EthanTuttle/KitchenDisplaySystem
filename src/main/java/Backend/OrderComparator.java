@@ -8,10 +8,10 @@ public class OrderComparator implements Comparator<Customer> {
 
     @Override
     public int compare(Customer c1, Customer c2){
-        if (c1.getName().equals("Kuzmin")){
+        if (c1.getName().equals("kuzmin")){
             return -1;
         }
-        else if (c2.getName().equals("Kuzmin")){
+        else if (c2.getName().equals("kuzmin")){
             return 1;
         }
         if ((c1.getTick()>=5 && c2.getTick()>=5) || (c1.getTick()<5 && c2.getTick()<5)){
