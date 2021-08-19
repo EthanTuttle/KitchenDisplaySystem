@@ -48,15 +48,14 @@ public class MenuCreationGUI extends JPanel {
                     @Override
                     public void mousePressed(MouseEvent e)
                     {
-                        handleMousePress(categLabel, "category");
+                        handleMousePress(categLabel, "category", enclosedSingleCategPanel);
                     }
                 });
                 JButton addMenuItemButton = new JButton(new ButtonAction("Add Menu Item", singleCategPanel));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", enclosingCategPanel, enclosedSingleCategPanel));
-                singleCategPanel.setName(categLabel.getText());
-                newMenuItemPanel.setName(categLabel.getText());
+                singleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
+                enclosedSingleCategPanel.setName("category="+categLabel.getText()+"&menu_item= ");
                 newMenuItemPanel.add(addMenuItemButton);
-                labelAndExitPanel.setName("category="+"&menu_item=&"+categLabel.getText());
                 labelAndExitPanel.add(categLabel);
                 labelAndExitPanel.add(removeComponentButton);
 
@@ -148,21 +147,23 @@ public class MenuCreationGUI extends JPanel {
                 if (!(checkValidValue(itemTimeCombo.getText(),"menu_item"))){
                     return;
                 }
-                menu.addMenuItem(parentPanel.getName(), menuItem.getText().strip(), Integer.parseInt(menuItemETM.getText().strip()));
+                ArrayList<String> values = parseQuery(this.parentPanel);
+                String category = values.get(0);
+                menu.addMenuItem(category, menuItem.getText().strip(), Integer.parseInt(menuItemETM.getText().strip()));
                 itemTimeCombo.addMouseListener(new MouseAdapter()
                 {
                     @Override
                     public void mousePressed(MouseEvent e)
                     {
-                        handleMousePress(itemTimeCombo, "menu_item");
+                        handleMousePress(itemTimeCombo, "menu_item", parentPanel);
                     }
                 });
                 JPanel labelAndExitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,0));
                 JButton removeComponentButton = new JButton(new RemoveComponentAction("X", this.parentPanel, labelAndExitPanel));
-                labelAndExitPanel.setName("category="+this.parentPanel.getName().strip()+"&menu_item="+menuItem.getText().strip());
+                labelAndExitPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
+                parentPanel.setName("category="+category+"&menu_item="+menuItem.getText().strip());
                 labelAndExitPanel.add(itemTimeCombo);
                 labelAndExitPanel.add(removeComponentButton);
-
                 parentPanel.add(labelAndExitPanel);
                 parentPanel.revalidate();
                 scrollPanel.revalidate();
@@ -184,34 +185,38 @@ public class MenuCreationGUI extends JPanel {
         {
             // this.childPanel.getName() will return
             // category=?&menu_item=?
-            
 
             // Split the query into category=? AND menu_item=?
-            String[] query = this.childPanel.getName().split("&");
-            String category = "";
-            String menu_item = "";
-
-            // parse, split and get the category and menu item
-            String[] values = query[0].split("=");
-            category = values[1];
-            values = query[1].split("=");
-            menu_item = values[1];
-            menu.remove(category, menu_item, menu_item.equals("") ? "category" : "menu_item");
+            System.out.println(this.childPanel.getName());
+            ArrayList<String> values = parseQuery(this.childPanel);
+            for (int i = 0; i < 2; i++){
+                System.out.println("return ret where val at "+ i +" is "+values.get(i));
+            }
+            String category = values.get(0);
+            String menuItem = values.get(1);
+            menu.remove(category, menuItem, menuItem.equals(" ") ? "category" : "menu_item");
             this.parentPanel.remove(this.childPanel);
             this.parentPanel.revalidate();
             this.parentPanel.repaint();
         }
     }
-    public void handleMousePress(JLabel text, String type)
+    public void handleMousePress(JLabel text, String type, JPanel childPanel)
     {
         String updatedString = null;
         JTextArea updatedMenuItem = new JTextArea();
         JTextArea updatedMenuItemETM = new JTextArea();
+        ArrayList<String> values = parseQuery(childPanel);
+        String category = values.get(0);
         if (type.toLowerCase().equals("category"))
         {
 		    updatedString = JOptionPane.showInputDialog(this, "What would you like to rename the category to?");
             if (!checkValidValue(updatedString,"category")){
+                return;
             }
+            menu.replace(category, updatedString);
+            String oldMenuItem = values.get(1);
+            childPanel.setName("category="+updatedString+"&menu_item="+oldMenuItem);
+            category = updatedString;
         }
         else if (type.toLowerCase().equals("menu_item"))
         {
@@ -224,10 +229,14 @@ public class MenuCreationGUI extends JPanel {
             int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 // Check if the input is valid
-                updatedString = updatedMenuItem.getText()+"  "+updatedMenuItemETM.getText();
+                updatedString = updatedMenuItem.getText().strip()+"  "+updatedMenuItemETM.getText().strip();
                 if (!checkValidValue(updatedString,"menu_item")){
                     return;
                 }
+                // text == menu_item=? <=== and we parse for '?'
+                String menuItem = text.getText().strip().split("  ")[0];
+                menu.remove(category, menuItem, "menu_item");
+                menu.addMenuItem(category, updatedMenuItem.getText().strip(), Integer.parseInt(updatedMenuItemETM.getText()));
             }
         }
         else{
@@ -239,7 +248,35 @@ public class MenuCreationGUI extends JPanel {
         if (updatedString != null)
         {
             text.setText(updatedString);
+            Component[] allComponents = childPanel.getComponents();
+            for (int i = 0; i < allComponents.length; i++){
+                if (allComponents[i].getName() != null){
+                    System.out.println("At "+i+" the component name is: "+allComponents[i].getName());
+                    allComponents[i].setName("category="+category+"&menu_item="+updatedMenuItem.getText().strip());
+                }
+            }
         }
+    }
+    /**
+     * 
+     * @param childPanel Parse the name of this panel
+     * @return An ArrayList of strings where the first value is the category and the second value is the menu_item
+     */
+    private ArrayList<String> parseQuery(JPanel childPanel)
+    {
+        // Split the query into category=? AND menu_item=?
+        System.out.println(childPanel.getName());
+        String[] query = childPanel.getName().split("&");
+        ArrayList<String> ret = new ArrayList<String>();
+
+        // parse, split and get the category and menu item
+        String[] values = query[0].split("=");
+        //category = values[1];
+        ret.add(values[1]);
+        values = query[1].split("=");
+        //menu_item = values[1];
+        ret.add(values[1]);
+        return ret;
     }
 
     private JScrollPane scrollPanel;
