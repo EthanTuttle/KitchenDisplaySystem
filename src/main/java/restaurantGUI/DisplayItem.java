@@ -18,7 +18,12 @@ public class DisplayItem extends JPanel {
         this.customer = customer;
         setLayout(new GridLayout(0, 1));
         JLabel name = new JLabel("", SwingConstants.CENTER);
-        name.setText(customer.getName());
+        if (customer.getName().length() > 20) {
+            name.setText(customer.getName().substring(0, 20) + "...");
+        } else {
+            name.setText(customer.getName());
+        }
+        
         Font original = name.getFont();
         Font bigger = original.deriveFont(18.0f);
         name.setFont(bigger);
