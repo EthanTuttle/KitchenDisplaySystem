@@ -3,6 +3,7 @@ package src.main.java.Backend;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -14,13 +15,13 @@ public class Menu {
     /**
      * Menu object that holds menu items
      */
-    private Map<String,HashMap<String,MenuItem>> menu; //items on menu
+    private LinkedHashMap<String,HashMap<String,MenuItem>> menu; //items on menu
     
     /**
      * Constructs empty menu object
      */
     public Menu(){
-        menu = new HashMap<String,HashMap<String,MenuItem>>();
+        menu = new LinkedHashMap<String,HashMap<String,MenuItem>>();
     }
 
     /**
@@ -96,6 +97,11 @@ public class Menu {
             }
         }
         return null;
+    }
+
+    public Map<String, HashMap<String, MenuItem>> getMenu()
+    {
+        return this.menu;
     }
 
     public boolean isEmpty(){

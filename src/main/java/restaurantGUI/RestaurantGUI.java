@@ -28,6 +28,7 @@ public class RestaurantGUI extends JFrame{
 
     
     public RestaurantGUI() {
+
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +42,19 @@ public class RestaurantGUI extends JFrame{
         }
         
         menu = src.main.java.Backend.Menu.loadMenu();
+
+        addWindowListener(new java.awt.event.WindowAdapter(){
+            /**
+             * stores data before frame closed
+            * @param java.awt.event.WindowEvent e This is the frame closing
+            */
+            public void windowClosing(java.awt.event.WindowEvent e){
+                    ExitProcedure.exitProcedure(menu);
+                    System.exit(0);
+            }
+        });
+
+
         activeOrdersDisplay = new ActiveOrdersDisplay(new ActiveOrders(), menu);
         new Thread(new Runnable() {
             public void run() {
