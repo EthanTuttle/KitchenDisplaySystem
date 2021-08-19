@@ -65,13 +65,19 @@ public class Menu {
         return menu;
     }
 
+    public void replace(String oldCategoryName, String newCategoryName){
+        HashMap<String,MenuItem> sampleMap = menu.remove(oldCategoryName);
+        menu.put(newCategoryName,sampleMap);
+    }
     public void remove(String categ, String menuItem, String type){
+        System.out.println(menu);
         if (type.equals("category")){
             menu.remove(categ);
         }
         else if (type.equals("menu_item")){
             menu.get(categ).remove(menuItem);
         }
+        System.out.println(menu);
     }
 
     public MenuItem findMenuItem(String name) {
