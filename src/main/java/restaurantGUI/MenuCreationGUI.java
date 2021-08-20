@@ -283,14 +283,15 @@ public class MenuCreationGUI extends JPanel {
                 
             }
             else{
-                result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+                result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.OK_CANCEL_OPTION);
             }
             if(result == JOptionPane.OK_OPTION) {
                 int minutes = (Integer) menuItemMin.getValue();
                 int seconds = (Integer) menuItemSec.getValue();
                 int totalSeconds = (minutes*60) + seconds;
                 String checkString = menuItem.getText().strip() + "  " + totalSeconds;
-                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds);
+                String minSec = String.format("Time: %d:%02d",minutes,seconds);
+                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+ minSec);
                 if (loadingMenu == false && !(checkValidValue(checkString, null, "menu_item"))){
                     return;
                 }
@@ -417,7 +418,7 @@ public class MenuCreationGUI extends JPanel {
                 new JLabel("Enter the estimated seconds to make the menu item"),
                 updatedMenuItemSec
             };
-            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.OK_CANCEL_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 // Check if the input is valid
                 int minutes = (Integer) updatedMenuItemMin.getValue();
@@ -427,9 +428,8 @@ public class MenuCreationGUI extends JPanel {
 
                 String oldTotalSeconds = String.valueOf(Integer.parseInt(oldMinutes)*60+Integer.parseInt(oldSeconds));
                 String oldItemTimeCombo = oldMenuItem.strip()+"  "+oldTotalSeconds;
-                System.out.println("old item time combo is: \""+oldItemTimeCombo+"\"");
-                System.out.println("new item time combo is: \""+checkString+"\"");
-                updatedString = updatedMenuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds;
+                String minSec = String.format("Time: %d:%02d",minutes,seconds);
+                updatedString = updatedMenuItem.getText().strip()+"  "+ minSec;
                 if (!checkValidValue(checkString, oldItemTimeCombo, "menu_item")){
                     return;
                 }
@@ -466,7 +466,10 @@ public class MenuCreationGUI extends JPanel {
     private ArrayList<String> parseQuery(JPanel childPanel)
     {
         // Split the query into category=? AND menu_item=?
+<<<<<<< HEAD
         //System.out.println("query is: \'"+childPanel.getName()+"\'");
+=======
+>>>>>>> 890c6a89990c2bda82d352349771ff1976e83874
         String[] query = childPanel.getName().split(";");
         
         /*//Debug statements

@@ -95,10 +95,8 @@ public class RestaurantGUI extends JFrame{
             @Override
             public void run() {
                 while (true) {
-                    System.out.println("Waiting");
                     try {
                         Socket client = server.accept();
-                        System.out.println("Connection found");
                         PrintWriter out = new PrintWriter(client.getOutputStream(), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                         new Thread(new Runnable() {

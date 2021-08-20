@@ -72,7 +72,7 @@ public class CustomerGUI {
                 if (nameInput.getText().length() == 0 || ipInput.getText().length() == 0 ) {
                     JOptionPane.showMessageDialog(null, "Must enter all inputs", "Input Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    rpiIP = ipInput.getText();
+                    rpiIP = ipInput.getText().strip();
                     try {
                         loadSemaphore.acquire();
                         connection = new Socket(InetAddress.getByName(rpiIP), 55555);
