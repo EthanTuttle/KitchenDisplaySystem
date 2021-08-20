@@ -10,3 +10,4 @@ category=Drinks;menu_item=Coffee;timeToMake=5
 category=Dessert;menu_item=Pumpkin Pie;timeToMake=2
 category=Dessert;menu_item=Ice Cream;timeToMake=3
 category=Dessert;menu_item=Chocolate Cake;timeToMake=5
+category=;;menu_item= ;timeToMake= 

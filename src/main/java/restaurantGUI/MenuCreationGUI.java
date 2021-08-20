@@ -466,7 +466,7 @@ public class MenuCreationGUI extends JPanel {
     private ArrayList<String> parseQuery(JPanel childPanel)
     {
         // Split the query into category=? AND menu_item=?
-        System.out.println("query is: \'"+childPanel.getName()+"\'");
+        //System.out.println("query is: \'"+childPanel.getName()+"\'");
         String[] query = childPanel.getName().split(";");
         
         /*//Debug statements

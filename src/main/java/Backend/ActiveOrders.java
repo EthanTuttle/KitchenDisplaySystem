@@ -32,13 +32,6 @@ public class ActiveOrders {
     public ActiveOrders() {
         orders = new LinkedList<Customer>();
     }
-    
-    /**
-     * Arranges queue
-     */
-    public void ArrangeQueue() {
-
-    }
 
     /**
      * Adds a customer to the active orders list and sorts the order list
