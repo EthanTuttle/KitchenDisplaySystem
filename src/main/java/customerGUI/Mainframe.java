@@ -51,17 +51,9 @@ public class Mainframe extends JFrame {
     JPanel panCopy;
     private Menu givMenu;
     /**
-     * Order Price
-     */
-    private int orderPrice;
-    /**
      * List of items ordered
      */
     private ArrayList<MenuItem> itemsOrdered;
-    /**
-     * Information of item
-     */
-    private String itemInformation;
 
     // test for shawn uodatate129.161.52.212\\
     /**
@@ -74,7 +66,6 @@ public class Mainframe extends JFrame {
     public Mainframe(Menu gMenu, String customerString, Socket fromEathnSocket) {
 
         totalCost = new BigDecimal(0);
-        itemInformation = "";
 
         String Customer = customerString;
 
@@ -405,7 +396,6 @@ public class Mainframe extends JFrame {
     private void delete() {
 
         itemsOrdered.clear();
-        itemInformation = "";
 
         centerPanel.removeAll();
         centerPanel.repaint();
@@ -420,8 +410,6 @@ public class Mainframe extends JFrame {
      */
     private void refreshPanel(final MenuItem itemButton) {
         String item = itemButton.getName();
-
-        int itemPrice = itemButton.getTimeToMake();
 
         itemsOrdered.add(itemButton);
 
@@ -449,7 +437,6 @@ public class Mainframe extends JFrame {
         centerPanel.add(deleteButton);
         centerPanel.revalidate();
 
-        orderPrice += totalCost.intValue();
     }
 
 }
