@@ -1,9 +1,10 @@
 category=Food;menu_item=Burger;timeToMake=10
-category=Food;menu_item=green beens;timeToMake=120
+category=Food;menu_item=green beens;timeToMake=140
 category=Food;menu_item=Fries;timeToMake=2
 category=Food;menu_item=Chicken;timeToMake=13
 category=Food;menu_item=Pulled Pork;timeToMake=20
 category=Drinks;menu_item=Water;timeToMake=1
+category=Drinks;menu_item=Iced Tea;timeToMake=2
 category=Drinks;menu_item=Lemonade;timeToMake=2
 category=Drinks;menu_item=Coke;timeToMake=2
 category=Drinks;menu_item=Pepsi;timeToMake=2
