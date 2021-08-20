@@ -1,5 +1,7 @@
-category=Main Courses;menu_item=chicken;timeToMake=0
+category=Main Courses;menu_item=chicken;timeToMake=720
 category=Main Courses;menu_item=Burgers;timeToMake=600
-category=sides;menu_item= ;timeToMake= 
+category=sides;menu_item=mashed potatoes;timeToMake=75
+category=sides;menu_item=fries;timeToMake=30
+category=sides;menu_item=apple slices;timeToMake=45
 category=apps;menu_item= ;timeToMake= 
-category=drinks;menu_item= ;timeToMake= 
+category=drinks;menu_item=water;timeToMake=5

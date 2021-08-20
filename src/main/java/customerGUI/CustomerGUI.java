@@ -2,7 +2,6 @@ package src.main.java.customerGUI;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.EventQueue;
 import java.awt.event.*;
 import java.net.InetAddress;
 import java.net.Socket;

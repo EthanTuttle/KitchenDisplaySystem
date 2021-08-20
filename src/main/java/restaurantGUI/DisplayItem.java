@@ -28,6 +28,7 @@ public class DisplayItem extends JPanel {
      * @param customer Customer and therefor order to display
      */
     public DisplayItem(Customer customer, JButton deleteButton) {
+        HashMap<String, Integer> itemCount = new HashMap<>();
       
         this.customer = customer;
         setLayout(new BorderLayout());
@@ -58,10 +59,21 @@ public class DisplayItem extends JPanel {
         boxPanel.add(bar);
         for (OrderItem order : customer.getOrders()) {
             for (MenuItem menuItem : order.getOrder()) {
-                JLabel itemName = new JLabel(menuItem.getName(), SwingConstants.CENTER);
-                itemName.setFont(original.deriveFont(18.0f));
-                boxPanel.add(itemName);                
+                if (!itemCount.containsKey(menuItem.getName())) {
+                    itemCount.put(menuItem.getName(), 1);
+                } else {
+                    itemCount.put(menuItem.getName(), itemCount.get(menuItem.getName())+1);
+                }
+                              
             }
+        }
+        for (String itemName : itemCount.keySet()) {
+            JLabel itemLabel = new JLabel(itemName + "   " + (itemCount.get(itemName) > 1 ? "x"+itemCount.get(itemName) : ""), SwingConstants.CENTER);
+            itemLabel.setFont(original.deriveFont(18.0f));
+            boxPanel.add(itemLabel);  
+        }
+        if (customer.getTick() >= 5) {
+            boxPanel.setBackground(new Color(255, 102, 102));
         }
         boxPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         JScrollPane scroll = new JScrollPane(boxPanel);

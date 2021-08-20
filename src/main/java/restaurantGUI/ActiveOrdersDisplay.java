@@ -149,6 +149,7 @@ public class ActiveOrdersDisplay extends JPanel {
                         scrollPanel.repaint();
                         scrollPanel.revalidate();
                         customers.remove(customer.getName());
+                        updatePanel();
                     }
                 });
             }

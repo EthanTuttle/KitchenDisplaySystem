@@ -1,14 +1,7 @@
-category=Food;menu_item=Burger;timeToMake=10
-category=Food;menu_item=green beens;timeToMake=120
-category=Food;menu_item=Fries;timeToMake=2
-category=Food;menu_item=Chicken;timeToMake=13
-category=Food;menu_item=Pulled Pork;timeToMake=20
-category=Drinks;menu_item=Water;timeToMake=1
-category=Drinks;menu_item=Lemonade;timeToMake=2
-category=Drinks;menu_item=Coke;timeToMake=2
-category=Drinks;menu_item=Pepsi;timeToMake=2
-category=Drinks;menu_item=Coffee;timeToMake=5
-category=Dessert;menu_item=Pumpkin Pie;timeToMake=2
-category=Dessert;menu_item=Ice Cream;timeToMake=3
-category=Dessert;menu_item=Chocolate Cake;timeToMake=5
-category=;;menu_item= ;timeToMake= 
+category=Main Courses;menu_item=chicken;timeToMake=720
+category=Main Courses;menu_item=Burgers;timeToMake=600
+category=sides;menu_item=mashed potatoes;timeToMake=75
+category=sides;menu_item=fries;timeToMake=30
+category=sides;menu_item=apple slices;timeToMake=45
+category=apps;menu_item= ;timeToMake= 
+category=drinks;menu_item=water;timeToMake=5
