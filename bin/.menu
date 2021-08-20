@@ -1,7 +1,20 @@
-category=Main Courses;menu_item=chicken;timeToMake=720
+category=Main Courses;menu_item=Ribeye;timeToMake=720
+category=Main Courses;menu_item=Fried Chicken;timeToMake=600
 category=Main Courses;menu_item=Burgers;timeToMake=600
-category=sides;menu_item=mashed potatoes;timeToMake=75
-category=sides;menu_item=fries;timeToMake=30
-category=sides;menu_item=apple slices;timeToMake=45
+category=Main Courses;menu_item=Chicken;timeToMake=720
+category=Main Courses;menu_item=Fish Filet;timeToMake=660
+category=Main Courses;menu_item=Pulled Pork;timeToMake=845
+category=Main Courses;menu_item=Ribs;timeToMake=480
 category=apps;menu_item= ;timeToMake= 
-category=drinks;menu_item=water;timeToMake=5
+category=drinks;menu_item=Water;timeToMake=5
+category=drinks;menu_item=Lemonade;timeToMake=5
+category=drinks;menu_item=Coke;timeToMake=5
+category=drinks;menu_item=Milkshake;timeToMake=45
+category=drinks;menu_item=Pepsi;timeToMake=5
+category=sides 2;menu_item=Mashed Potatoes;timeToMake=75
+category=sides 2;menu_item=Fries;timeToMake=30
+category=sides 2;menu_item=Coleslaw;timeToMake=120
+category=sides 2;menu_item=Corn;timeToMake=90
+category=sides 2;menu_item=Apple Slices;timeToMake=45
+category=sides 2;menu_item=Corn Bread;timeToMake=30
+category=sides 2;menu_item=Mac & Cheese;timeToMake=180
