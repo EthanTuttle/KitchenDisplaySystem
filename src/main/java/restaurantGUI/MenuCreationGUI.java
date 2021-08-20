@@ -290,7 +290,8 @@ public class MenuCreationGUI extends JPanel {
                 int seconds = (Integer) menuItemSec.getValue();
                 int totalSeconds = (minutes*60) + seconds;
                 String checkString = menuItem.getText().strip() + "  " + totalSeconds;
-                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds);
+                String minSec = String.format("Time: %d:%02d",minutes,seconds);
+                JLabel itemTimeCombo = new JLabel(menuItem.getText().strip()+"  "+ minSec);
                 if (loadingMenu == false && !(checkValidValue(checkString, null, "menu_item"))){
                     return;
                 }
@@ -427,7 +428,8 @@ public class MenuCreationGUI extends JPanel {
 
                 String oldTotalSeconds = String.valueOf(Integer.parseInt(oldMinutes)*60+Integer.parseInt(oldSeconds));
                 String oldItemTimeCombo = oldMenuItem.strip()+"  "+oldTotalSeconds;
-                updatedString = updatedMenuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds;
+                String minSec = String.format("Time: %d:%02d",minutes,seconds);
+                updatedString = updatedMenuItem.getText().strip()+"  "+ minSec;
                 if (!checkValidValue(checkString, oldItemTimeCombo, "menu_item")){
                     return;
                 }
