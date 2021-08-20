@@ -283,7 +283,7 @@ public class MenuCreationGUI extends JPanel {
                 
             }
             else{
-                result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+                result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.OK_CANCEL_OPTION);
             }
             if(result == JOptionPane.OK_OPTION) {
                 int minutes = (Integer) menuItemMin.getValue();
@@ -417,7 +417,7 @@ public class MenuCreationGUI extends JPanel {
                 new JLabel("Enter the estimated seconds to make the menu item"),
                 updatedMenuItemSec
             };
-            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, components, "Add new menu item", JOptionPane.OK_CANCEL_OPTION);
             if(result == JOptionPane.OK_OPTION) {
                 // Check if the input is valid
                 int minutes = (Integer) updatedMenuItemMin.getValue();
