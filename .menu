@@ -1,5 +1,5 @@
-category=Category 1;menu_item=Menu Item;timeToMake=310
-category=Category 1;menu_item=s;timeToMake=1207
-category=Category 2;menu_item= ;timeToMake= 
-category=Category 3;menu_item= ;timeToMake= 
-category=Chicken & Sandwiches;menu_item=Menu Item;timeToMake=310
+category=Main Courses;menu_item=chicken;timeToMake=0
+category=Main Courses;menu_item=Burgers;timeToMake=600
+category=sides;menu_item= ;timeToMake= 
+category=apps;menu_item= ;timeToMake= 
+category=drinks;menu_item= ;timeToMake= 
