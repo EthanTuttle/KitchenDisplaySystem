@@ -427,8 +427,6 @@ public class MenuCreationGUI extends JPanel {
 
                 String oldTotalSeconds = String.valueOf(Integer.parseInt(oldMinutes)*60+Integer.parseInt(oldSeconds));
                 String oldItemTimeCombo = oldMenuItem.strip()+"  "+oldTotalSeconds;
-                System.out.println("old item time combo is: \""+oldItemTimeCombo+"\"");
-                System.out.println("new item time combo is: \""+checkString+"\"");
                 updatedString = updatedMenuItem.getText().strip()+"  "+ "Time: " + minutes + ":" + seconds;
                 if (!checkValidValue(checkString, oldItemTimeCombo, "menu_item")){
                     return;
@@ -466,7 +464,6 @@ public class MenuCreationGUI extends JPanel {
     private ArrayList<String> parseQuery(JPanel childPanel)
     {
         // Split the query into category=? AND menu_item=?
-        System.out.println("query is: \'"+childPanel.getName()+"\'");
         String[] query = childPanel.getName().split(";");
         
         /*//Debug statements
